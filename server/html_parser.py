@@ -23,3 +23,10 @@ def parseHTML(html):
 	print("output is " + output)
 	return output
 
+def parseXML(xml):
+	soup = BeautifulSoup(xml, 'xml')
+	output = soup.get_text()
+	print("xml is " + ou)
+
+# def parseStratechery():
+	
