@@ -8,8 +8,7 @@ export default class HTMLContent extends React.Component {
 
   render () {
     return (
-    	<div id="innerContent">
-    		{this.props.innerHTML}
+    	<div id="innerContent" dangerouslySetInnerHTML={this.props.innerHTML}>
     	</div>
     	);
   }

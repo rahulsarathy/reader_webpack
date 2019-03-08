@@ -9,14 +9,15 @@ export default class Reader extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
-
+		this.showFirst = this.showFirst.bind(this);
+		this.changeClicked = this.changeClicked.bind(this);
 
 		this.state = {
 			value: "",
 			innerHTML: {
 				__html: "<div></div>"
 			},
-			innerContent: ''
+			innerContent: '',
 		};
 	}
 
@@ -71,12 +72,45 @@ export default class Reader extends React.Component {
 		);
 	}
 
+	showFirst(url)
+	{
+		var data = {
+			url: url
+		}
+		$.ajax(
+			{
+				type: 'POST',
+				url: '/first',
+				dataType: 'html',
+				data: data,
+				success: function(data)
+				{
+					this.setState(
+						{
+							innerHTML: {
+								__html: data
+							} 
+						});
+				}.bind(this),
+				error: function(xhr)
+				{
+					console.log(xhr.responseText)
+				}
+			});
+	}
+
+	changeClicked(event) {
+		console.log(event.target);
+		this.showFirst(event.target.getAttribute('url'));
+	}
+
 	render () {
     return (
     	<div>
     		<URLField value={this.state.value} onChange={this.handleChange} onClick={this.handleClick} />
-    		<Options />
-    		<HTMLContent innerHTML={this.state.innerContent}/>
+    		<Options changeClicked={this.changeClicked} showFirst={this.showFirst}/>
+    		<HTMLContent innerHTML={this.state.innerHTML}/>
+    		<button onClick={this.showFirst}>Show First</button>
     	</div>
     	);
   }
