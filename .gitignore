@@ -1,3 +1,6 @@
 /server/venv
 /static/node_modules
 /server/publishing
+/server/a.xml
+/server/nofilter.html
+/server/output.html
