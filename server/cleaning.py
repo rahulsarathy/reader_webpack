@@ -52,6 +52,8 @@ def specificArticle(name, firstArticle):
 		return soup.find('article')
 	elif (name == 'Overcoming Bias'):
 		return soup.find("div", id="content")
+	elif (name =='Marginal Revolution'):
+		return soup.find('article')
 	# elif (name =='econlib'):
 	# 	return soup.find("div", class_="article-single-page site-container post-container")
 	else:
