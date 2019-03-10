@@ -72,11 +72,9 @@ export default class Reader extends React.Component {
 		);
 	}
 
-	showFirst(url)
+	showFirst(data)
 	{
-		var data = {
-			url: url
-		}
+		console.log()
 		$.ajax(
 			{
 				type: 'POST',
@@ -101,7 +99,11 @@ export default class Reader extends React.Component {
 
 	changeClicked(event) {
 		console.log(event.target);
-		this.showFirst(event.target.getAttribute('url'));
+		var data = {
+			url: event.target.getAttribute('url'),
+			name: event.target.getAttribute('name')
+		}
+		this.showFirst(data);
 	}
 
 	render () {
