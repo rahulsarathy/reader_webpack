@@ -9,6 +9,7 @@ from newspaper import Article
 from bs4 import BeautifulSoup
 import sys
 import cleaning
+import book_creator
 
 data = [
 	{
@@ -58,6 +59,8 @@ def retrieveHTML():
 	url = request.values.get('url')
 	name = request.values.get('name')
 	soup = cleaning.findFirst(url, name)
+
+	book_creator.createEBook()
 
 	r = Response(str(soup), status=200)
 	return r
