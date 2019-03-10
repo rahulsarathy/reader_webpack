@@ -20,21 +20,21 @@ var data = [
 		selector: "post-content"
 	},
 	{
-		name: "Marginal Revolution",
+		name: "marginal_revolution",
 		url: "https://feeds.feedburner.com/marginalrevolution/"
 	},
 	{
-		name: "Ribbon Farm",
+		name: "ribbonfarm",
 		url: "https://ribbonfarm.com/feed",
 		selector: "content"
 	},
 	{
-		name: "Melting Asphalt",
+		name: "melting_asphalt",
 		url: "https://meltingasphalt.com/feed/"
 
 	},
 	{
-		name: "Overcoming Bias",
+		name: "overcoming_bias",
 		url: "http://www.overcomingbias.com/feed"
 	}
 ];

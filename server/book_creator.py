@@ -2,11 +2,12 @@ import shutil
 import os
 from bs4 import BeautifulSoup
 
-def createEBook():
+def createEBook(name):
 	convertToXHTML()
-	os.remove('./publishing/archive.epub')
-	shutil.make_archive('./publishing/archive', 'zip', './EPUB_Template')
-	os.rename('./publishing/archive.zip', './publishing/archive.epub')
+	shutil.rmtree('./publishing')
+	os.mkdir('./publishing')
+	shutil.make_archive('./publishing/' + name , 'zip', './EPUB_Template')
+	os.rename('./publishing/' + name + '.zip', './publishing/' + name + '.epub')
 
 def convertToXHTML():
 	open('a.xml', 'w').close()

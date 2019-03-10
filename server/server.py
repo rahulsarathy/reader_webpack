@@ -60,7 +60,7 @@ def retrieveHTML():
 	name = request.values.get('name')
 	soup = cleaning.findFirst(url, name)
 
-	book_creator.createEBook()
+	book_creator.createEBook(name)
 
 	r = Response(str(soup), status=200)
 	return r
