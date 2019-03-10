@@ -1,631 +1,2277 @@
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
 <head>
-<!-- Use the latest IE engine to render the page and execute JavaScript -->
-<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="http://gmpg.org/xfn/11" rel="profile"/>
-<link href="https://stratechery.com/xmlrpc.php" rel="pingback"/>
-<!-- Typekit -->
-<script src="//use.typekit.net/qcf4iyw.js"></script>
-<script>try{Typekit.load();}catch(e){}</script>
-<!-- Favicon -->
-<link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="/favicon/site.webmanifest" rel="manifest"/>
-<link color="#e9ab59" href="/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
-<link href="/favicon/favicon.ico" rel="shortcut icon"/>
-<meta content="#e9ab59" name="msapplication-TileColor"/>
-<meta content="/favicon/browserconfig.xml" name="msapplication-config"/>
-<meta content="#ffffff" name="theme-color"/>
-<!-- Google Analytics -->
-<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		ga('create', 'UA-39065009-1', 'auto');
-		ga('send', 'pageview');
-		ga('require', 'linker');
-		ga('linker:autoLink', ['memberful.com'], true);
-			</script>
-<title>Facebook’s Privacy Cake – Stratechery by Ben Thompson</title>
-<link href="//s0.wp.com" rel="dns-prefetch">
-<link href="//s.w.org" rel="dns-prefetch">
-<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/stratechery.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.9"}};
-			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script>
-<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-<link href="https://stratechery.com/wp-content/plugins/memberful-wp/stylesheets/widget.css?ver=1.44.0" id="memberful-wp-profile-widget-css" media="all" rel="stylesheet" type="text/css">
-<link href="https://stratechery.com/wp-content/plugins/ultimate-faqs/css/ewd-ufaq-styles.css?ver=4.9.9" id="ewd-ufaq-style-css" media="all" rel="stylesheet" type="text/css">
-<link href="https://stratechery.com/wp-content/plugins/ultimate-faqs/css/rrssb-min.css?ver=4.9.9" id="ewd-ufaq-rrssb-css" media="all" rel="stylesheet" type="text/css">
-<link href="https://stratechery.com/wp-content/themes/stratecheryV4/css/bigfoot.css?ver=1.0" id="stratechery-bigfoot-css" media="all" rel="stylesheet" type="text/css">
-<link href="https://stratechery.com/wp-content/themes/stratecheryV4/css/membership.css?ver=1.0" id="stratechery-membership-css" media="all" rel="stylesheet" type="text/css">
-<link href="https://stratechery.com/wp-content/themes/stratecheryV4/style.css" id="stratechery-style-css" media="all" rel="stylesheet" type="text/css">
-<link href="https://stratechery.com/wp-content/plugins/search-by-algolia-instant-relevant-results/includes/../css/algolia-autocomplete.css?ver=2.11.2" id="algolia-autocomplete-css" media="screen" rel="stylesheet" type="text/css"/>
-<link href="https://stratechery.com/wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=1" id="social-logos-css" media="all" rel="stylesheet" type="text/css"/>
-<link href="https://stratechery.com/wp-content/plugins/jetpack/css/jetpack.css?ver=6.8.1" id="jetpack_css-css" media="all" rel="stylesheet" type="text/css"/>
-<script src="https://stratechery.com/wp-includes/js/jquery/jquery.js?ver=1.12.4" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1" type="text/javascript"></script>
-<script type="text/javascript">
-/* <![CDATA[ */
-var related_posts_js_options = {"post_heading":"h4"};
-/* ]]> */
-</script>
-<script src="https://stratechery.com/wp-content/plugins/jetpack/_inc/build/related-posts/related-posts.min.js?ver=20150408" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-includes/js/underscore.min.js?ver=1.8.3" type="text/javascript"></script>
-<script type="text/javascript">
-/* <![CDATA[ */
-var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}};
-/* ]]> */
-</script>
-<script src="https://stratechery.com/wp-includes/js/wp-util.min.js?ver=4.9.9" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-content/plugins/search-by-algolia-instant-relevant-results/includes/../js/algoliasearch/algoliasearch.jquery.min.js?ver=2.11.2" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-content/plugins/search-by-algolia-instant-relevant-results/includes/../js/autocomplete.js/autocomplete.min.js?ver=2.11.2" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-content/plugins/search-by-algolia-instant-relevant-results/includes/../js/autocomplete-noconflict.js?ver=2.11.2" type="text/javascript"></script>
-<link href="https://stratechery.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
-<link href="https://stratechery.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
-<link href="https://stratechery.com/2019/zillows-changes-ceos-an-interview-with-zillow-ceo-rich-barton/" rel="prev" title="Zillow Changes CEOs, An Interview with Zillow CEO Rich Barton"/>
-<link href="https://stratechery.com/2019/exponent-podcast-mark-zuckerbergs-projected-self/" rel="next" title="Exponent Podcast: Mark Zuckerberg’s Projected Self"/>
-<link href="https://stratechery.com/2019/facebooks-privacy-cake/" rel="canonical"/>
-<link href="https://stratechery.com/?p=4063" rel="shortlink"/>
-<link href="https://stratechery.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fstratechery.com%2F2019%2Ffacebooks-privacy-cake%2F" rel="alternate" type="application/json+oembed"/>
-<link href="https://stratechery.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fstratechery.com%2F2019%2Ffacebooks-privacy-cake%2F&amp;format=xml" rel="alternate" type="text/xml+oembed"/>
-<script type="text/javascript">
-  window.MemberfulOptions = {
-    site: "https://stratechery.memberful.com",
-    intercept: [
-            "http://stratechery.com/?memberful_endpoint=auth",
-            "https://stratechery.com/?memberful_endpoint=auth",
-            "http://stratechery.com?memberful_endpoint=auth",
-            "https://stratechery.com?memberful_endpoint=auth",
-          ],
-    memberSignedIn: false  };
-
-  (function() {
-    var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = 'https://d35xxde4fgg0cx.cloudfront.net/assets/embedded.js';
-
-    setup = function() { window.MemberfulEmbedded.setup(); }
-
-    if(s.addEventListener) {
-      s.addEventListener("load", setup, false);
-    } else {
-      s.attachEvent("onload", setup);
-    }
-
-    ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
-  })();
-</script>
-<script type="text/javascript">
-        var ajaxurl = 'https://stratechery.com/wp-admin/admin-ajax.php';
-    </script>
-<style type="text/css">
-						ol.footnotes li {list-style-type:decimal;}
-						ol.footnotes{font-size:0.8em; color:#666666;}		</style>
-<script type="text/javascript">var algolia = {"debug":false,"application_id":"Q1WKEJ5QZW","search_api_key":"9869ac428326cd1e4fec2202453b53e0","powered_by_enabled":false,"query":"","autocomplete":{"sources":[{"index_id":"posts_post","index_name":"STRATECHERY_PRODUCTION_posts_post","label":"Posts","admin_name":"Posts","position":0,"max_suggestions":5,"tmpl_suggestion":"autocomplete-post-suggestion","enabled":true},{"index_id":"terms_companies","index_name":"STRATECHERY_PRODUCTION_terms_companies","label":"<a href=\"\/companies\/\">Companies<\/a>","admin_name":"Companies","position":1,"max_suggestions":3,"tmpl_suggestion":"autocomplete-term-suggestion","enabled":true},{"index_id":"terms_concepts","index_name":"STRATECHERY_PRODUCTION_terms_concepts","label":"<a href=\"\/concepts\/\">Concepts<\/a>","admin_name":"Concepts","position":2,"max_suggestions":3,"tmpl_suggestion":"autocomplete-term-suggestion","enabled":true},{"index_id":"terms_topics","index_name":"STRATECHERY_PRODUCTION_terms_topics","label":"<a href=\"\/topics\/\">Topics<\/a>","admin_name":"Topics","position":3,"max_suggestions":3,"tmpl_suggestion":"autocomplete-term-suggestion","enabled":true}],"input_selector":"input[name='s']:not('.no-autocomplete')"},"indices":{"searchable_posts":{"name":"STRATECHERY_PRODUCTION_searchable_posts","id":"searchable_posts","enabled":true,"replicas":[]},"posts_post":{"name":"STRATECHERY_PRODUCTION_posts_post","id":"posts_post","enabled":true,"replicas":[]},"terms_topics":{"name":"STRATECHERY_PRODUCTION_terms_topics","id":"terms_topics","enabled":true,"replicas":[]},"terms_concepts":{"name":"STRATECHERY_PRODUCTION_terms_concepts","id":"terms_concepts","enabled":true,"replicas":[]},"terms_companies":{"name":"STRATECHERY_PRODUCTION_terms_companies","id":"terms_companies","enabled":true,"replicas":[]}}};</script>
-<!-- Jetpack Open Graph Tags -->
+<title>*Culture in Nazi Germany* - Marginal REVOLUTION</title>
+<!-- This site is optimized with the Yoast SEO plugin v9.5 - https://yoast.com/wordpress/plugins/seo/ -->
+<link href="https://marginalrevolution.com/marginalrevolution/2019/03/culture-in-nazi-germany.html" rel="canonical"/>
+<meta content="en_US" property="og:locale">
 <meta content="article" property="og:type">
-<meta content="Facebook’s Privacy Cake" property="og:title">
-<meta content="https://stratechery.com/2019/facebooks-privacy-cake/" property="og:url">
-<meta content="Mark Zuckerberg’s announcement of A Privacy-Focused Vision for Social Networking is not some dramatic pivot: it is a growth opportunity for Facebook and a challenge for regulators." property="og:description">
-<meta content="2019-03-07T12:06:15+00:00" property="article:published_time">
-<meta content="2019-03-08T05:12:31+00:00" property="article:modified_time">
-<meta content="Stratechery by Ben Thompson" property="og:site_name"/>
-<meta content="https://stratechery.com/wp-content/uploads/2013/11/photo-2-1024x796.jpg" property="og:image"/>
-<meta content="640" property="og:image:width"/>
-<meta content="498" property="og:image:height"/>
-<meta content="en_US" property="og:locale"/>
-<meta content="@stratechery" name="twitter:site"/>
-<meta content="Facebook’s Privacy Cake" name="twitter:text:title"/>
+<meta content="*Culture in Nazi Germany* - Marginal REVOLUTION" property="og:title">
+<meta content="That is a new and forthcoming book by Michael H. Kater, excerpt: The book’s first contention is that in order for a new Nazi type of culture to take hold, the preceding forms first had to be wiped out.  This mainly affected the artistic and intellectual achievements most hated by the Nazis, those of the …" property="og:description"/>
+<meta content="https://marginalrevolution.com/marginalrevolution/2019/03/culture-in-nazi-germany.html" property="og:url"/>
+<meta content="Marginal REVOLUTION" property="og:site_name"/>
+<meta content="Books" property="article:section"/>
+<meta content="2019-03-10T05:28:30+00:00" property="article:published_time"/>
+<meta content="2019-03-09T18:29:48+00:00" property="article:modified_time"/>
+<meta content="2019-03-09T18:29:48+00:00" property="og:updated_time"/>
+<meta content="https://marginalrevolution.com/wp-content/uploads/2016/10/MR-logo-thumbnail.png" property="og:image"/>
+<meta content="https://marginalrevolution.com/wp-content/uploads/2016/10/MR-logo-thumbnail.png" property="og:image:secure_url"/>
+<meta content="2000" property="og:image:width"/>
+<meta content="2000" property="og:image:height"/>
 <meta content="summary" name="twitter:card"/>
-<!-- End Jetpack Open Graph Tags -->
-<link href="https://stratechery.com/wp-content/uploads/2018/03/cropped-android-chrome-512x512-1-32x32.png" rel="icon" sizes="32x32"/>
-<link href="https://stratechery.com/wp-content/uploads/2018/03/cropped-android-chrome-512x512-1-192x192.png" rel="icon" sizes="192x192"/>
-<link href="https://stratechery.com/wp-content/uploads/2018/03/cropped-android-chrome-512x512-1-180x180.png" rel="apple-touch-icon-precomposed"/>
-<meta content="https://stratechery.com/wp-content/uploads/2018/03/cropped-android-chrome-512x512-1-270x270.png" name="msapplication-TileImage"/>
-<script id="tmpl-autocomplete-header" type="text/html">
-  <div class="autocomplete-header">
-	<div class="autocomplete-header-title">{{{ data.label }}}</div>
-	<div class="clear"></div>
-  </div>
-</script>
-<script id="tmpl-autocomplete-post-suggestion" type="text/html">
-  <a class="suggestion-link" href="{{ data.permalink }}" title="{{ data.post_title }}">
-		<div class="suggestion-post-attributes">
-		  <span class="suggestion-post-title">{{{ data._highlightResult.post_title.value }}}</span>
-		  <# if ( data._snippetResult['content'] ) { #>
-			<span class="suggestion-post-content">{{{ data._snippetResult['content'].value }}}</span>
-			<# } #>
-		</div>
-  </a>
-</script>
-<script id="tmpl-autocomplete-term-suggestion" type="text/html">
-  <a class="suggestion-link" href="{{ data.permalink }}" title="{{ data.name }}">
-	<svg viewBox="0 0 21 21" width="21" height="21">
-	  <svg width="21" height="21" viewBox="0 0 21 21">
-		<path
-			d="M4.662 8.72l-1.23 1.23c-.682.682-.68 1.792.004 2.477l5.135 5.135c.7.693 1.8.688 2.48.005l1.23-1.23 5.35-5.346c.31-.31.54-.92.51-1.36l-.32-4.29c-.09-1.09-1.05-2.06-2.15-2.14l-4.3-.33c-.43-.03-1.05.2-1.36.51l-.79.8-2.27 2.28-2.28 2.27zm9.826-.98c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25z"
-			fill-rule="evenodd"></path>
-	  </svg>
-	</svg>
-	<span class="suggestion-post-title">{{{ data._highlightResult.name.value }}}</span>
-  </a>
-</script>
-<script id="tmpl-autocomplete-user-suggestion" type="text/html">
-  <a class="suggestion-link user-suggestion-link" href="{{ data.posts_url }}" title="{{ data.display_name }}">
-	<# if ( data.avatar_url ) { #>
-	  <img class="suggestion-user-thumbnail" src="{{ data.avatar_url }}" alt="{{ data.display_name }}">
-	  <# } #>
-
-		<span class="suggestion-post-title">{{{ data._highlightResult.display_name.value }}}</span>
-  </a>
-</script>
-<script id="tmpl-autocomplete-footer" type="text/html">
-  <div class="autocomplete-footer">
-	<div class="autocomplete-footer-branding">
-	  <a href="#" class="algolia-powered-by-link" title="Algolia">
-		<svg width="130" viewBox="0 0 130 18" xmlns="http://www.w3.org/2000/svg">
-		  <title>Search by Algolia</title>
-		  <defs>
-			<linearGradient x1="-36.868%" y1="134.936%" x2="129.432%" y2="-27.7%" id="a">
-			  <stop stop-color="#00AEFF" offset="0%"/>
-			  <stop stop-color="#3369E7" offset="100%"/>
-			</linearGradient>
-		  </defs>
-		  <g fill="none" fill-rule="evenodd">
-			<path
-				d="M59.399.022h13.299a2.372 2.372 0 0 1 2.377 2.364V15.62a2.372 2.372 0 0 1-2.377 2.364H59.399a2.372 2.372 0 0 1-2.377-2.364V2.381A2.368 2.368 0 0 1 59.399.022z"
-				fill="url(#a)"/>
-			<path
-				d="M66.257 4.56c-2.815 0-5.1 2.272-5.1 5.078 0 2.806 2.284 5.072 5.1 5.072 2.815 0 5.1-2.272 5.1-5.078 0-2.806-2.279-5.072-5.1-5.072zm0 8.652c-1.983 0-3.593-1.602-3.593-3.574 0-1.972 1.61-3.574 3.593-3.574 1.983 0 3.593 1.602 3.593 3.574a3.582 3.582 0 0 1-3.593 3.574zm0-6.418v2.664c0 .076.082.131.153.093l2.377-1.226c.055-.027.071-.093.044-.147a2.96 2.96 0 0 0-2.465-1.487c-.055 0-.11.044-.11.104l.001-.001zm-3.33-1.956l-.312-.311a.783.783 0 0 0-1.106 0l-.372.37a.773.773 0 0 0 0 1.101l.307.305c.049.049.121.038.164-.011.181-.245.378-.479.597-.697.225-.223.455-.42.707-.599.055-.033.06-.109.016-.158h-.001zm5.001-.806v-.616a.781.781 0 0 0-.783-.779h-1.824a.78.78 0 0 0-.783.779v.632c0 .071.066.12.137.104a5.736 5.736 0 0 1 1.588-.223c.52 0 1.035.071 1.534.207a.106.106 0 0 0 .131-.104z"
-				fill="#FFF"/>
-			<path
-				d="M102.162 13.762c0 1.455-.372 2.517-1.123 3.193-.75.676-1.895 1.013-3.44 1.013-.564 0-1.736-.109-2.673-.316l.345-1.689c.783.163 1.819.207 2.361.207.86 0 1.473-.174 1.84-.523.367-.349.548-.866.548-1.553v-.349a6.374 6.374 0 0 1-.838.316 4.151 4.151 0 0 1-1.194.158 4.515 4.515 0 0 1-1.616-.278 3.385 3.385 0 0 1-1.254-.817 3.744 3.744 0 0 1-.811-1.351c-.192-.539-.29-1.504-.29-2.212 0-.665.104-1.498.307-2.054a3.925 3.925 0 0 1 .904-1.433 4.124 4.124 0 0 1 1.441-.926 5.31 5.31 0 0 1 1.945-.365c.696 0 1.337.087 1.961.191a15.86 15.86 0 0 1 1.588.332v8.456h-.001zm-5.954-4.206c0 .893.197 1.885.592 2.299.394.414.904.621 1.528.621.34 0 .663-.049.964-.142a2.75 2.75 0 0 0 .734-.332v-5.29a8.531 8.531 0 0 0-1.413-.18c-.778-.022-1.369.294-1.786.801-.411.507-.619 1.395-.619 2.223zm16.12 0c0 .719-.104 1.264-.318 1.858a4.389 4.389 0 0 1-.904 1.52c-.389.42-.854.746-1.402.975-.548.229-1.391.36-1.813.36-.422-.005-1.26-.125-1.802-.36a4.088 4.088 0 0 1-1.397-.975 4.486 4.486 0 0 1-.909-1.52 5.037 5.037 0 0 1-.329-1.858c0-.719.099-1.411.318-1.999.219-.588.526-1.09.92-1.509.394-.42.865-.741 1.402-.97a4.547 4.547 0 0 1 1.786-.338 4.69 4.69 0 0 1 1.791.338c.548.229 1.019.55 1.402.97.389.42.69.921.909 1.509.23.588.345 1.28.345 1.999h.001zm-2.191.005c0-.921-.203-1.689-.597-2.223-.394-.539-.948-.806-1.654-.806-.707 0-1.26.267-1.654.806-.394.539-.586 1.302-.586 2.223 0 .932.197 1.558.592 2.098.394.545.948.812 1.654.812.707 0 1.26-.272 1.654-.812.394-.545.592-1.166.592-2.098h-.001zm6.962 4.707c-3.511.016-3.511-2.822-3.511-3.274L113.583.926l2.142-.338v10.003c0 .256 0 1.88 1.375 1.885v1.792h-.001zm3.774 0h-2.153V5.072l2.153-.338v9.534zm-1.079-10.542c.718 0 1.304-.578 1.304-1.291 0-.714-.581-1.291-1.304-1.291-.723 0-1.304.578-1.304 1.291 0 .714.586 1.291 1.304 1.291zm6.431 1.013c.707 0 1.304.087 1.786.262.482.174.871.42 1.156.73.285.311.488.735.608 1.182.126.447.186.937.186 1.476v5.481a25.24 25.24 0 0 1-1.495.251c-.668.098-1.419.147-2.251.147a6.829 6.829 0 0 1-1.517-.158 3.213 3.213 0 0 1-1.178-.507 2.455 2.455 0 0 1-.761-.904c-.181-.37-.274-.893-.274-1.438 0-.523.104-.855.307-1.215.208-.36.487-.654.838-.883a3.609 3.609 0 0 1 1.227-.49 7.073 7.073 0 0 1 2.202-.103c.263.027.537.076.833.147v-.349c0-.245-.027-.479-.088-.697a1.486 1.486 0 0 0-.307-.583c-.148-.169-.34-.3-.581-.392a2.536 2.536 0 0 0-.915-.163c-.493 0-.942.06-1.353.131-.411.071-.75.153-1.008.245l-.257-1.749c.268-.093.668-.185 1.183-.278a9.335 9.335 0 0 1 1.66-.142l-.001-.001zm.181 7.731c.657 0 1.145-.038 1.484-.104v-2.168a5.097 5.097 0 0 0-1.978-.104c-.241.033-.46.098-.652.191a1.167 1.167 0 0 0-.466.392c-.121.169-.175.267-.175.523 0 .501.175.79.493.981.323.196.75.289 1.293.289h.001zM84.109 4.794c.707 0 1.304.087 1.786.262.482.174.871.42 1.156.73.29.316.487.735.608 1.182.126.447.186.937.186 1.476v5.481a25.24 25.24 0 0 1-1.495.251c-.668.098-1.419.147-2.251.147a6.829 6.829 0 0 1-1.517-.158 3.213 3.213 0 0 1-1.178-.507 2.455 2.455 0 0 1-.761-.904c-.181-.37-.274-.893-.274-1.438 0-.523.104-.855.307-1.215.208-.36.487-.654.838-.883a3.609 3.609 0 0 1 1.227-.49 7.073 7.073 0 0 1 2.202-.103c.257.027.537.076.833.147v-.349c0-.245-.027-.479-.088-.697a1.486 1.486 0 0 0-.307-.583c-.148-.169-.34-.3-.581-.392a2.536 2.536 0 0 0-.915-.163c-.493 0-.942.06-1.353.131-.411.071-.75.153-1.008.245l-.257-1.749c.268-.093.668-.185 1.183-.278a8.89 8.89 0 0 1 1.66-.142l-.001-.001zm.186 7.736c.657 0 1.145-.038 1.484-.104v-2.168a5.097 5.097 0 0 0-1.978-.104c-.241.033-.46.098-.652.191a1.167 1.167 0 0 0-.466.392c-.121.169-.175.267-.175.523 0 .501.175.79.493.981.318.191.75.289 1.293.289h.001zm8.682 1.738c-3.511.016-3.511-2.822-3.511-3.274L89.461.926l2.142-.338v10.003c0 .256 0 1.88 1.375 1.885v1.792h-.001z"
-				fill="#182359"/>
-			<path
-				d="M5.027 11.025c0 .698-.252 1.246-.757 1.644-.505.397-1.201.596-2.089.596-.888 0-1.615-.138-2.181-.414v-1.214c.358.168.739.301 1.141.397.403.097.778.145 1.125.145.508 0 .884-.097 1.125-.29a.945.945 0 0 0 .363-.779.978.978 0 0 0-.333-.747c-.222-.204-.68-.446-1.375-.725-.716-.29-1.221-.621-1.515-.994-.294-.372-.44-.82-.44-1.343 0-.655.233-1.171.698-1.547.466-.376 1.09-.564 1.875-.564.752 0 1.5.165 2.245.494l-.408 1.047c-.698-.294-1.321-.44-1.869-.44-.415 0-.73.09-.945.271a.89.89 0 0 0-.322.717c0 .204.043.379.129.524.086.145.227.282.424.411.197.129.551.299 1.063.51.577.24.999.464 1.268.671.269.208.466.442.591.704.125.261.188.569.188.924l-.001.002zm3.98 2.24c-.924 0-1.646-.269-2.167-.808-.521-.539-.782-1.281-.782-2.226 0-.97.242-1.733.725-2.288.483-.555 1.148-.833 1.993-.833.784 0 1.404.238 1.858.714.455.476.682 1.132.682 1.966v.682H7.357c.018.577.174 1.02.467 1.329.294.31.707.465 1.241.465.351 0 .678-.033.98-.099a5.1 5.1 0 0 0 .975-.33v1.026a3.865 3.865 0 0 1-.935.312 5.723 5.723 0 0 1-1.08.091l.002-.001zm-.231-5.199c-.401 0-.722.127-.964.381s-.386.625-.432 1.112h2.696c-.007-.491-.125-.862-.354-1.115-.229-.252-.544-.379-.945-.379l-.001.001zm7.692 5.092l-.252-.827h-.043c-.286.362-.575.608-.865.739-.29.131-.662.196-1.117.196-.584 0-1.039-.158-1.367-.473-.328-.315-.491-.761-.491-1.337 0-.612.227-1.074.682-1.386.455-.312 1.148-.482 2.079-.51l1.026-.032v-.317c0-.38-.089-.663-.266-.851-.177-.188-.452-.282-.824-.282-.304 0-.596.045-.876.134a6.68 6.68 0 0 0-.806.317l-.408-.902a4.414 4.414 0 0 1 1.058-.384 4.856 4.856 0 0 1 1.085-.132c.756 0 1.326.165 1.711.494.385.329.577.847.577 1.552v4.002h-.902l-.001-.001zm-1.88-.859c.458 0 .826-.128 1.104-.384.278-.256.416-.615.416-1.077v-.516l-.763.032c-.594.021-1.027.121-1.297.298s-.406.448-.406.814c0 .265.079.47.236.615.158.145.394.218.709.218h.001zm7.557-5.189c.254 0 .464.018.628.054l-.124 1.176a2.383 2.383 0 0 0-.559-.064c-.505 0-.914.165-1.227.494-.313.329-.47.757-.47 1.284v3.105h-1.262V7.218h.988l.167 1.047h.064c.197-.354.454-.636.771-.843a1.83 1.83 0 0 1 1.023-.312h.001zm4.125 6.155c-.899 0-1.582-.262-2.049-.787-.467-.525-.701-1.277-.701-2.259 0-.999.244-1.767.733-2.304.489-.537 1.195-.806 2.119-.806.627 0 1.191.116 1.692.349l-.381 1.015c-.534-.208-.974-.312-1.321-.312-1.028 0-1.542.682-1.542 2.046 0 .666.128 1.166.384 1.501.256.335.631.502 1.125.502a3.23 3.23 0 0 0 1.595-.419v1.101a2.53 2.53 0 0 1-.722.285 4.356 4.356 0 0 1-.932.086v.002zm8.277-.107h-1.268V9.506c0-.458-.092-.8-.277-1.026-.184-.226-.477-.338-.878-.338-.53 0-.919.158-1.168.475-.249.317-.373.848-.373 1.593v2.949h-1.262V4.801h1.262v2.122c0 .34-.021.704-.064 1.09h.081a1.76 1.76 0 0 1 .717-.666c.306-.158.663-.236 1.072-.236 1.439 0 2.159.725 2.159 2.175v3.873l-.001-.001zm7.649-6.048c.741 0 1.319.269 1.732.806.414.537.62 1.291.62 2.261 0 .974-.209 1.732-.628 2.275-.419.542-1.001.814-1.746.814-.752 0-1.336-.27-1.751-.811h-.086l-.231.704h-.945V4.801h1.262v1.987l-.021.655-.032.553h.054c.401-.591.992-.886 1.772-.886zm-.328 1.031c-.508 0-.875.149-1.098.448-.224.299-.339.799-.346 1.501v.086c0 .723.115 1.247.344 1.571.229.324.603.486 1.123.486.448 0 .787-.177 1.018-.532.231-.354.346-.867.346-1.536 0-1.35-.462-2.025-1.386-2.025l-.001.001zm3.244-.924h1.375l1.209 3.368c.183.48.304.931.365 1.354h.043c.032-.197.091-.436.177-.717.086-.281.541-1.616 1.364-4.004h1.364l-2.541 6.73c-.462 1.235-1.232 1.853-2.31 1.853-.279 0-.551-.03-.816-.091v-.999c.19.043.406.064.65.064.609 0 1.037-.353 1.284-1.058l.22-.559-2.385-5.941h.001z"
-				fill="#1D3657"/>
-		  </g>
-		</svg>
-	  </a>
-	</div>
-  </div>
-</script>
-<script id="tmpl-autocomplete-empty" type="text/html">
-  <div class="autocomplete-empty">
-	  No results matched your query 	<span class="empty-query">"{{ data.query }}"</span>
-  </div>
+<meta content="That is a new and forthcoming book by Michael H. Kater, excerpt: The book’s first contention is that in order for a new Nazi type of culture to take hold, the preceding forms first had to be wiped out.  This mainly affected the artistic and intellectual achievements most hated by the Nazis, those of the […]" name="twitter:description"/>
+<meta content="*Culture in Nazi Germany* - Marginal REVOLUTION" name="twitter:title"/>
+<meta content="@margrev" name="twitter:site"/>
+<meta content="http://marginalrevolution.com/wp-content/uploads/2016/10/MR-logo-thumbnail.png" name="twitter:image"/>
+<meta content="@tylercowen" name="twitter:creator"/>
+<!-- / Yoast SEO plugin. -->
+<link href="//s0.wp.com" rel="dns-prefetch"/>
+<link href="//cloud.typography.com" rel="dns-prefetch"/>
+<link href="//fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="//s.w.org" rel="dns-prefetch"/>
+<link href="https://marginalrevolution.com/marginalrevolution/2019/03/culture-in-nazi-germany.html/feed" rel="alternate" title="Marginal REVOLUTION » *Culture in Nazi Germany* Comments Feed" type="application/rss+xml"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/plugins/share-this/css/style.css" id="st-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://cloud.typography.com/6843196/7975592/css/fonts.css" id="gotham-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="//fonts.googleapis.com/css?family=Open+Sans|Merriweather&amp;subset=latin" id="google-fonts-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/themes/marginal-revolution/assets/css/styles.min.css?ver=c795e070254d11" id="base-styles-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=1" id="social-logos-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/plugins/jetpack/css/jetpack.css?ver=6.9" id="jetpack_css-css" media="all" rel="stylesheet" type="text/css"/>
+<script src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/plugins/wolfram-cdf-plugin/cdfplugin.js?ver=2.0" type="text/javascript"></script>
+<script src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-includes/js/jquery/jquery.js?ver=1.12.4" type="text/javascript"></script>
+<script src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1" type="text/javascript"></script>
+<script src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/themes/marginal-revolution/assets/js/lib/bootstrap.min.js?ver=3.3.7" type="text/javascript"></script>
+<script src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/plugins/google-analyticator/external-tracking.min.js?ver=6.5.4" type="text/javascript"></script>
+<link href="https://wp.me/p2T8CM-jEL" rel="shortlink"/>
+<style media="screen" type="text/css">
+          div.printfriendly a, div.printfriendly a:link, div.printfriendly a:hover, div.printfriendly a:visited {
+            text-decoration: none;
+            border: none;
+          }
+    </style>
+<style media="screen" type="text/css">
+          div.printfriendly {
+            margin: 12px 12px 12px 12px;
+            position: relative;
+            z-index: 1000;
+          }
+          div.printfriendly a, div.printfriendly a:link, div.printfriendly a:visited {
+            font-size: 14px;
+            color: #6D9F00;
+            vertical-align: bottom;
+          }
+          .printfriendly a {
+            box-shadow:none;
+          }
+          .printfriendly a:hover {
+            cursor: pointer;
+          }
+          .printfriendly a img  {
+            border: none;
+            padding:0;
+            margin-right: 6px;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+          }
+          .printfriendly a span{
+            vertical-align: bottom;
+          }
+          .pf-alignleft {
+            float: left;
+          }
+          .pf-alignright {
+            float: right;
+          }
+          div.pf-aligncenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+          }
+        </style>
+<style media="print" type="text/css">
+          .printfriendly {
+            display: none;
+          }
+        </style>
+<script charset="utf-8" type="text/javascript">var switchTo5x=true;</script>
+<script charset="utf-8" src="http://w.sharethis.com/button/buttons.js" type="text/javascript"></script>
+<script charset="utf-8" type="text/javascript">stLight.options({"publisher":"45541b50-b97a-42ad-a955-e747cfdf389c","doNotCopy":true,"hashAddressBar":false,"doNotHash":true, "publisherGA":"UA-2925268-1"});var st_type="wordpress4.5.4";</script>
+<!-- Stream WordPress user activity plugin v3.2.3 -->
+<link href="//v0.wordpress.com" rel="dns-prefetch"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-32x32.png" rel="icon" sizes="32x32"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-192x192.png" rel="icon" sizes="192x192"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-180x180.png" rel="apple-touch-icon-precomposed"/>
+<meta content="https://marginalrevolution.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-270x270.png" name="msapplication-TileImage"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-32x32.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-150x150.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-150x150.png" rel="apple-touch-icon" sizes="120x120" type="image/png"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-180x180.png" rel="apple-touch-icon" sizes="152x152" type="image/png"/>
+<link href="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2015/10/cropped-MR-logo-thumbnail-180x180.png" rel="apple-touch-icon" sizes="167x167" type="image/png"/>
+<!-- Google Analytics Tracking by Google Analyticator 6.5.4: http://www.videousermanuals.com/google-analyticator/ -->
+<script type="text/javascript">
+    var analyticsFileTypes = [''];
+    var analyticsSnippet = 'disabled';
+    var analyticsEventTracking = 'enabled';
 </script>
 <script type="text/javascript">
-  jQuery(function () {
-	/* init Algolia client */
-	var client = algoliasearch(algolia.application_id, algolia.search_api_key);
-
-	/* setup default sources */
-	var sources = [];
-
-	sources.push({
-		source: function(q, cb) { cb([]); },
-		name: "default",
-		templates: {
-			empty: function(data) {
-				return '<a href="/?s=' + encodeURIComponent(data.query) + '">Search for: <span class="empty-query">"' + data.query + '"</span></a>';
-			}
-		}
-	});
-
-	jQuery.each(algolia.autocomplete.sources, function (i, config) {
-	  var suggestion_template = wp.template(config['tmpl_suggestion']);
-	  sources.push({
-		source: algoliaAutocomplete.sources.hits(client.initIndex(config['index_name']), {
-		  hitsPerPage: config['max_suggestions'],
-		  attributesToSnippet: [
-			'content:10'
-		  ],
-		  highlightPreTag: '__ais-highlight__',
-		  highlightPostTag: '__/ais-highlight__'
-		}),
-		templates: {
-		  header: function () {
-			return wp.template('autocomplete-header')({
-			  label: config['label']
-			});
-		  },
-		  suggestion: function (hit) {
-      if(hit.escaped === true) {
-        return suggestion_template(hit);
-      }
-      hit.escaped = true;
-
-			for (var key in hit._highlightResult) {
-			  /* We do not deal with arrays. */
-			  if (typeof hit._highlightResult[key].value !== 'string') {
-				continue;
-			  }
-			  hit._highlightResult[key].value = _.escape(hit._highlightResult[key].value);
-			  hit._highlightResult[key].value = hit._highlightResult[key].value.replace(/__ais-highlight__/g, '<em>').replace(/__\/ais-highlight__/g, '</em>');
-			}
-
-			for (var key in hit._snippetResult) {
-			  /* We do not deal with arrays. */
-			  if (typeof hit._snippetResult[key].value !== 'string') {
-				continue;
-			  }
-
-			  hit._snippetResult[key].value = _.escape(hit._snippetResult[key].value);
-			  hit._snippetResult[key].value = hit._snippetResult[key].value.replace(/__ais-highlight__/g, '<em>').replace(/__\/ais-highlight__/g, '</em>');
-			}
-
-			return suggestion_template(hit);
-		  }
-		}
-	  });
-	});
-
-	/* Setup dropdown menus */
-	jQuery(algolia.autocomplete.input_selector).each(function (i) {
-	  var $searchInput = jQuery(this);
-
-	  var config = {
-		debug: algolia.debug,
-		hint: false,
-		openOnFocus: true,
-		appendTo: 'body'
-	  };
-
-	  if (algolia.powered_by_enabled) {
-		config.templates.footer = wp.template('autocomplete-footer');
-	  }
-
-	  /* Instantiate autocomplete.js */
-	  var autocomplete = algoliaAutocomplete($searchInput[0], config, sources)
-	  .on('autocomplete:selected', function (e, suggestion) {
-		/* Redirect the user when we detect a suggestion selection. */
-		window.location.href = suggestion.permalink;
-	  });
-
-	  /* Force the dropdown to be re-drawn on scroll to handle fixed containers. */
-	  jQuery(window).scroll(function() {
-		if(autocomplete.autocomplete.getWrapper().style.display === "block") {
-		  autocomplete.autocomplete.close();
-		  autocomplete.autocomplete.open();
-		}
-	  });
-	});
-
-	jQuery(document).on("click", ".algolia-powered-by-link", function (e) {
-	  e.preventDefault();
-	  window.location = "https://www.algolia.com/?utm_source=WordPress&utm_medium=extension&utm_content=" + window.location.hostname + "&utm_campaign=poweredby";
-	});
-  });
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-2925268-1', 'auto');
+ 
+	ga('send', 'pageview');
 </script>
-</meta></meta></meta></meta></meta></meta></link></link></link></link></link></link></link></link></head>
-<body class="post-template-default single single-post postid-4063 single-format-standard">
-<div class="hfeed site" id="page">
-<a class="skip-link screen-reader-text" href="#content">
-		Skip to content	</a>
-<header class="site-header" id="masthead" role="banner">
-<div class="grid">
-<div class="row">
-<div class="twelve column">
-<div class="site-branding">
-<h1 class="site-title">
-<a href="https://stratechery.com/" rel="home">
-<span>Stratechery by Ben Thompson</span>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NCFFWNQ');</script>
+<!-- End Google Tag Manager -->
+</meta></meta></meta></head>
+<body class="post-template-default single single-post postid-75563 single-format-standard">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-NCFFWNQ" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page-wrapper">
+<nav class="navbar site-navbar" id="site-navbar" role="navigation">
+<div class="container">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-logo" href="https://marginalrevolution.com">
+<img alt="" class="logo-mobile" src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/themes/marginal-revolution/assets/images/nav-logo-mobile.png"/>
+<img alt="" class="logo-desktop" src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/themes/marginal-revolution/assets/images/svg-logo.svg"/>
 </a>
-</h1><!-- .site-title -->
-<p class="site-description">On the business, strategy, and impact of technology.</p>
-</div><!-- .site-branding -->
-<nav class="main-navigation" id="site-navigation" role="navigation">
-<button aria-controls="primary-menu" aria-expanded="false" class="menu-toggle"><span>Menu</span></button>
-<div class="menu-primary-container"><ul class="menu" id="primary-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1611" id="menu-item-1611"><a href="http://stratechery.com/about/">About</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1613" id="menu-item-1613"><a href="http://exponent.fm/">Exponent Podcast</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1645" id="menu-item-1645"><a href="https://forum.stratechery.com/login">Member Forum</a></li>
-</ul></div> </nav><!-- #site-navigation -->
-<div class="widget-area">
-<aside class="widget widget_search" id="search-2"><form action="https://stratechery.com/" class="search-form" method="get" role="search">
-<label>
-<span class="screen-reader-text">Search for:</span>
-<input class="search-field" name="s" placeholder="Search …" type="search" value=""/>
-</label>
-<input class="search-submit" type="submit" value="Search"/>
-</form></aside><aside class="widget widget_nav_menu" id="nav_menu-6"><h1 class="widget-title">Explore Stratechery</h1><div class="menu-explore-container"><ul class="menu" id="menu-explore"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3386" id="menu-item-3386"><a href="https://stratechery.com/concepts/">Concepts</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3387" id="menu-item-3387"><a href="https://stratechery.com/companies/">Companies</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3388" id="menu-item-3388"><a href="https://stratechery.com/topics/">Topics</a></li>
-</ul></div></aside><aside class="widget widget_nav_menu" id="nav_menu-2"><h1 class="widget-title">By Ben Thompson</h1><div class="menu-primary-container"><ul class="menu" id="menu-primary"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1611"><a href="http://stratechery.com/about/">About</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1613"><a href="http://exponent.fm/">Exponent Podcast</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1645"><a href="https://forum.stratechery.com/login">Member Forum</a></li>
-</ul></div></aside><aside class="widget widget_nav_menu" id="nav_menu-4"><h1 class="widget-title">Weekly Articles</h1><div class="menu-weekly-articles-container"><ul class="menu" id="menu-weekly-articles"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1641" id="menu-item-1641"><a href="http://stratechery.com/feed/">RSS Feed</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1643" id="menu-item-1643"><a href="https://stratechery.memberful.com/register/">Email</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1642" id="menu-item-1642"><a href="http://twitter.com/stratechery">Twitter</a></li>
-</ul></div></aside><aside class="widget widget_nav_menu" id="nav_menu-3"><h1 class="widget-title">The Daily Update</h1><div class="menu-the-daily-update-container"><ul class="menu" id="menu-the-daily-update"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1608" id="menu-item-1608"><a href="https://stratechery.com/membership/">About The Daily Update</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1630" id="menu-item-1630"><a href="https://stratechery.memberful.com/checkout?plan=5749">Subscribe Monthly</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1609" id="menu-item-1609"><a href="https://stratechery.memberful.com/checkout?plan=5748">Subscribe Annually</a></li>
-</ul></div></aside><aside class="widget widget_memberful_wp_profile_widget" id="memberful_wp_profile_widget-2"> <h1 class="widget-title">Account</h1> <a class="memberful-sign-in-link" href="https://stratechery.com/?memberful_endpoint=auth">Sign in</a></aside><aside class="widget widget_text" id="text-2"> <div class="textwidget"><a class="memberful-rss-notice" href="https://stratechery.com/membership/">Subscribe</a> to access the Daily Update via email, RSS, or the web</div>
-</aside><aside class="widget widget_nav_menu" id="nav_menu-7"><h1 class="widget-title">Archives</h1><div class="menu-archives-container"><ul class="menu" id="menu-archives"><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-1772" id="menu-item-1772"><a href="https://stratechery.com/category/articles/">Articles</a></li>
-<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1773" id="menu-item-1773"><a href="https://stratechery.com/category/daily-email/">Daily Updates</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1775" id="menu-item-1775"><a href="https://stratechery.com/category/year-in-review/">Years in Review</a></li>
-</ul></div></aside> </div>
-</div><!-- .twelve -->
-</div><!-- .row -->
-</div><!-- .grid -->
-</header><!-- #masthead -->
-<div class="site-content" id="content">
-<div class="grid">
-<div class="row">
-<div class="nine column content-area">
-<div id="primary">
-<main class="site-main" id="main" role="main">
-<article class="post-4063 post type-post status-publish format-standard hentry category-articles topics-messaging topics-networks topics-social concepts-advertising concepts-antitrust concepts-business-models concepts-incentives concepts-privacy concepts-security concepts-strategy-taxes-and-credits concepts-technology-and-society companies-facebook companies-instagram companies-line companies-snapchat companies-tencent companies-twitter companies-wechat companies-whatsapp" id="post-4063">
+</div><!-- /.navbar-header -->
+<div class="collapse navbar-collapse" id="navbar-collapse">
+<ul class="nav navbar-nav">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73323"><a class="menu-link" href="https://marginalrevolution.com/about">About Marginal Revolution</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73322"><a class="menu-link" href="https://marginalrevolution.com/categories">Categories</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73324"><a class="menu-link" href="https://marginalrevolution.com/books">Our Books</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73325"><a class="menu-link" href="https://marginalrevolution.com/our-textbook">Our Textbook</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-73326"><a class="menu-link" href="https://mruniversity.com">Marginal Revolution University</a></li>
+</ul><!-- /.navbar-nav -->
+<form action="/" class="navbar-form" method="get" role="search">
+<div class="form-group">
+<label class="sr-only" for="">Search</label>
+<input class="form-control" name="s" placeholder="Search" type="search" value=""/>
+<button class="btn btn-default" type="submit">
+<span class="sr-only">Search</span>
+<i aria-hidden="true" class="fa fa-search"></i>
+</button>
+</div><!-- /.form-group -->
+</form><!-- /.navbar-form --> </div><!-- /.navbar-collapse -->
+</div><!-- /.container -->
+</nav><!-- /#site-navbar --> <div class="page-content">
+<main class="site-main" id="site-main" role="main">
+<article class="post-75563 post type-post status-publish format-standard hentry category-books category-education category-film category-history category-the-arts" id="post-75563">
 <header class="entry-header">
-<h1 class="entry-title">Facebook’s Privacy Cake</h1>
-<div class="entry-meta">
-<span class="posted-on"><span class="screen-reader-text">Posted on</span><time class="entry-date published" datetime="2019-03-07T04:06:15+00:00">Thursday, March 7, 2019</time><time class="updated" datetime="2019-03-07T21:12:31+00:00">Thursday, March 7, 2019</time></span> <span class="byline"><span class="author vcard"><span class="screen-reader-text">Author</span> by <a class="url fn n" href="https://stratechery.com/author/stratechery/">Ben Thompson</a></span></span> </div><!-- .entry-meta -->
-</header><!-- .entry-header -->
+<h1 class="entry-title">*Culture in Nazi Germany*</h1>
+<div class="byline">
+        by  <span class="author"><a href="/about">Tyler Cowen</a></span>
+<time class="entry-date published" datetime="2019-03-10 00:28:30">March 10, 2019 at 12:28 am </time>
+                  in
+          <ul class="entry-tags">
+<li class="tag" rel="tag"><a href="https://marginalrevolution.com/marginalrevolution/category/books">Books</a></li>
+<li class="tag" rel="tag"><a href="https://marginalrevolution.com/marginalrevolution/category/education">Education</a></li>
+<li class="tag" rel="tag"><a href="https://marginalrevolution.com/marginalrevolution/category/film">Film</a></li>
+<li class="tag" rel="tag"><a href="https://marginalrevolution.com/marginalrevolution/category/history">History</a></li>
+<li class="tag" rel="tag"><a href="https://marginalrevolution.com/marginalrevolution/category/the-arts">The Arts</a></li>
+</ul><!-- /.entry-tags -->
+</div><!-- /.byline -->
+</header><!-- /.entry-header -->
 <div class="entry-content">
-<p>What was striking about the reaction to Mark Zuckerberg’s latest missive about the future of Facebook, <a href="https://www.facebook.com/notes/mark-zuckerberg/a-privacy-focused-vision-for-social-networking/10156700570096634/">A Privacy-Focused Vision for Social Networking</a>, were the two very distinct reactions that, in my estimation, made the same mistake, but in opposite directions; one set of folks didn’t take Zuckerberg seriously at all:</p>
-<div align="center">
-<blockquote class="twitter-tweet" data-lang="en">
-<p dir="ltr" lang="en">Mark Zuckerberg today: ”I believe we should be working towards a world where people can speak privately and live freely knowing that their information will only be seen by who they want to see it.” How long has he personally believed this? An hour? A day? <a href="https://t.co/2qmZjl8Iaq">https://t.co/2qmZjl8Iaq</a></p>
-<p>— Walt Mossberg (@waltmossberg) <a href="https://twitter.com/waltmossberg/status/1103404104938909698?ref_src=twsrc%5Etfw">March 6, 2019</a></p></blockquote>
-<p><script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></p></div>
-<p>Another set took Zuckerberg entirely too seriously:</p>
-<div align="center">
-<blockquote class="twitter-tweet" data-conversation="none" data-lang="en">
-<p dir="ltr" lang="en">I am not a stock market person but the fact that Facebook’s stock hardly budged on a day that Mark Zuckerberg said he planned to pivot the company to a totally untested new business model seems odd to me</p>
-<p>— Casey Newton (@CaseyNewton) <a href="https://twitter.com/CaseyNewton/status/1103469141967626240?ref_src=twsrc%5Etfw">March 7, 2019</a></p></blockquote>
-<p><script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></p></div>
-<p>In fact, what Zuckerberg announced is quite believable, precisely because it makes perfect sense for Facebook: this is a privacy cake that Facebook can have — and eat it too.</p>
-<h4>The Social-Communications Map</h4>
-<p>Zuckerberg began by describing two distinct kinds of social networks:</p>
-<blockquote><p>
-  Over the last 15 years, Facebook and Instagram have helped people connect with friends, communities, and interests in the digital equivalent of a town square. But people increasingly also want to connect privately in the digital equivalent of the living room. As I think about the future of the internet, I believe a privacy-focused communications platform will become even more important than today’s open platforms. Privacy gives people the freedom to be themselves and connect more naturally, which is why we build social networks.</p>
-<p>  Today we already see that private messaging, ephemeral stories, and small groups are by far the fastest growing areas of online communication. There are a number of reasons for this. Many people prefer the intimacy of communicating one-on-one or with just a few friends. People are more cautious of having a permanent record of what they’ve shared. And we all expect to be able to do things like payments privately and securely.</p>
-<p>  Public social networks will continue to be very important in people’s lives — for connecting with everyone you know, discovering new people, ideas and content, and giving people a voice more broadly. People find these valuable every day, and there are still a lot of useful services to build on top of them. But now, with all the ways people also want to interact privately, there’s also an opportunity to build a simpler platform that’s focused on privacy first.
-</p></blockquote>
-<p>I first explored the idea of there being different types of social networks in 2013 when I created <a href="https://stratechery.com/2013/socialcommunication-map/">The Social/Communications Map</a>:</p>
-<blockquote><p>
-<a href="https://stratechery.com/2013/socialcommunication-map/"><img alt="A drawing of the Social/Communications Map" class="aligncenter size-large wp-image-600" height="498" sizes="(max-width: 640px) 100vw, 640px" src="https://stratechery.com/wp-content/uploads/2013/11/photo-2-1024x796.jpg" srcset="https://stratechery.com/wp-content/uploads/2013/11/photo-2-1024x796.jpg 1024w, https://stratechery.com/wp-content/uploads/2013/11/photo-2-300x233.jpg 300w, https://stratechery.com/wp-content/uploads/2013/11/photo-2-768x597.jpg 768w, https://stratechery.com/wp-content/uploads/2013/11/photo-2-811x630.jpg 811w" width="640"/></a>
-</p></blockquote>
-<p>Keep in mind, this image is from 2013, but there are still some important points worth calling out:</p>
-<ul>
-<li>First, the axes are about user perception, not technical implementations; back then tweets were very much <em>experienced</em> as being ephemeral; now they have more permanence, leading to people both being called-out for old tweets and/or deleting their archives.</li>
-<li>That Twitter and Instagram should have perhaps been on the “permanent” side of the axis is further emphasized by the success of Instagram Stories, which is much more ephemeral than Instagram posts, along with the rise of tweet threads replacing blogging.</li>
-<li>I noted in the post that LINE was representative of multiple chat networks, including WeChat and WhatsApp; obviously I should have illustrated both instead.</li>
+<div class="pf-content"><p>That is <a href="https://www.amazon.com/Culture-Nazi-Germany-Michael-Kater/dp/0300211414/ref=sr_1_1?keywords=culture+in+nazi+germany&amp;qid=1552156146&amp;s=gateway&amp;sr=8-1/marginalrevol-20" rel="noopener" target="_blank">a new and forthcoming book by Michael H. Kater</a>, excerpt:</p>
+<blockquote><p>The book’s first contention is that in order for a new Nazi type of culture to take hold, the preceding forms first had to be wiped out.  This mainly affected the artistic and intellectual achievements most hated by the Nazis, those of the Weimar Republic, whose aesthetic and political hallmark was Modernism.  The police controls Hitler used to carry out purges in political and social contexts were also used against Modernist art forms and their creators…</p>
+<p>However, as far as films were concerned, the most acute interest shown by Hitler was in the weekly newsreels.  These embodied for him what film was all about: an ideal instrument for political control.  He regularly commented on newsreels to Goebbels, and had some several cut or modified.  More so than in the case of feature films, Hitler was liable to override any decisions Goebbels had already made on them.  Even long before the war broke out Hitler was adamant that newsreels display the heroic…</p></blockquote>
+<p>Recommended, even if you feel you’ve had your fill of books on Nazi Germany.</p>
+</div>
+</div><!-- /.entry-content -->
+<footer class="entry-footer">
+<section class="post-actions">
+<ul class="entry-meta">
+<li class="meta-item">
+<a href="https://marginalrevolution.com/marginalrevolution/2019/03/culture-in-nazi-germany.html#comments">
+<i aria-hidden="true" class="fa fa-comment-o"></i>
+<span class="meta-text">25 Comments</span>
+</a>
+</li>
 </ul>
-<p>The most important thing to note, though, are the relative positions of Facebook and Snapchat (it was Facebook’s attempted acquisition of Snapchat that <a href="https://stratechery.com/2013/multitudes-social/">inspired the map in the first place</a>).</p>
-<h4>Facebook Versus Snapchat</h4>
-<p>Perhaps the most important moment in Facebook’s history was its shift from the private to public space on the Social/Communications Map with the introduction of the News Feed. Again, to be clear, this map is about public perception, not technical reality, and this is a perfect example: data on Facebook was public to everyone in your network from day one. What the News Feed did, though, was change Facebook data from a <em>pull</em> to a <em>push</em> model: instead of needing to seek out your friends’ profiles Facebook would push their updates to you directly.</p>
-<p>This inspired a strong backlash amongst users, who not only complained online but actually organized rallies in person; ultimately, though, it turned out that people <em>loved</em> the News Feed, and once Facebook embraced mobile, it turned out <a href="https://stratechery.com/2013/mobile-makes-facebook-just-an-app-thats-great-news/">the News Feed was perfect for advertising</a>.</p>
-<p>Still, that transition exposed a soft underbelly in Facebook’s product: private ephemeral communication that allowed users to be their true selves. This was the premise undergirding Snapchat, which I described in <a href="https://stratechery.com/2016/what-facebook-is-and-isnt/">Facebook, Phones, and Phonebooks</a>:</p>
-<blockquote><p>
-  It is increasingly clear that there are two types of social apps: one is the phone book, and one is the phone. The phone book is incredibly valuable: it connects you to anyone, whether they be a personal friend, an acquaintance, or a business. The social phone book, though, goes much further: it allows the creation of ad hoc groups for an event or network, it is continually updated with the status of anyone you may know or wish to know, and it even provides an unlimited supply of entertaining professionally produced content whenever you feel the slightest bit bored.</p>
-<p>  The phone, on the other hand, is personal: it is about communication between you and someone you purposely reach out to. True, telemarketing calls can happen, but they are annoying and often dismissed. The phone is simply about the conversation that is happening right now, one that will be gone the moment you hang up.</p>
-<p>  In the U.S. the phone book is Facebook and the phone is Snapchat; in Taiwan, where I live, the phone book is Facebook and the phone is LINE. Japan and Thailand are the same, with a dash of Twitter in the former. In China WeChat handles it all, while Kakao is the phone in South Korea. For much of the rest of the world the phone is WhatsApp, but for everywhere but China the phone book is Facebook.
-</p></blockquote>
-<p>Make no mistake, the phonebook has been more valuable: it lends itself better to both data collection and advertising. Snapchat, though, threatened to break out of the phone space into the phonebook space with Stories — a product that shifted Snapchat out of the private space into the public one.</p>
-<p>To that end, it is instructive that it is Stories where Facebook finally mounted its Snapchat defense: I wrote in <a href="https://stratechery.com/2016/the-audacity-of-copying-well/">The Audacity of Copying Well</a>:</p>
-<blockquote><p>
-  Instagram and Facebook are smart enough to know that Instagram Stories are not going to displace Snapchat’s place in its users lives. What Instagram Stories can do, though, is remove the motivation for the hundreds of millions of users on Instagram to even give Snapchat a shot.
-</p></blockquote>
-<p>That is exactly what happened: Snap retained its place as the core of 1×1 communication for young people, but the segments more removed from Snapchat’s core use case of chat were suddenly far less likely to even give the service a try, thanks to Instagram’s intelligent leveraging of its network.</p>
-<p>By the same token, though, just because Facebook capped Snapchat’s growth doesn’t mean that Snapchat’s core insight about the desire for private, ephemeral communication was wrong: what Zuckerberg wrote yesterday is basically Snapchat’s reason-for-existing. In other words, while Instagram Stories built a wall around Snapchat by copying Snapchat’s secondary feature, this “Privacy-Focused Vision for Social Networking” is a clear attempt to build the core of Snapchat for everyone else.</p>
-<h4>Zuckerberg’s Vision</h4>
-<p>Look again at what Zuckerberg outlined:</p>
-<ul>
-<li>Private interactions</li>
-<li>Encryption</li>
-<li>Reducing Permanence</li>
-<li>Safety</li>
-<li>Interoperability</li>
-<li>Secure data storage</li>
-</ul>
-<p>The first three are all about owning the 1×1 private ephemeral space; critically, none of them have anything to do with Facebook’s core feed-based products. Facebook is going to continue to exist as it has to date, as will Instagram, including all of the data collection and ad targeting that currently exist. The “Privacy-Focused Vision for Social Networking” is <em>in addition to</em> Facebook’s current products, not <em>in place of</em>. This is the mistake made by those that took Zuckerberg too seriously.</p>
-<p>As for those who didn’t take Zuckerberg seriously enough, why wouldn’t Facebook want to move in this direction? There are multiple benefits:</p>
-<ul>
-<li>First, this is a valuable space to own for all of the reasons that Snapchat succeeded in the first place. People want a place to communicate freely without fear of snooping or a historical record.</li>
-<li>Second, to the extent the rise of 1×1 networking is inexorable, it is better for Facebook that it happen on their properties. Not only does Facebook preserve the ability to advertise on privacy-focused platforms — the company can leverage data from Facebook to advertise in its messaging products (although <a href="https://stratechery.com/2017/facebook-messenger-rolling-out-ads-facebooks-product-development-strategy-how-should-messenger-monetize/">I am skeptical that messaging products are well-suited to advertising</a>) — it also prevents would-be competitors from capturing leverageable attention.</li>
-<li>Third, as we have seen over the last 24 hours, there are tremendous PR benefits from a privacy-focused service. Facebook has changed nothing about its core service or data collection policies, yet the assumption is that the company is pivoting and the only debate is whether to believe them or not.</li>
-</ul>
-<p>Perhaps most compelling, though, is the degree to which this move locks in Facebook’s competitive position. As I noted above, Snapchat already showed that Facebook is vulnerable in the realm of private ephemeral communications, but soon that will no longer be the case. Moreover, given Facebook’s focus on end-to-end encryption, the company has made it that much harder to even get off the ground: not even Snapchat is fully end-to-end encrypted (pictures are, but not text messages).</p>
-<p>There is an even more important benefit to Facebook voluntarily forgoing the data within messages and limiting the time it keeps surrounding metadata (make no mistake, end-to-end encryption is a real thing — Facebook will <em>not</em> be able to see encrypted messages); as <a href="https://www.wired.com/story/mark-zuckerberg-facebook-interview-privacy-pivot/">Zuckerberg told Wired</a>:</p>
-<blockquote><p>
-  Certainly, ad targeting can benefit from having access to as much content or signal as possible. You know, I’m more optimistic about this for a few reasons. One is that we aren’t really using the content of messages to target ads today anyway. So we weren’t planning on doing that. So it’s not like building a system and making it end-to-end encrypted and now we can’t see the messages is really going to hurt ads that much because of the way we were already thinking about that. Keeping metadata around for less time will have some impact, although I’m optimistic that we’ll build systems that can basically deliver most of the value with a fraction of the amount of data.
-</p></blockquote>
-<p>Why can Facebook deliver most of the value? Because they are still Facebook! They still have the core Facebook app, Instagram, ‘Like’-buttons scattered across the web — none of that is going away with this announcement. They can very much afford a privacy-centric messaging offering in a way that any would-be challenger could not. Privacy, it turns out, is a competitive advantage for Facebook, not the cudgel the company’s critics hoped it might be.</p>
-<h4>Safety, Interoperability, and Strategy Credits</h4>
-<p>The last three items in Zuckerberg’s list are interesting in their own right; to take them one-by-one:</p>
-<p><strong>Safety:</strong> This is about the very real trade-offs that come with end-to-end encryption. One obvious issue is law-enforcement: Apple has <a href="https://stratechery.com/2016/apple-the-fbi-and-security/">already been down this road with the FBI</a> when it comes to phone security; end-to-end encryption is both more challenging and yet simpler, simply because it is, properly implemented, truly unbreakable.</p>
-<p>Another issue is misinformation: for all of the issues surrounding misinformation on Facebook, at least misinformation is traceable; that is not the case if messages are encrypted, which has already been an issue with WhatsApp in India. One could certainly make the cynical argument that, in the process of cloaking itself in privacy, Facebook is washing its hands of misinformation.</p>
-<p>To be sure, Facebook is confident it can leverage its ability to analyze metadata to stop bad actors; that the exact same sort of audience analysis is perfectly portable to advertising is a rather happy benefit as far as Facebook is concerned.</p>
-<p><strong>Interoperability:</strong> This is perhaps the feature that is easiest to be cynical about; while it can certainly be frustrating to have to balance multiple messaging apps, for much of the world consolidating Facebook-owned messaging will not fully address the problem, thanks to alternatives like Messages, LINE, Kakao, etc. Moreover, even in areas where Facebook owns both the Phone (via WhatsApp) and the phonebook (via Facebook and Instagram), exactly how much consumer demand is there for integration?</p>
-<p>There is, to be sure, a business argument: <a href="https://stratechery.com/2018/data-factories/">Facebook has already unified much of the ad infrastructure</a> underlying its services, and unifying messaging is, to the extent Facebook wants to build a business platform on messaging, a natural next step. There is also a regulatory argument: while it is difficult to make the argument that Facebook has broken antitrust laws, the remedy, should that be accomplished, is obvious — split off Instagram and WhatsApp. That will be harder to do if they are fully integrated with Facebook, not simply on the advertising side but also the user side.</p>
-<p><strong>Secure Data Storage:</strong> This is an interesting addition to this piece, as it has little to do with messaging in the communications sense, but a lot to do with messaging in the political sense. This is what Zuckerberg wrote:</p>
-<blockquote><p>
-  There’s an important difference between providing a service in a country and storing people’s data there. As we build our infrastructure around the world, we’ve chosen not to build data centers in countries that have a track record of violating human rights like privacy or freedom of expression. If we build data centers and store sensitive data in these countries, rather than just caching non-sensitive data, it could make it easier for those governments to take people’s information.</p>
-<p>  Upholding this principle may mean that our services will get blocked in some countries, or that we won’t be able to enter others anytime soon. That’s a tradeoff we’re willing to make. We do not believe storing people’s data in some countries is a secure enough foundation to build such important internet infrastructure on.
-</p></blockquote>
-<p>The most obvious country worth avoiding is China, which means this is clearly a <a href="https://stratechery.com/2013/strategy-credit/">Strategy Credit</a>:</p>
-<blockquote><p>
-  A strategy credit is an uncomplicated decision that makes a company look good relative to other companies who face much more significant trade-offs.
-</p></blockquote>
-<p>Facebook is already banned in China, so not putting data centers in China costs the company nothing (it may soon cost the company in Russia; one imagines Facebook will not mind being banned there of all places). This is in sharp contrast to Facebook’s most vociferous critic in tech, Tim Cook and Apple; the latter absolutely stores customer data in China <a href="https://www.wsj.com/articles/apple-to-start-putting-sensitive-encryption-keys-in-china-1519497574">along with encryption keys</a>, because that is the law for companies that wish to operate in the country.</p>
-<p>To be clear, this is understandable, but that is what makes that <em>Strategy Credit</em> article rather ironic; I coined the term in response to Apple’s posturing about user data in the wake of the Snowden revelations, noting that forgoing data wasn’t really a tradeoff given Apple’s business model. Now Apple is on the other side of the coin.</p>
-<h4>Privacy Moats</h4>
-<p>Ultimately there are three broad takeaways from Zuckerberg’s article:</p>
-<ul>
-<li>Stop expecting companies to act against their interests. Facebook isn’t killing their core business anymore than Apple, to take a pertinent example, is willing to go to the mat to protect user data in China.</li>
-<li>Facebook doing something that benefits itself is not inherently bad for end users. It is perfectly reasonable that the company can be instituting genuinely user-friendly changes like end-to-end encryption even as it furthers its own self-interests.</li>
-<li>Relatedly, and most importantly, there needs to be much more appreciation for the anti-competitive trade-offs inherent in an absolutist approach to privacy. Facebook is doing what its fiercest critics supposedly want, and enhancing its competitive position as a result.</li>
-</ul>
-<p>This was a point I made last year in <a href="https://stratechery.com/2018/open-closed-and-privacy/">Open, Closed, and Privacy</a>:</p>
-<blockquote><p>
-  If an emphasis on privacy and the non-leakage of data is a priority, it follows that the platforms that already exist will be increasingly entrenched. And, if those platforms will be increasingly entrenched, then the more valuable might regulation be that ensures an equal playing field on top of those platforms. The reality is that an emphasis on privacy will only increase the walls on those gardens; it may be fruitful to rule out the possibility of unfair expansion.
-</p></blockquote>
-<p>This is a debate that is woefully lacking. The reality is that the only user-friendly way to enforce privacy — which is another way of saying the only scalable way in a demand-driven world — is to severely limit inter-operability and over-burden would-be challengers. Regulators need to be far more aware of this and either choose another approach to privacy — i.e. <a href="https://stratechery.com/2018/data-factories/">entrust it to individuals</a> — or regulate data-platforms, at least in terms of competition on top of their platforms, even more severely.</p>
-<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share</h3><div class="sd-content"><ul><li class="share-facebook"><a class="share-facebook sd-button share-icon" data-shared="sharing-facebook-4063" href="https://stratechery.com/2019/facebooks-privacy-cake/?share=facebook" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a class="share-twitter sd-button share-icon" data-shared="sharing-twitter-4063" href="https://stratechery.com/2019/facebooks-privacy-cake/?share=twitter" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-linkedin"><a class="share-linkedin sd-button share-icon" data-shared="sharing-linkedin-4063" href="https://stratechery.com/2019/facebooks-privacy-cake/?share=linkedin" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-email"><a class="share-email sd-button share-icon" data-shared="" href="https://stratechery.com/2019/facebooks-privacy-cake/?share=email" rel="nofollow noopener noreferrer" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-end"></li></ul></div></div></div>
-<div class="jp-relatedposts" id="jp-relatedposts">
-<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
-</div> </div><!-- .entry-content -->
-</article><!-- #post-## -->
-<nav class="navigation post-navigation" role="navigation">
-<h2 class="screen-reader-text">Post navigation</h2>
-<div class="nav-links"><div class="nav-previous"><a href="https://stratechery.com/2019/exponent-podcast-valuing-value-chains/" rel="prev"><span class="screen-reader-text">Previous post:</span> <span class="post-title">Exponent Podcast: Valuing Value Chains</span></a></div><div class="nav-next"><a href="https://stratechery.com/2019/exponent-podcast-mark-zuckerbergs-projected-self/" rel="next"><span class="screen-reader-text">Next post:</span> <span class="post-title">Exponent Podcast: Mark Zuckerberg’s Projected Self</span></a></div></div>
-</nav>
-</main><!-- #main -->
-</div><!-- #primary -->
-</div><!-- .nine -->
-<div class="three column widget-area">
-<div id="secondary" role="complementary">
-<aside class="widget widget_search" id="search-2"><form action="https://stratechery.com/" class="search-form" method="get" role="search">
-<label>
-<span class="screen-reader-text">Search for:</span>
-<input class="search-field" name="s" placeholder="Search …" type="search" value=""/>
-</label>
-<input class="search-submit" type="submit" value="Search"/>
-</form></aside><aside class="widget widget_nav_menu" id="nav_menu-6"><h1 class="widget-title">Explore Stratechery</h1><div class="menu-explore-container"><ul class="menu" id="menu-explore-1"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3386"><a href="https://stratechery.com/concepts/">Concepts</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3387"><a href="https://stratechery.com/companies/">Companies</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3388"><a href="https://stratechery.com/topics/">Topics</a></li>
-</ul></div></aside><aside class="widget widget_nav_menu" id="nav_menu-2"><h1 class="widget-title">By Ben Thompson</h1><div class="menu-primary-container"><ul class="menu" id="menu-primary-1"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1611"><a href="http://stratechery.com/about/">About</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1613"><a href="http://exponent.fm/">Exponent Podcast</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1645"><a href="https://forum.stratechery.com/login">Member Forum</a></li>
-</ul></div></aside><aside class="widget widget_nav_menu" id="nav_menu-4"><h1 class="widget-title">Weekly Articles</h1><div class="menu-weekly-articles-container"><ul class="menu" id="menu-weekly-articles-1"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1641"><a href="http://stratechery.com/feed/">RSS Feed</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1643"><a href="https://stratechery.memberful.com/register/">Email</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1642"><a href="http://twitter.com/stratechery">Twitter</a></li>
-</ul></div></aside><aside class="widget widget_nav_menu" id="nav_menu-3"><h1 class="widget-title">The Daily Update</h1><div class="menu-the-daily-update-container"><ul class="menu" id="menu-the-daily-update-1"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1608"><a href="https://stratechery.com/membership/">About The Daily Update</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1630"><a href="https://stratechery.memberful.com/checkout?plan=5749">Subscribe Monthly</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1609"><a href="https://stratechery.memberful.com/checkout?plan=5748">Subscribe Annually</a></li>
-</ul></div></aside><aside class="widget widget_memberful_wp_profile_widget" id="memberful_wp_profile_widget-2"> <h1 class="widget-title">Account</h1> <a class="memberful-sign-in-link" href="https://stratechery.com/?memberful_endpoint=auth">Sign in</a></aside><aside class="widget widget_text" id="text-2"> <div class="textwidget"><a class="memberful-rss-notice" href="https://stratechery.com/membership/">Subscribe</a> to access the Daily Update via email, RSS, or the web</div>
-</aside><aside class="widget widget_nav_menu" id="nav_menu-7"><h1 class="widget-title">Archives</h1><div class="menu-archives-container"><ul class="menu" id="menu-archives-1"><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-1772"><a href="https://stratechery.com/category/articles/">Articles</a></li>
-<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1773"><a href="https://stratechery.com/category/daily-email/">Daily Updates</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1775"><a href="https://stratechery.com/category/year-in-review/">Years in Review</a></li>
-</ul></div></aside> </div><!-- #secondary -->
-</div><!-- .widget-area --> </div><!-- .row -->
-</div><!-- .grid -->
-</div><!-- #content -->
-<section id="daily-updates">
-<div class="grid">
-<div class="row">
-<h1><strong>Subscriber’s Daily Update</strong></h1>
-<div class="post-4061 post type-post status-publish format-standard hentry category-daily-email topics-industries topics-real-estate concepts-advertising concepts-aggregation-theory concepts-business-models concepts-change concepts-company-structure concepts-incentives concepts-owning-customer-relationship concepts-strategy companies-expedia companies-opendoor companies-redfin companies-zillow" id="post-4061">
-<span class="entry-meta">
-							Wednesday, March 6, 2019						</span>
-<h1 class="entry-title"><a href="https://stratechery.com/2019/zillows-changes-ceos-an-interview-with-zillow-ceo-rich-barton/" rel="bookmark">Zillow Changes CEOs, An Interview with Zillow CEO Rich Barton</a></h1> </div>
-<div class="post-4054 post type-post status-publish format-standard hentry category-daily-email topics-events topics-ipo topics-ride-sharing topics-transportation concepts-incentives concepts-making-money companies-lyft companies-uber" id="post-4054">
-<span class="entry-meta">
-							Tuesday, March 5, 2019						</span>
-<h1 class="entry-title"><a href="https://stratechery.com/2019/lyfts-s-1-demand-supply-lyft-concerns/" rel="bookmark">Lyft’s S-1, Demand &gt; Supply, Lyft Concerns</a></h1> </div>
-<div class="post-4052 post type-post status-publish format-standard hentry category-daily-email topics-linear topics-streaming topics-video concepts-advertising concepts-bundling-and-unbundling concepts-business-models concepts-company-structure concepts-incentives concepts-media concepts-media-and-subscriptions concepts-subscriptions companies-amazon companies-att companies-disney companies-hbo companies-netflix companies-turner-broadcasting" id="post-4052">
-<span class="entry-meta">
-							Monday, March 4, 2019						</span>
-<h1 class="entry-title"><a href="https://stratechery.com/2019/changes-at-hbo-atts-strategic-rationale-hbos-differentiation/" rel="bookmark">Changes at HBO, AT&amp;T’s Strategic Rationale, HBO’s Differentiation</a></h1> </div>
-<div class="post-4050 post type-post status-publish format-standard hentry category-daily-email topics-earnings topics-enterprise-products topics-events topics-storage concepts-business-models concepts-enterprise companies-box companies-dropbox companies-microsoft" id="post-4050">
-<span class="entry-meta">
-							Thursday, February 28, 2019						</span>
-<h1 class="entry-title"><a href="https://stratechery.com/2019/boxs-earnings-boxs-microsoft-problem-dropboxs-earnings/" rel="bookmark">Box’s Earnings, Box’s Microsoft Problem, Dropbox’s Earnings</a></h1> </div>
-</div><!-- .row -->
-</div><!-- .grid -->
-</section><!-- #daily-updates -->
-<footer class="site-footer" id="colophon" role="contentinfo">
-<div class="grid">
-<div class="row">
-<div class="twelve column">
-<div class="site-info">
-<div class="site-info-container">
-<span class="powered-by">
-								On the business, strategy, and impact of technology.
-							</span><!-- .powered-by -->
-<span class="copyright">
-								© <a href="http://stratechery.com/">Stratechery LLC</a> 2019 | <a href="https://stratechery.com/terms-service/">Terms of Service</a> | <a href="https://stratechery.com/privacy-policy/">Privacy Policy</a>
-</span>
-</div><!-- .site-info-container -->
-</div><!-- .site-info -->
-</div><!-- .twelve -->
-</div><!-- .row -->
-</div><!-- .grid -->
-</footer><!-- #colophon -->
-</div><!-- #page -->
-<div id="sharing_email" style="display: none;">
-<form action="/2019/facebooks-privacy-cake/" method="post">
-<label for="target_email">Send to Email Address</label>
-<input id="target_email" name="target_email" type="email" value=""/>
-<label for="source_name">Your Name</label>
-<input id="source_name" name="source_name" type="text" value=""/>
-<label for="source_email">Your Email Address</label>
-<input id="source_email" name="source_email" type="email" value=""/>
-<input autocomplete="off" class="input" id="jetpack-source_f_name" name="source_f_name" size="25" title="This field is for validation and should not be changed" type="text" value=""/>
-<img alt="loading" class="loading" height="16" src="https://stratechery.com/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" style="float: right; display: none" width="16"/>
-<input class="sharing_send" type="submit" value="Send Email"/>
-<a class="sharing_cancel" href="#cancel" rel="nofollow" role="button">Cancel</a>
-<div class="errors errors-1" style="display: none;">
-				Post was not sent - check your email addresses!			</div>
-<div class="errors errors-2" style="display: none;">
-				Email check failed, please try again			</div>
-<div class="errors errors-3" style="display: none;">
-				Sorry, your blog cannot share posts by email.			</div>
+<ul class="post-social" style="margin-top: -5px;">
+<li class="social-item facebook">
+<a href="//www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmarginalrevolution.com%2Fmarginalrevolution%2F2019%2F03%2Fculture-in-nazi-germany.html" target="_blank">
+<span class="sr-only">Facebook</span>
+<i aria-hidden="true" class="fa fa-facebook-square"></i>
+</a>
+</li>
+<li class="social-item twitter">
+<a href="//twitter.com/home?status=https%3A%2F%2Fmarginalrevolution.com%2Fmarginalrevolution%2F2019%2F03%2Fculture-in-nazi-germany.html">
+<span class="sr-only">Twitter</span>
+<i aria-hidden="true" class="fa fa-twitter-square"></i>
+</a>
+</li>
+<li class="social-item rss">
+<a href="/feed">
+<span class="sr-only">RSS Feed</span>
+<i aria-hidden="true" class="fa fa-rss-square"></i>
+</a>
+</li>
+</ul><!-- /.post-social -->
+<ul class="entry-meta" style="margin-left: 25px;">
+<li class="meta-item desktop-only">
+<a href="https://marginalrevolution.com/marginalrevolution/2019/03/culture-in-nazi-germany.html#print" target="_blank">
+<i aria-hidden="true" class="fa fa-print"></i>
+<span class="meta-text">print</span>
+</a>
+</li>
+</ul><!-- /.entry-meta -->
+</section><!-- /.post-actions -->
+<section class="comment-box" id="comments">
+<div class="comments">
+<h2>Comments</h2>
+<article class="blog-comment depth-0" id="blog-comment-159916814">
+<div class="byline">
+<h3 class="comment-author">Matt Rafat</h3>
+<time class="comment-date" datetime="2019-03-10 01:07:47">March 10, 2019 at 1:07 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916814" rel="nofollow" title="Permalink to this comment">1</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>I've been meaning to study exactly this topic, until I realized: it doesn't matter. There were good judges, good lawyers, good writers, good people in Nazi Germany, just like there are good ones today in the United States. We don't study any of them because they weren't able to make a difference. </p>
+<p>Debt bondage, a feature of modern warfare, coupled with currency fluctuations based on oil prices, have been the 20th century's bane of existence. W.H. Auden once wrote, "Poetry makes nothing happen," but if art doesn't make anything happen, it's one sign human creativity has become subservient to another, more sinister set of cultural codes. I don't know if I've summarized the book, but if I haven't, I'd love to hear something new, something fresh, and something humane from someone who's read it.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916814"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916825">
+<div class="byline">
+<h3 class="comment-author">clockwork_prior</h3>
+<time class="comment-date" datetime="2019-03-10 01:59:37">March 10, 2019 at 1:59 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916825" rel="nofollow" title="Permalink to this comment">2</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>'The book’s first contention is that in order for a new Nazi type of culture to take hold, the preceding forms first had to be wiped out.'</p>
+<p>Not really, unless one means that the program of the Nazis was radical in a sense that meant it had to remove the restraints normally found in any society. Further, the Nazis often presented themselves as restoring proper culture in various areas, while sweeping away 'trash.'</p>
+<p>What is striking living in Germany is just how much the Nazis simply entwined themselves into society, meaning the term 'wiped out' is broadly inaccurate.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-1" id="blog-comment-159916858">
+<div class="byline">
+<h3 class="comment-author">derek</h3>
+<time class="comment-date" datetime="2019-03-10 10:00:39">March 10, 2019 at 10:00 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916858" rel="nofollow" title="Permalink to this comment">3</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>I had the privilege to get to know a few Germans who lived during that time. What was remarkable about their stories is how unremarkable the events were before the war.</p>
+<p>One women said that she could go in the streets to do her chores without being afraid of young hooligans. She said that trouble makers were the ones who got mistreated. I remember being chilled by her comments.</p>
+<p>Another gentleman was 25, fully trained industrial tool and die maker, and unemployed living in his father's home. 3 weeks after Hitler gained power he and a large number of others got a letter telling him where to show up for work. He also said that everyone knew the cost of their prosperity, it was their freedom. </p>
+<p>So maybe the 'culture' that had to be supplanted had no redeeming qualities. It was an art and culture of abandon and dissipation. The dramatic change that happened in the lives of most people when the Nazis took power made that culture look rather cheap and useless.</p>
+<p>I posit that if they had term limits of 8 years at that time, Hitler would be considered an heroic example emulated almost everywhere.</p>
+<p>Same with Chavez if he had been followed by someone who would have dismantled his worst initiatives. </p>
+<p>Interesting to see last week anti-semitism justified by people who should know better because of poor childhood experience.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-2" id="blog-comment-159916863">
+<div class="byline">
+<h3 class="comment-author">clockwork_prior</h3>
+<time class="comment-date" datetime="2019-03-10 10:17:10">March 10, 2019 at 10:17 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916863" rel="nofollow" title="Permalink to this comment">4</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>'So maybe the 'culture' that had to be supplanted had no redeeming qualities. '</p>
+<p>Sure, the Nazis distinctly hated opera, right? All that singing and costumes - nothing redeeming there.</p>
+<p>'It was an art and culture of abandon and dissipation.'</p>
+<p>Yep, that definitely describes the Bayreuth Festival to a T.</p>
+<p>'The dramatic change that happened in the lives of most people when the Nazis took power made that culture look rather cheap and useless.'</p>
+<p>I am not really sure how to put this to you, but most Germans did not care about the art found in Berlin (and Vienna). And much of the hatred directed against modern art such as the Neue Sachlichkeit was due to its 'Jewishness' in the sense of gallery owners being the ones peddling such 'trash.' </p>
+<p>And this may give you an idea why the Nazis hated the Neue Sachlichkeit - the artists identified in this movement rejected romantic idealism, which of course the Nazis could seemingly never get enough of. <a href="https://en.wikipedia.org/wiki/New_Objectivity" rel="nofollow">https://en.wikipedia.org/wiki/New_Objectivity</a></p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916863"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-2" id="blog-comment-159916872">
+<div class="byline">
+<h3 class="comment-author">anonymous</h3>
+<time class="comment-date" datetime="2019-03-10 10:47:35">March 10, 2019 at 10:47 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916872" rel="nofollow" title="Permalink to this comment">5</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>If you want to understand how Chavez made it work, and who actually follows the pattern, don't be afraid, read it right on through:</p>
+<p>"For Chávez, for instance, vulgar language and insults were a trademark, not a flaw. He talked to national audiences about having sex with his wife, called Americans an obscene term, described his bowel movements on television and named the first cellphone made in Venezuela after a popular slang term for penis."</p>
+<p>https://www.washingtonpost.com/outlook/yes-trump-is-undignified-demagogues-have-to-be/2019/03/08/bd8d8d9c-4109-11e9-a0d3-1210e58a94cf_story.html</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-3" id="blog-comment-159916876">
+<div class="byline">
+<h3 class="comment-author">blank</h3>
+<time class="comment-date" datetime="2019-03-10 11:09:41">March 10, 2019 at 11:09 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916876" rel="nofollow" title="Permalink to this comment">6</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>"Chavez" didn't make anything work. A spectacular nation, with a loving populace, unique and all their own, he wrecked it over envy. Start paying 2 bucks a gallon a for petro and get back in the game.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-4" id="blog-comment-159916878">
+<div class="byline">
+<h3 class="comment-author">anonymous</h3>
+<time class="comment-date" datetime="2019-03-10 11:16:31">March 10, 2019 at 11:16 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916878" rel="nofollow" title="Permalink to this comment">7</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Good point.  What works for a populist leader, for him to get and maintain power, may not be the same as what works for the populace.</p>
+<p>Even supporters may see reductions in their welfare.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-5" id="blog-comment-159916884">
+<div class="byline">
+<h3 class="comment-author">Apso</h3>
+<time class="comment-date" datetime="2019-03-10 12:20:58">March 10, 2019 at 12:20 pm </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916884" rel="nofollow" title="Permalink to this comment">8</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>He was more socialist than populist.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916884"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-5" id="blog-comment-159916885">
+<div class="byline">
+<h3 class="comment-author">derek</h3>
+<time class="comment-date" datetime="2019-03-10 12:21:15">March 10, 2019 at 12:21 pm </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916885" rel="nofollow" title="Permalink to this comment">9</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Which is typical of Communists and Socialists. </p>
+<p>My point above was that these radical ideologies gain traction because they are talking about a real problem that needs attention. Chavez' supporters, who still exist in large numbers, had their lives improved.</p>
+<p>There was a remarkable bit of information I ran across reading about the OSS, (precursor to the CIA). During WWII the agents had no problem finding sympathetic protectors in countries which were invaded by Germany. Greece for example. Which allowed them to establish safe houses and bases of operation within enemy territory. But they couldn't do that in Germany because the populace would turn them in. For whatever reason the German Nazis had wide support among the population.</p>
+<p>One of the women I knew worked in a German social agency during the war. She worked at an office in a rail terminal and would receive people whose homes were destroyed by bombing and route them to a new home somewhere. Those places were a target for the bombing campaigns so she never knew whether she would survive the day.</p>
+<p>There was a very funny article in Macleans magazine, a canadian news magazine that is reliably Liberal. The article described how people were thinking that the economy wasn't doing well, and said that no it is doing fine, it is a mistaken impression. A month later the news came out that the last quarter of last year had .4 growth. I knew that from what I was experiencing. But ideological blinders and desperation at the coming election convinces people to believe what they want to believe. Then policy is made based upon those mistaken impressions, and the results are a 180 degree neck stretching shift in the political winds. Best not to call people idiots and deplorables when they are telling you what you desperately need to hear to keep things working the way you want.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916885"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916878"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916876"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916872"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916858"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916825"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916826">
+<div class="byline">
+<h3 class="comment-author">Bob the Historian</h3>
+<time class="comment-date" datetime="2019-03-10 03:05:10">March 10, 2019 at 3:05 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916826" rel="nofollow" title="Permalink to this comment">10</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Had my fill of the 20th century a while ago. These days it is all about the Byzantine Empire and the Mongols. What a disaster that 4th Crusade.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916826"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916827">
+<div class="byline">
+<h3 class="comment-author">Bossenaar</h3>
+<time class="comment-date" datetime="2019-03-10 03:23:35">March 10, 2019 at 3:23 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916827" rel="nofollow" title="Permalink to this comment">11</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>For museum fans: "Design Museum Den Bosch’s exhibition of Third Reich design will be the first in the world. The Volkswagen Beetle, the 1936 Olympic Games, the swastika and Leni Riefenstahl’s films..." Opens September 7, 2019.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916827"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916828">
+<div class="byline">
+<h3 class="comment-author">Li</h3>
+<time class="comment-date" datetime="2019-03-10 03:31:11">March 10, 2019 at 3:31 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916828" rel="nofollow" title="Permalink to this comment">12</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Scratching my head here. What was "new" about the Nazis? The intolerant/violent/abusive racism they displayed wasn't "new". Our tribes have been slaughtering/enslaving each other since we first came down from the trees. The first Russian pogrom preceded 1933 by over 100 years. This seems to be a case of reverse-exceptionalism. It would be nice if we could believe there was something special about the circumstances that gave rise to such inhumanity, but anyone who has been paying attention. Knows of the genocides of the last 50 years. Even today, what's that going on in China?</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916828"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916836">
+<div class="byline">
+<h3 class="comment-author">clockwork_prior</h3>
+<time class="comment-date" datetime="2019-03-10 06:36:05">March 10, 2019 at 6:36 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916836" rel="nofollow" title="Permalink to this comment">13</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>'What was "new" about the Nazis? '</p>
+<p>That they practiced eugenics on such a large scale, without even pretending that the killing of millions was somehow justified by anything other than their ideology. Generally, genocidal regimes justify themselves with necessity, The Nazis justified (at least among themselves) their measures with triumphalism, that finally those with power were able to take the proper heroic measures, not just small steps, towards a much better world.</p>
+<p>Stalin did most of his murdering to maintain absolute power, as did Mao. The Nazis killed children because they were 'defective,' for example, and out of a desire to cleanse humanity of its 'unacceptable' elements. In other words, the Nazis were the culmination of what various eugenic thinkers, such as Harry H. Laughlin, whose own activities in the U.S. led to things like this - <a href="https://en.wikipedia.org/wiki/Virginia_Sterilization_Act_of_1924" rel="nofollow">https://en.wikipedia.org/wiki/Virginia_Sterilization_Act_of_1924</a></p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-1" id="blog-comment-159916869">
+<div class="byline">
+<h3 class="comment-author">dearieme</h3>
+<time class="comment-date" datetime="2019-03-10 10:28:45">March 10, 2019 at 10:28 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916869" rel="nofollow" title="Permalink to this comment">14</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>"The Nazis killed children because they were 'defective'": as had many Christians over the years, albeit on the sly.  And many another society too.</p>
+<p>"Stalin did most of his murdering to maintain absolute power, as did Mao": that seems implausible to me.  They could have maintained power with far fewer victims, I'd guess.  They were just evil bastards in roughly the same terms as the Nazis.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-2" id="blog-comment-159916874">
+<div class="byline">
+<h3 class="comment-author">clockwork_prior</h3>
+<time class="comment-date" datetime="2019-03-10 10:56:20">March 10, 2019 at 10:56 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916874" rel="nofollow" title="Permalink to this comment">15</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>'They could have maintained power with far fewer victims, I'd guess. '</p>
+<p>Depends on how you count the victims - the gulags weren't death camps meant to exterminate an entire group, they were a more or less profitable state enterprise with a steady need for labor. Mao was notably incompetent, and most of his victims were not people lined up in front of pits and shot.</p>
+<p>There is no question that both of them killed large numbers of people and that both fit any meaningful definition of evil, but Stalin was not trying to exterminate Ukrainians, for example.</p>
+<p>The Nazis, on the other hand, intentionally killed those who were considered unsuitable for further existence.</p>
+<p>It is a real distinction, unless one is more interested in dismissing road bumps to a much better world.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916874"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-2" id="blog-comment-159916886">
+<div class="byline">
+<h3 class="comment-author">M</h3>
+<time class="comment-date" datetime="2019-03-10 12:58:33">March 10, 2019 at 12:58 pm </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916886" rel="nofollow" title="Permalink to this comment">16</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>The Soviets and Maoists were of course eliminationist too, towards class enemies and dissidents... but there's an option of defection there and then defection back and drafting new people in to the class. It's not really the destruction of a people. What they wanted to do was bloodthirsty and utopian, but ultimately silly and impossible. What the Nazis wanted to do was rooted in an insane conspiracy theory, but ultimately possible. Similarly on the reforms to change society - the Soviets and Maoists killed huge swathes of people, because what they wanted to do was impossible, ideological and insane (collective farms and so on). Not a matter of "competence" but that their ideology took them to suggest social and economic structures that did not comport with reality. The Nazi economic programs did not. Again the distinction is that the Nazis aimed to do something possible, if not something anyone believes they should do, while the Soviets butchered huge numbers of people in the pursuit of what was not even possible.</p>
+<p>(Again: State sponsored coercive eugenics; possible but ill advised. Lysenkoism and New Soviet Man; not even possible.)</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-3" id="blog-comment-159916901">
+<div class="byline">
+<h3 class="comment-author">clockwork_prior</h3>
+<time class="comment-date" datetime="2019-03-10 13:50:56">March 10, 2019 at 1:50 pm </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916901" rel="nofollow" title="Permalink to this comment">17</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>'Not a matter of "competence"'</p>
+<p>No need to debate terms, but the Great Leap Forward was pure stupidity leading to a large number of deaths. The Soviets are more complex, but of course many of their schemes were also completely idiotic, and the gulags were simply slave labor in a different guise.</p>
+<p>'The Nazi economic programs did not.'</p>
+<p>Not really sure how to put this, but WWII was an explicit Nazi economic program.</p>
+<p>'Again the distinction is that the Nazis aimed to do something possible'</p>
+<p>No West European has ever successfully subjugated Russia, and Hitler did not even follow the advice of those in charge of trying to do it.</p>
+<p>'the Soviets butchered huge numbers of people in the pursuit of what was not even possible'</p>
+<p>No, the Soviets did not butcher huge numbers of people - starved millions,  and  worked to death many in the gulags (some dispute about how many, but the gulags were not death camps). It was the Nazis with an organized program of extermination, which is what makes them stand out as a totalitarian state.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-4" id="blog-comment-159916905">
+<div class="byline">
+<h3 class="comment-author">M</h3>
+<time class="comment-date" datetime="2019-03-10 14:01:57">March 10, 2019 at 2:01 pm </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916905" rel="nofollow" title="Permalink to this comment">18</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>I think there's a distinction here between military conflicts that they walked into, and their generally bellicose stance (one that was not that distinct from European imperialist expansion that came before, or what the Soviets would've done if they weren't threatened by atomics), and general economic policies in the sense which I am describing. I would not accept that WWII can be described as an economic program or that was considered this way.</p>
+<p>You can dispute the kind of state organized camp deaths the Nazis and Soviets engaged with I guess - I don't think we'd look on the Nazis particularly more kindly if absent external pressure they'd decided to slowly work the residents of Dachau to death with starvation and forced labour.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916905"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916901"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916886"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916869"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916836"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916840">
+<div class="byline">
+<h3 class="comment-author">rayward</h3>
+<time class="comment-date" datetime="2019-03-10 07:39:28">March 10, 2019 at 7:39 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916840" rel="nofollow" title="Permalink to this comment">19</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Except for Andrew Jackson, is there anyone in American history Trump has not criticized and belittled, the founders, Lincoln, war heroes, even those serving in his own administration. Yes, indeed, Trump is attempting to wipe out the achievements of everyone who came before him while creating an image of greatness for himself that is pure fiction.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-1" id="blog-comment-159916864">
+<div class="byline">
+<h3 class="comment-author">Dude</h3>
+<time class="comment-date" datetime="2019-03-10 10:22:15">March 10, 2019 at 10:22 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916864" rel="nofollow" title="Permalink to this comment">20</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>I don’t follow these things closely, but has he belittled Washington and Jefferson?  Lincoln?  Links?</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916864"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-1" id="blog-comment-159916881">
+<div class="byline">
+<h3 class="comment-author">Tom T.</h3>
+<time class="comment-date" datetime="2019-03-10 11:36:45">March 10, 2019 at 11:36 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916881" rel="nofollow" title="Permalink to this comment">21</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Michelle Obama was even more explicit in declaring her husband's presidency the first thing about this country worth being proud of.  </p>
+<p>And more generally, it's certainly not commentators on the *right* who are seeking to have artists and works from the past declared "problematic" by today's standards.</p>
+</div><!-- /.comment-content -->
+<article class="blog-comment depth-2" id="blog-comment-159916883">
+<div class="byline">
+<h3 class="comment-author">Zar</h3>
+<time class="comment-date" datetime="2019-03-10 11:46:29">March 10, 2019 at 11:46 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916883" rel="nofollow" title="Permalink to this comment">22</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Like their wonderful statues of people who rebelled against the United States to keep Black people as property?</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916883"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916881"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916840"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916842">
+<div class="byline">
+<h3 class="comment-author">Thiago Ribeiro</h3>
+<time class="comment-date" datetime="2019-03-10 07:52:43">March 10, 2019 at 7:52 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916842" rel="nofollow" title="Permalink to this comment">23</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>The point is, can it happen here (there)? Will an impoverished and desperate populace living in an hollowed out America and facing the diktat of neoliberal apologists of Red China back extremist politicians and try to take what it can't make?</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916842"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916862">
+<div class="byline">
+<h3 class="comment-author">anonymous</h3>
+<time class="comment-date" datetime="2019-03-10 10:15:29">March 10, 2019 at 10:15 am </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916862" rel="nofollow" title="Permalink to this comment">24</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Too bad Bill Shine couldn't make it work.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916862"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment --> <article class="blog-comment depth-0" id="blog-comment-159916897">
+<div class="byline">
+<h3 class="comment-author">Bill</h3>
+<time class="comment-date" datetime="2019-03-10 13:40:01">March 10, 2019 at 1:40 pm </time>
+    
+      <a class="toggle-replies-btn" data-toggle="hide" href="#">Hide Replies</a>
+<span class="comment-number"><a class="permalink" href="#blog-comment-159916897" rel="nofollow" title="Permalink to this comment">25</a></span>
+</div><!-- /.byline -->
+<div class="comment-content">
+<p>Fake News.</p>
+</div><!-- /.comment-content -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="159916897"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond --> </article><!-- /.blog-comment -->
+<section class="comment-respond">
+<a class="comment-form-toggle" data-comment-form-toggle="" href="#" role="button">Respond</a>
+<form action="https://marginalrevolution.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<h3>Add Comment</h3>
+<div class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="email">Email</label>
+<div class="col-sm-10">
+<input class="form-control" id="email" name="email" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label required" for="author">Author</label>
+<div class="col-sm-10">
+<input class="form-control" id="author" name="author" required="" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="url">Website</label>
+<div class="col-sm-10">
+<input class="form-control" id="url" name="url" type="text"/>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<label class="col-sm-2 control-label" for="comment">Comment</label>
+<div class="col-sm-10">
+<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+</div><!-- /.col -->
+</div><!-- /.form-group -->
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="75563"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="0"/>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_comments">
+<input id="subscribe_comments" name="subscribe_comments" type="checkbox" value="subscribe"/>
+              Notify me of follow-up comments by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label for="subscribe_blog">
+<input id="subscribe_blog" name="subscribe_blog" type="checkbox" value="subscribe"/>
+              Notify me of new posts by email.
+            </label>
+</div><!-- /.checkbox -->
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-primary" name="Submit" type="submit">Submit</button>
+<button class="btn btn-neutral" data-comment-form-toggle="">Cancel</button>
+</div><!-- /.col-offset -->
+</div><!-- /.form-group -->
+</div><!-- /.form-horizontal -->
+</form><!-- /.comment-form -->
+</section><!-- /.comment-respond -->
+</div><!-- /.comments -->
+</section><!-- /.comment-box -->
+</footer><!-- /.entry-footer -->
+</article><!-- /.post -->
+</main> <!-- /#site-main -->
+<aside class="site-sidebar no-print" id="site-sidebar" role="complementary">
+<section class="sidebar-section">
+<article class="sidebar-featured-link">
+<a href="https://www.mruniversity.com/"><img alt="" class="featured-link-thumbnail" src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2018/04/mru.png"/></a>
+<h3 class="link-title"><a href="https://www.mruniversity.com/">Marginal Revolution University</a></h3>
+<div class="btn-wrapper"><a class="btn btn-primary-outline" href="https://www.mruniversity.com/">See Courses</a></div>
+</article><!-- /.sidebar-featured-link -->
+<article class="sidebar-featured-link">
+<a href="https://asp.mercatus.org/?utm_source=MR&amp;utm_medium=referral&amp;utm_campaign=fellowships2019"><img alt="" class="featured-link-thumbnail" src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2018/11/ASP-480x223-Digital-Ad-03-1-480x223.jpg"/></a>
+<h3 class="link-title"><a href="https://asp.mercatus.org/?utm_source=MR&amp;utm_medium=referral&amp;utm_campaign=fellowships2019">Learn more about Mercatus Center Graduate Student Fellowships</a></h3>
+<div class="btn-wrapper"><a class="btn btn-primary-outline" href="https://asp.mercatus.org/?utm_source=MR&amp;utm_medium=referral&amp;utm_campaign=fellowships2019">Learn More</a></div>
+</article><!-- /.sidebar-featured-link -->
+</section><!-- /.sidebar-section -->
+<section class="sidebar-section">
+<ul class="sidebar-links">
+<li class="link-item"><a class="sidebar-link" href="http://feeds.feedburner.com/marginalrevolution/feed">Subscribe via RSS Feed</a></li>
+</ul><!-- /.sidebar-links --> </section><!-- /.sidebar-section -->
+<section class="sidebar-section">
+<h2 class="section-title">Contact Us</h2> <div class="sidebar-html">
+<p><strong style="color: black;">Alex Tabarrok</strong><br/>
+<em><a href="mailto:atabarro@gmu.edu" rel="noopener" target="_blank"><i class="fa fa-envelope-square"></i> Email Alex</a></em><br/>
+<em><a href="https://twitter.com/ATabarrok" rel="noopener" target="_blank"><i aria-hidden="true" class="fa fa-twitter-square"></i> Follow @atabarrok</a></em></p>
+<p><strong style="color: black;">Tyler Cowen</strong><br/>
+<em><a href="mailto:tcowen@gmu.edu" rel="noopener" target="_blank"><i class="fa fa-envelope-square"></i> Email Tyler</a></em><br/>
+<em><a href="https://twitter.com/tylercowen" rel="noopener" target="_blank"><i aria-hidden="true" class="fa fa-twitter-square"></i> Follow @tylercowen</a></em></p>
+</div><!-- /.sidebar-html --> </section><!-- /.sidebar-section -->
+<section class="sidebar-section">
+<ul class="sidebar-links">
+<li class="link-item"><a class="sidebar-link" href="https://marginalrevolution.com/blogs-we-like">Blogs We Like</a></li>
+<li class="link-item"><a class="sidebar-link" href="https://marginalrevolution.com/interesting-people-sites">Interesting People &amp; Sites</a></li>
+</ul><!-- /.sidebar-links --> </section><!-- /.sidebar-section -->
+<section class="sidebar-section">
+<h2 class="section-title">Our Web Pages</h2> <ul class="sidebar-links">
+<li class="link-item"><a class="sidebar-link" href="http://mason.gmu.edu/~atabarro/">Alex Tabarrok's Home Page</a></li>
+<li class="link-item"><a class="sidebar-link" href="http://www.ted.com/index.php/talks/alex_tabarrok_foresees_economic_growth.html">Alex's TED talk, how ideas trump crises</a></li>
+<li class="link-item"><a class="sidebar-link" href="https://medium.com/conversations-with-tyler">Conversations with Tyler</a></li>
+<li class="link-item"><a class="sidebar-link" href="http://www.fdareview.org/">FDAReview.org</a></li>
+<li class="link-item"><a class="sidebar-link" href="https://publicchoice.gmu.edu/tylercowen">Tyler Cowen's Personal Web Page</a></li>
+<li class="link-item"><a class="sidebar-link" href="http://www.tylercowensethnicdiningguide.com/">Tyler's ethnic dining guide</a></li>
+<li class="link-item"><a class="sidebar-link" href="https://marginalrevolution.com/marginalrevolution/2018/09/emergent-ventures-new-project-help-foment-enlightenment.html">Apply to Emergent Ventures</a></li>
+</ul><!-- /.sidebar-links --> </section><!-- /.sidebar-section -->
+<section class="sidebar-section">
+<h2 class="section-title">Books</h2> <article class="book-post">
+<a href="https://www.macmillanlearning.com/Catalog/product/modernprinciplesofeconomics-fourthedition-cowen"><img alt="" class="book-cover" src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/uploads/2018/02/Modern_Principles_Cover-1-340x520.jpg"/></a>
+<h3 class="book-title"><a href="https://www.macmillanlearning.com/Catalog/product/modernprinciplesofeconomics-fourthedition-cowen">Modern Principles of Economics</a></h3>
+<address class="book-author">Tyler Cowen &amp; Alexander Tabarrok</address>
+</article><!-- /.book-post --> </section><!-- /.sidebar-section -->
+<div class="widgetizedArea"><h3>Subscribe via Email</h3>
+<form accept-charset="utf-8" action="#" id="subscribe-blog-blog_subscription-2" method="post">
+<div id="subscribe-text"><p>Enter your email address to subscribe to updates.</p>
+</div> <p id="subscribe-email">
+<label for="subscribe-field-blog_subscription-2" id="jetpack-subscribe-label">
+							Email Address						</label>
+<input class="required" id="subscribe-field-blog_subscription-2" name="email" placeholder="Email Address" required="required" type="email" value="">
+</input></p>
+<p id="subscribe-submit">
+<input name="action" type="hidden" value="subscribe">
+<input name="source" type="hidden" value="https://marginalrevolution.com/marginalrevolution/2019/03/culture-in-nazi-germany.html">
+<input name="sub-type" type="hidden" value="widget">
+<input name="redirect_fragment" type="hidden" value="blog_subscription-2">
+<input name="jetpack_subscriptions_widget" type="submit" value="Subscribe">
+</input></input></input></input></input></p>
 </form>
+<script>
+				/*
+				Custom functionality for safari and IE
+				 */
+				( function( d ) {
+					// In case the placeholder functionality is available we remove labels
+					if (( 'placeholder' in d.createElement( 'input' ) )) {
+						var label = d.querySelector( 'label[for=subscribe-field-blog_subscription-2]' );
+						label.style.clip = 'rect(1px, 1px, 1px, 1px)';
+						label.style.position = 'absolute';
+						label.style.height = '1px';
+						label.style.width = '1px';
+						label.style.overflow = 'hidden';
+					}
+
+					// Make sure the email value is filled in before allowing submit
+					var form = d.getElementById( 'subscribe-blog-blog_subscription-2' ),
+						input = d.getElementById( 'subscribe-field-blog_subscription-2' ),
+						handler = function( event ) {
+							if ('' === input.value) {
+								input.focus();
+
+								if (event.preventDefault) {
+									event.preventDefault();
+								}
+
+								return false;
+							}
+						};
+
+					if (window.addEventListener) {
+						form.addEventListener( 'submit', handler, false );
+					} else {
+						form.attachEvent( 'onsubmit', handler );
+					}
+				} )( document );
+			</script>
+</div>
+<footer class="sidebar-legal desktop-footer">
+<small>Marginal Revolution 2019</small>
+</footer><!-- /.desktop-footerl -->
+</aside></div></div></body></html> <!-- /#site-sidebar -->
+<!-- /.page-content -->
+<!-- /.page-wrapper -->
+<footer class="site-footer no-print" id="site-footer" role="contentinfo">
+<ul class="footer-links">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73323 footer-link-item"><a class="menu-link" href="https://marginalrevolution.com/about">About Marginal Revolution</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73322 footer-link-item"><a class="menu-link" href="https://marginalrevolution.com/categories">Categories</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73324 footer-link-item"><a class="menu-link" href="https://marginalrevolution.com/books">Our Books</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73325 footer-link-item"><a class="menu-link" href="https://marginalrevolution.com/our-textbook">Our Textbook</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-73326 footer-link-item"><a class="menu-link" href="https://mruniversity.com">Marginal Revolution University</a></li>
+<li class="footer-link-item">
+<ul class="footer-social">
+<li class="social-item facebook">
+<a href="https://www.facebook.com/mrevuniversity/" target="_blank">
+<span class="sr-only">Facebook</span>
+<i aria-hidden="true" class="fa fa-facebook-square"></i>
+</a>
+</li>
+<li class="social-item twitter">
+<a href="https://twitter.com/margrev" target="_blank">
+<span class="sr-only">Twitter</span>
+<i aria-hidden="true" class="fa fa-twitter-square"></i>
+</a>
+</li>
+<li class="social-item rss">
+<a href="/feed" target="_blank">
+<span class="sr-only">RSS Feed</span>
+<i aria-hidden="true" class="fa fa-rss-square"></i>
+</a>
+</li>
+</ul><!-- /.footer-social -->
+</li>
+<li class="footer-link-item button-link">
+<h3 class="link-title">Marginal Revolution University</h3>
+<a class="btn btn-primary-outline" href="https://mruniversity.com">See Courses</a>
+</li>
+</ul><!-- /.footer-links -->
+<div class="footer-bottom">
+<form action="/" class="footer-form" method="get" role="search">
+<div class="form-group">
+<label class="sr-only" for="">Search</label>
+<input class="form-control" name="s" placeholder="Search" type="search" value=""/>
+<button class="btn btn-default" type="submit">
+<span class="sr-only">Search</span>
+<i aria-hidden="true" class="fa fa-search"></i>
+</button>
+</div><!-- /.form-group -->
+</form><!-- /.footer-form -->
+<div class="footer-legal">
+<small><a href="/privacy-policy">Privacy Policy</a></small>
+<span class="copyright">Marginal Revolution 2019</span>
+</div><!-- /.footer-legal -->
+</div><!-- /.footer-bottom -->
+</footer><!-- /#site-footer -->
+<div style="display:none">
 </div>
 <script src="https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201910" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-content/themes/stratecheryV4/js/navigation.js?ver=20120206" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-content/themes/stratecheryV4/js/skip-link-focus-fix.js?ver=20130115" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-content/themes/stratecheryV4/js/theme.js?ver=1.0" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-content/themes/stratecheryV4/js/bigfoot.min.js?ver=20150428" type="text/javascript"></script>
-<script src="https://stratechery.com/wp-includes/js/wp-embed.min.js?ver=4.9.9" type="text/javascript"></script>
+<script src="https://2378nh2nfow32gm3mb25krmuyy-wpengine.netdna-ssl.com/wp-content/themes/marginal-revolution/assets/js/scripts.min.js?ver=a593a318bd9928" type="text/javascript"></script>
+<script async="async" defer="defer" src="https://stats.wp.com/e-201910.js" type="text/javascript"></script>
 <script type="text/javascript">
-/* <![CDATA[ */
-var sharing_js_options = {"lang":"en","counts":"","is_stats_active":""};
-/* ]]> */
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:6.9',blog:'42693868',post:'75563',tz:'-4',srv:'marginalrevolution.com'} ]);
+	_stq.push([ 'clickTrackerInit', '42693868', '75563' ]);
 </script>
-<script src="https://stratechery.com/wp-content/plugins/jetpack/_inc/build/sharedaddy/sharing.min.js?ver=6.8.1" type="text/javascript"></script>
-<script type="text/javascript">
-var windowOpen;
-			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
-				// If there's another sharing window open, close it.
-				if ( 'undefined' !== typeof windowOpen ) {
-					windowOpen.close();
-				}
-				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
-				return false;
-			});
-var windowOpen;
-			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
-				// If there's another sharing window open, close it.
-				if ( 'undefined' !== typeof windowOpen ) {
-					windowOpen.close();
-				}
-				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
-				return false;
-			});
-var windowOpen;
-			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
-				// If there's another sharing window open, close it.
-				if ( 'undefined' !== typeof windowOpen ) {
-					windowOpen.close();
-				}
-				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
-				return false;
-			});
-</script>
-</body>
-</html>
+

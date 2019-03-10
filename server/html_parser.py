@@ -55,20 +55,6 @@ def returnFirst(links):
 			print(article.text)
 			return article
 
-def createBook():
-	createContentOPF()
-	createTOCNCX()
-
-def createMimeType():
-	mimetype = open("./book/mimetype")
-	mimetype.write("application/epub+zip")
-	mimetype.close()
-
-def createTOCNCX():
-	tocNXC = open("./book/toc.ncx")
-
-def createContentOPF():
-	contentOPF  = open("./book/OEBPS/content.opf")
 
 def main():
 	findFirst()

@@ -16,3 +16,25 @@ def convertToXHTML():
 	g = open('a.xml', 'w')
 	g.write(str(soup))
 	g.close()
+	injectXML()
+
+def injectXML():
+	f = open('a.xml', "r")
+	contents = f.read()
+	bookSoup = BeautifulSoup(contents, "xml")
+	innerbody = bookSoup.find('body')
+
+	page = open('./EPUB_Template/OEBPS/Text/chap01.xhtml')
+	soup = BeautifulSoup(page, features="lxml")
+	page.close()
+	open('./EPUB_Template/OEBPS/Text/chap01.xhtml', 'w').close()
+	elem = soup.find('body')
+	elem.clear()
+	elem.append(innerbody)
+	page = open('./EPUB_Template/OEBPS/Text/chap01.xhtml', "w")
+	page.write(str(soup))
+	page.close()
+
+
+
+
