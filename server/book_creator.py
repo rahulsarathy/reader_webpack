@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 
 def createEBook():
 	convertToXHTML()
-	os.remove('archive.epub')
-	shutil.make_archive('archive', 'zip', './EPUB_Template')
-	os.rename('archive.zip', 'archive.epub')
+	os.remove('./publishing/archive.epub')
+	shutil.make_archive('./publishing/archive', 'zip', './EPUB_Template')
+	os.rename('./publishing/archive.zip', './publishing/archive.epub')
 
 def convertToXHTML():
 	open('a.xml', 'w').close()
