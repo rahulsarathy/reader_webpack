@@ -23,7 +23,7 @@ def injectXML():
 	f = open('a.xml', "r")
 	contents = f.read()
 	bookSoup = BeautifulSoup(contents, "xml")
-	innerbody = bookSoup.find('body')
+	innerbody = bookSoup.body.findChildren()[0]
 
 	page = open('./EPUB_Template/OEBPS/Text/chap01.xhtml')
 	soup = BeautifulSoup(page, features="lxml")

@@ -60,7 +60,7 @@ def specificArticle(name, firstArticle):
 		return soup	
 
 def cleanTags(soup):
-	REMOVE_TAG = ['head', 'script', 'form', 'input']
+	REMOVE_TAG = ['head', 'script', 'form', 'input', 'button']
 
 	for tag in REMOVE_TAG:
 		for e in soup.findAll(tag):
