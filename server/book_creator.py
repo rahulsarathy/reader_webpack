@@ -1,6 +1,7 @@
 import shutil
 import os
 from bs4 import BeautifulSoup
+import json
 
 def createEBook(name):
 	convertToXHTML()

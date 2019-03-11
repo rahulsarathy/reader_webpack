@@ -15,17 +15,14 @@ data = [
 	{
 		'name': "stratechery",
 		'url': "https://stratechery.com/feed",
-		'selector': "content"
 	},
 	{
 		'name': "startupboy",
 		'url': "https://startupboy.com/feed",
-		'selector': "content"
 	},
 	{
 		'name': "Bryan Caplan Econlib",
 		'url': "https://www.econlib.org/feed/indexCaplan_xml",
-		'selector': "post-content"
 	},
 	{
 		'name': "Marginal Revolution",
@@ -34,7 +31,6 @@ data = [
 	{
 		'name': "Ribbon Farm",
 		'url': "https://ribbonfarm.com/feed",
-		'selector': "content"
 	},
 	{
 		'name': "Melting Asphalt",
