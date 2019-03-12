@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.request import Request as req
 import pickle
+import time
 
 def findFirst(url, name):
 	# url = 'https://stratechery.com/feed'
@@ -10,24 +11,6 @@ def findFirst(url, name):
 	toSend = req(url=url, headers=headers)
 	xml = urlopen(toSend).read()
 	rss_feed = BeautifulSoup(xml, 'xml')
-
-	# read last time
-	file = open('last.txt', 'rb')
-	time_table = pickle.load(file)
-	if name in time_table:
-		last_updated = time_table[name]
-
-	#update with new time
-	last_update = rss_feed.find('lastBuildDate')
-	if last_update is not None:
-		last_update = rss_feed.find('lastBuildDate').text
-	else:
-		last_update = "Mon, 11 Mar 2019 17:45:34 +0000"
-
-	file = open('last.txt', 'wb')
-	time_table[name] = last_update
-	pickle.dump(time_table, file)
-	file.close()
 
 	links = rss_feed.find_all('guid')
 	if not links:
