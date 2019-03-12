@@ -1,4 +1,5 @@
 import React from 'react';
+import './components.css'
 
 export default class HTMLContent extends React.Component {
 
@@ -8,7 +9,7 @@ export default class HTMLContent extends React.Component {
 
   render () {
     return (
-    	<div id="innerContent" dangerouslySetInnerHTML={this.props.innerHTML}>
+    	<div className="article" id="innerContent" dangerouslySetInnerHTML={this.props.innerHTML}>
     	</div>
     	);
   }

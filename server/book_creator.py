@@ -1,11 +1,10 @@
 import shutil
 import os
 from bs4 import BeautifulSoup
+import json
 
 def createEBook(name):
 	convertToXHTML()
-	shutil.rmtree('./publishing')
-	os.mkdir('./publishing')
 	shutil.make_archive('./publishing/' + name , 'zip', './EPUB_Template')
 	os.rename('./publishing/' + name + '.zip', './publishing/' + name + '.epub')
 

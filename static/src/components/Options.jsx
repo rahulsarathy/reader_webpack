@@ -36,6 +36,14 @@ var data = [
 	{
 		name: "overcoming_bias",
 		url: "http://www.overcomingbias.com/feed"
+	},
+	{
+		name: "slatestarcodex",
+		url: "https://slatestarcodex.com/feed/"
+	},
+	{
+		name: "paulgraham",
+		url: "http://www.aaronsw.com/2002/feeds/pgessays.rss"
 	}
 ];
 
