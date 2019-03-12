@@ -1,5 +1,5 @@
 import React from 'react';
-import {HTMLContent, ParseURL, URLField, Options} from './components/Components.jsx'
+import {HTMLContent, ParseURL, URLField, Options, Reset, Poll} from './components/Components.jsx'
 import $ from 'jquery';
 
 export default class Reader extends React.Component {
@@ -19,7 +19,6 @@ export default class Reader extends React.Component {
 	}
 
 	handleClick() {
-		console.log("clicked");
 		this.parseURL(this.state.value);
 	}
 
@@ -27,7 +26,6 @@ export default class Reader extends React.Component {
 
 	showFirst(data)
 	{
-		console.log()
 		$.ajax(
 			{
 				type: 'POST',
@@ -51,7 +49,6 @@ export default class Reader extends React.Component {
 	}
 
 	changeClicked(event) {
-		console.log(event.target);
 		var data = {
 			url: event.target.getAttribute('url'),
 			name: event.target.getAttribute('name')
@@ -64,6 +61,8 @@ export default class Reader extends React.Component {
     	<div>
     		<Options changeClicked={this.changeClicked} showFirst={this.showFirst}/>
     		<HTMLContent innerHTML={this.state.innerHTML}/>
+    		<Reset />
+    		<Poll />
     	</div>
     	);
   }
