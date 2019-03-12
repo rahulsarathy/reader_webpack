@@ -63,8 +63,11 @@ def retrieveHTML():
 
 @app.route('/poll', methods=['POST'])
 def poll():
-	print("polling");
-	threading.Timer(5, poll).start()
+	
+
+
+
+	threading.Timer(3600, poll).start()
 
 
 
