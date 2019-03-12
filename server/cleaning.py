@@ -23,8 +23,8 @@ def findFirst(url, name):
 	soup = cleanTags(soup)
 	soup = cleanAttributes(soup)
 
-	open('output.html', 'w').close()
-	text_file = open("output.html", "w")
+	open( './publishing/html/' + name + '.html', 'w').close()
+	text_file = open('./publishing/html/' + name + ".html", "w")
 	text_file.write(str(soup))
 	text_file.close()
 

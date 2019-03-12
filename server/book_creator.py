@@ -4,13 +4,13 @@ from bs4 import BeautifulSoup
 import json
 
 def createEBook(name):
-	convertToXHTML()
-	shutil.make_archive('./publishing/' + name , 'zip', './EPUB_Template')
-	os.rename('./publishing/' + name + '.zip', './publishing/' + name + '.epub')
+	convertToXHTML(name)
+	shutil.make_archive('./publishing/books/' + name , 'zip', './EPUB_Template')
+	os.rename('./publishing/books/' + name + '.zip', './publishing/books/' + name + '.epub')
 
-def convertToXHTML():
+def convertToXHTML(name):
 	open('a.xml', 'w').close()
-	f = open('output.html')
+	f = open('./publishing/html/' + name + '.html', 'r')
 	soup = BeautifulSoup(f, features="lxml")
 	f.close()
 	g = open('a.xml', 'w')
