@@ -61,6 +61,8 @@ def specificArticle(name, firstArticle):
 		return soup.find('article')
 	elif (name=='ribbonfarm'):
 		return soup.find_all("div", class_="type-post")[0]
+	elif (name=='melting_asphalt'):
+		return soup.find("div", id="content")
 	else:
 		return soup	
 

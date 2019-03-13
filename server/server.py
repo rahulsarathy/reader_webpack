@@ -56,6 +56,7 @@ app = Flask(__name__, template_folder='../static', static_folder="../static/dist
 
 @app.route('/')
 def main(name=None):
+	poll()
 	return render_template('index.html', name=name)
 
 @app.route('/first', methods=['POST'])
