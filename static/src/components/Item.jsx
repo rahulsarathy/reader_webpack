@@ -9,8 +9,8 @@ export default class Item extends React.Component {
 
   render () {
     return (
-    	<div url={this.props.url} name={this.props.name} onClick={this.props.changeClicked} className="item">
-    		{this.props.name}
+    	<div name={this.props.name} onClick={this.props.changeClicked} className="item">
+    		{this.props.display}
     	</div>
     	);
   }

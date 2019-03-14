@@ -48,7 +48,6 @@ export default class Reader extends React.Component {
 
 	changeClicked(event) {
 		var data = {
-			url: event.target.getAttribute('url'),
 			name: event.target.getAttribute('name')
 		}
 		this.showFirst(data);

@@ -55,9 +55,22 @@ def returnFirst(links):
 			print(article.text)
 			return article
 
+def correct():
+	url = "http://www.overcomingbias.com/feed"
+	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+	toSend = req(url=url, headers=headers)
+	xml = urlopen(toSend).read()
+	soup = BeautifulSoup(xml, 'html.parser')
+	# rss_feed = soup.find('content:encoded')
+	rss_feed = soup.find('item')
+
+	open("testing.html", 'w').close()
+	text_file = open("testing.html", "w")
+	text_file.write(str(rss_feed))
+
 
 def main():
-	findFirst()
+	correct()
 
 if __name__ == '__main__':
 	main()
