@@ -11,6 +11,17 @@ import sys
 import cleaning
 import book_creator
 import pickle
+from flask_mail import Mail, Message
+import os
+
+mail_settings = {
+    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_PORT": 465,
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": os.environ['EMAIL_USER'],
+    "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
+}
 
 data = [
 	{
@@ -52,11 +63,14 @@ data = [
 ];
 
 
+
 app = Flask(__name__, template_folder='../static', static_folder="../static/dist")
 
+app.config.update(mail_settings)
+mail = Mail(app)
+
 @app.route('/')
-def main(name=None):
-	poll()
+def index(name=None):
 	return render_template('index.html', name=name)
 
 @app.route('/first', methods=['POST'])
@@ -133,6 +147,18 @@ def poll():
 	threading.Timer(3600, poll).start()
 	r = Response(str("polling"), status=200)
 	return r
+
+@app.route('/send', methods=['POST'])
+def send():
+	msg = Message(
+		subject="Hello",
+		sender=app.config.get("MAIL_USERNAME"),
+		recipients=["rahul@sarathy.org"],
+		body="This is a test email I sent with Gmail and Python")
+	mail.send(msg)
+
+if __name__ == '__main__':		
+	app.run(debug=True)
 
 
 
