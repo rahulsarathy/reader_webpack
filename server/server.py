@@ -150,6 +150,7 @@ def poll():
 
 @app.route('/send', methods=['POST'])
 def send():
+	print("sending email")
 	msg = Message(
 		subject="Hello",
 		sender=app.config.get("MAIL_USERNAME"),

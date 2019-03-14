@@ -4,6 +4,7 @@ import Options from './Options';
 import Item from './Item';
 import Reset from './Reset';
 import Poll from './Poll';
+import Email from './Email';
 
 
 export {
@@ -12,5 +13,6 @@ export {
 	Options,
 	Item,
 	Reset,
-	Poll
+	Poll,
+	Email
 }
