@@ -22,8 +22,6 @@ export default class Reader extends React.Component {
 		this.parseURL(this.state.value);
 	}
 
-	
-
 	showFirst(data)
 	{
 		$.ajax(
@@ -60,10 +58,10 @@ export default class Reader extends React.Component {
     return (
     	<div>
     		<Options changeClicked={this.changeClicked} showFirst={this.showFirst}/>
-    		<HTMLContent innerHTML={this.state.innerHTML}/>
     		<Reset />
     		<Poll />
     		<Email />
+    		<HTMLContent innerHTML={this.state.innerHTML}/>
     	</div>
     	);
   }

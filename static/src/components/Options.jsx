@@ -1,87 +1,57 @@
 import React from 'react';
 import {Item} from './Components';
+import $ from 'jquery';
+
 
 var blogs;
-
-var data = [
-	{
-		name: "stratechery",
-		url: "https://stratechery.com/feed",
-		selector: "content"
-	},
-	{
-		name: "startupboy",
-		url: "https://startupboy.com/feed",
-		selector: "content"
-	},
-	{
-		name: "econlib",
-		url: "https://www.econlib.org/feed/indexCaplan_xml",
-		selector: "post-content"
-	},
-	{
-		name: "marginal_revolution",
-		url: "https://feeds.feedburner.com/marginalrevolution/"
-	},
-	{
-		name: "ribbonfarm",
-		url: "https://ribbonfarm.com/feed",
-		selector: "content"
-	},
-	{
-		name: "melting_asphalt",
-		url: "https://meltingasphalt.com/feed/"
-
-	},
-	{
-		name: "overcoming_bias",
-		url: "http://www.overcomingbias.com/feed"
-	},
-	{
-		name: "slatestarcodex",
-		url: "https://slatestarcodex.com/feed/"
-	},
-	{
-		name: "paulgraham",
-		url: "http://www.aaronsw.com/2002/feeds/pgessays.rss"
-	}
-];
-
-var names = ["startupboy", 
-"less wrong", 
-"ribbon farm", 
-"stratechery", 
-"melting asphalt",
-"overcoming bias",
-"econlib",
-"marginal revolution",
-"elaine ou",
-"devon zuegel",
-"andrew kortina",
-"eugene wei",
-"paul graham",
-"ben evans",
-"above the crowd",
-"Scott Adams blog",
-"andrew chen",
-"tony sheng",
-"vital buterin",
-"Conversations with tyler",
-"Gwern"]
 
 export default class Options extends React.Component {
 	constructor(props) {
 		super(props)
-		this.createBlogs()
+		this.state = {
+			blogData: {}
+		}
+	}
+
+	componentDidMount(){
+		this.getBlogs();
+	}
+
+	getBlogs() {
+		$.ajax(
+			{
+				type: 'GET',
+				url: '/blogs',
+				dataType: 'json',
+				success: function(data)
+				{
+					this.setState(
+						{
+							blogData: data
+						});
+				}.bind(this),
+				error: function(xhr)
+				{
+					console.log(xhr)
+				}
+			});
 	}
 
 	createBlogs(){
-		blogs = data.map((blog) =>
-			<Item changeClicked={this.props.changeClicked} name={blog["name"]} url={blog["url"]} />
-		);
+
+		blogs = [];
+
+		var blogData = this.state.blogData;
+		for (var i = 0; i < blogData.length; i++)
+		{
+			blogs.push(<Item changeClicked={this.props.changeClicked} name={blogData[i]['display']} />);
+		}
 	}
 
 	render () {
+
+		this.createBlogs();
+
 		return (
     		<div>
     			{blogs}

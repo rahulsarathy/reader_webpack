@@ -13,6 +13,7 @@ import book_creator
 import pickle
 from flask_mail import Mail, Message
 import os
+import json
 
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
@@ -72,6 +73,11 @@ mail = Mail(app)
 @app.route('/')
 def index(name=None):
 	return render_template('index.html', name=name)
+
+@app.route('/blogs', methods=['GET'])
+def blogs():
+	r = Response(json.dumps(data), status=200)
+	return r
 
 @app.route('/first', methods=['POST'])
 def retrieveHTML():
@@ -148,15 +154,19 @@ def poll():
 	r = Response(str("polling"), status=200)
 	return r
 
-@app.route('/send', methods=['POST'])
+@app.route('/send')
 def send():
 	print("sending email")
+	recipient = request.values.get('recipient')
+	print(recipient)
 	msg = Message(
 		subject="Hello",
 		sender=app.config.get("MAIL_USERNAME"),
 		recipients=["rahul@sarathy.org"],
 		body="This is a test email I sent with Gmail and Python")
 	mail.send(msg)
+	r = Response(str("mailing"), status=200)
+	return r
 
 if __name__ == '__main__':		
 	app.run(debug=True)
