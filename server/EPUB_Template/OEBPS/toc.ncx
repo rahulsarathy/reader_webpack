@@ -24,12 +24,5 @@
 			<content src="Text/chap01.xhtml"/>
 		</navPoint>
 		
-		<navPoint class="chapter" id="backcover" playOrder="3">
-			<navLabel>
-				<text>Backcover</text>
-			</navLabel>
-			<content src="Text/backcover.xhtml"/>
-		</navPoint>
-		
 	</navMap>
 </ncx>

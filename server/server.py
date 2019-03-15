@@ -60,6 +60,11 @@ data = {
 	{
 		'display': 'Elaine Ou',
 		'url': 'https://elaineou.com/feed/',
+	},
+	'eugene_wei':
+	{
+		'display': 'Eugene Wei',
+		'url': 'https://eugene-wei.squarespace.com/blog?format=rss'
 	}
 
 }

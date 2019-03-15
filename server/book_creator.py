@@ -1,10 +1,14 @@
 import shutil
+from shutil import copyfile
 import os
 from bs4 import BeautifulSoup
 import json
 
 def createEBook(name):
 	convertToXHTML(name)
+	copyfile("./publishing/images/" + name + "/author.jpg", "./EPUB_Template/OEBPS/images/author.jpg")
+	copyfile("./publishing/images/" + name + "/cover.jpg", "./EPUB_Template/OEBPS/images/cover.jpg")
+
 	shutil.make_archive('./publishing/books/' + name , 'zip', './EPUB_Template')
 	os.rename('./publishing/books/' + name + '.zip', './publishing/books/' + name + '.epub')
 
