@@ -8,7 +8,7 @@ import time
 def findFirst(name, xml):
 	# url = 'https://stratechery.com/feed'
 	link = xml.find('guid').text
-
+	
 	article = Article(link)
 	article.download()
 	article.parse()

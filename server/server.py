@@ -65,6 +65,12 @@ data = {
 	{
 		'display': 'Eugene Wei',
 		'url': 'https://eugene-wei.squarespace.com/blog?format=rss'
+	},
+	'meaningness':
+	{
+		'display': 'Meaningness',
+		'url': 'https://meaningness.com/rss.xml',
+		'custom_parse': True
 	}
 
 }
@@ -78,7 +84,8 @@ mail = Mail(app)
 
 @app.route('/')
 def index(name=None):
-	return render_template('index.html', name=name)
+	user = {'username': 'Rahul'}
+	return render_template('index.html', name=name, user=user)
 
 @app.route('/blogs', methods=['GET'])
 def blogs():
