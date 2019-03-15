@@ -27,7 +27,7 @@ export default class Reader extends React.Component {
 		$.ajax(
 			{
 				type: 'POST',
-				url: '/first',
+				url: '/parseRSS',
 				dataType: 'html',
 				data: data,
 				success: function(data)

@@ -1,13 +1,9 @@
 from flask import Flask
-import html_parser
-import json
 from urllib.request import urlopen
 from urllib.request import Request as req
 from flask import render_template, request, Response
-import time, threading, webbrowser, random
-from newspaper import Article
+import time, threading
 from bs4 import BeautifulSoup, CData
-import sys
 import cleaning
 import book_creator
 import pickle
@@ -84,44 +80,28 @@ def blogs():
 	r = Response(json.dumps(data), status=200)
 	return r
 
-# @app.route('/first', methods=['POST'])
-# def retrieveHTML():
-# 	name = request.values.get('name')
-# 	url = data[name]['url']
-# 	soup = cleaning.findFirst(url, name)
-
-# 	book_creator.createEBook(name)
-
-# 	r = Response(str(soup), status=200)
-# 	return r
-
 @app.route('/reset', methods=['POST'])
 def reset():
-		file = open('last.txt', 'rb')
-		time_table = pickle.load(file)
-		file.close()
+	file = open('last.txt', 'rb')
+	time_table = pickle.load(file)
+	file.close()
 
-		for key in time_table:
-			time_table[key] = "Mon, 11 Mar 2019 17:45:34 +0000"
+	for key in time_table:
+		time_table[key] = "Mon, 11 Mar 2019 17:45:34 +0000"
 
-		file = open('last.txt', 'wb')
-		pickle.dump(time_table, file)
-		file.close()
-		print("times resetted")
-		r = Response(str("times reset"), status=200)
-		return r
+	file = open('last.txt', 'wb')
+	pickle.dump(time_table, file)
+	file.close()
+	print("times resetted")
+	r = Response(str("times reset"), status=200)
+	return r
 
-@app.route('/first', methods=['POST'])
-def correct(name=None):
+@app.route('/parseRSS', methods=['POST'])
+def parseRSS(name=None):
 	if name is None:
 		name = request.values.get('name')
 
 	url = data[name]['url']
-
-	if 'custom_parse' in data[name]:
-		output =  cleaning.findFirst(url, name)
-		r = Response(str(output), status=200)
-		return r
 
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 	toSend = req(url=url, headers=headers)
@@ -129,13 +109,23 @@ def correct(name=None):
 	rss_feed = BeautifulSoup(xml, 'html.parser')
 
 	output = rss_feed.find('item')
-	max = 0
 
-	for cd in output.findAll(text=True):
-		if isinstance(cd, CData):
-			if len(cd) > max:
-				output = BeautifulSoup(cd, 'html.parser')
-				max = len(cd)
+	if 'custom_parse' in data[name]:
+		output =  cleaning.findFirst(name, output)
+	else:
+		max = 0
+
+		for cd in output.findAll(text=True):
+			if isinstance(cd, CData):
+				if len(cd) > max:
+					output = BeautifulSoup(cd, 'html.parser')
+					max = len(cd)
+
+
+	open( './publishing/html/' + name + '.html', 'w').close()
+	text_file = open('./publishing/html/' + name + ".html", "w")
+	text_file.write(str(output))
+	text_file.close()
 
 	r = Response(str(output), status=200)
 	return r
@@ -144,10 +134,11 @@ def correct(name=None):
 def poll():
 	print("polling")
 
+	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+
 	for blog in data:
 		url = data[blog]['url']
 
-		headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 		toSend = req(url=url, headers=headers)
 
 		xml = urlopen(toSend).read()
@@ -179,7 +170,7 @@ def poll():
 
 		print("creating {}".format(blog))
 
-		soup = cleaning.findFirst(url, blog)
+		parseRSS(blog)
 
 		book_creator.createEBook(blog)
 

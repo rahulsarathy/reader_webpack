@@ -9,17 +9,18 @@ def createEBook(name):
 	os.rename('./publishing/books/' + name + '.zip', './publishing/books/' + name + '.epub')
 
 def convertToXHTML(name):
-	open('a.xml', 'w').close()
 	f = open('./publishing/html/' + name + '.html', 'r')
 	soup = BeautifulSoup(f, features="lxml")
 	f.close()
-	g = open('a.xml', 'w')
+	g = open('./publishing/xml/' + name + '.xml', 'w').close()
+	g = open('./publishing/xml/' + name + '.xml', 'w')
 	g.write(str(soup))
 	g.close()
-	injectXML()
 
-def injectXML():
-	f = open('a.xml', "r")
+	injectXML(name)
+
+def injectXML(name):
+	f = open('./publishing/xml/' + name + '.xml', "r")
 	contents = f.read()
 	bookSoup = BeautifulSoup(contents, "xml")
 	innerbody = bookSoup.body.findChildren()[0]
@@ -30,11 +31,10 @@ def injectXML():
 	open('./EPUB_Template/OEBPS/Text/chap01.xhtml', 'w').close()
 	elem = soup.find('body')
 	elem.clear()
-	elem.append(innerbody)
+	elem.append(bookSoup)
 	page = open('./EPUB_Template/OEBPS/Text/chap01.xhtml', "w")
 	page.write(str(soup))
 	page.close()
-
 
 
 
