@@ -8,7 +8,7 @@ data = {
 	'bryan_caplan_econlib': False,
 	'marginal_revolution': False,
 	'ribbonfarm': False,
-'melting_asphalt': False,
+	'melting_asphalt': False,
 	'overcoming_bias': False,
 	'elaine_ou': False,
 	'eugene_wei': False,
