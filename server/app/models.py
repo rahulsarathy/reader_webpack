@@ -32,8 +32,7 @@ class Blogs(db.Model):
 	meaningness = db.Column(db.Boolean, unique=False, default=False)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
 
-
-
+	
 @login.user_loader
 def load_user(id):
 	return User.query.get(int(id))
