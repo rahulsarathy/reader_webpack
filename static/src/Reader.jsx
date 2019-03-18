@@ -41,7 +41,7 @@ export default class Reader extends React.Component {
 				}.bind(this),
 				error: function(xhr)
 				{
-					console.log(xhr.responseText)
+					console.log("error is " + xhr.responseText)
 				}
 			});
 	}

@@ -32,7 +32,7 @@ export default class Options extends React.Component {
 				}.bind(this),
 				error: function(xhr)
 				{
-					console.log(xhr)
+					console.log("error is " + xhr)
 				}
 			});
 	}

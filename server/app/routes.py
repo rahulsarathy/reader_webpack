@@ -1,7 +1,8 @@
-from app import app
+from app import app, db
+from app.forms import RegistrationForm
 from urllib.request import urlopen
 from urllib.request import Request as req
-from flask import render_template, request, Response
+from flask import render_template, request, Response, redirect, flash, url_for
 import time, threading
 from bs4 import BeautifulSoup, CData
 import pickle
@@ -11,20 +12,12 @@ import json
 from app import cleaning
 from app import book_creator
 from flask_mail import Mail, Message
+from flask_login import current_user, login_user, logout_user, login_required
+from app.models import User
+from app.forms import LoginForm
+from werkzeug.urls import url_parse
 
-mail_settings = {
-    "MAIL_SERVER": 'smtp.gmail.com',
-    "MAIL_PORT": 465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": os.environ['EMAIL_USER'],
-    "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
-}
-
-app.config.update(mail_settings)
-mail = Mail(app)
-
-data = {
+blogs = {
 	'stratechery': {
 		'display': "Stratechery",
 		'url': "https://stratechery.com/feed",
@@ -79,17 +72,32 @@ data = {
 
 }
 
+mail_settings = {
+    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_PORT": 465,
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": os.environ['EMAIL_USER'],
+    "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
+}
+
+app.config.update(mail_settings)
+mail = Mail(app)
+
 
 @app.route('/')
+@app.route('/index')
+@login_required
 def index(name=None):
-	user = {'username': 'Rahul'}
-	return render_template('index.html', name=name, user=user)
+	return render_template('index.html', name=name)
 
+@login_required
 @app.route('/blogs', methods=['GET'])
-def blogs():
-	r = Response(json.dumps(data), status=200)
+def get_blogs():
+	r = Response(json.dumps(blogs), status=200)
 	return r
 
+@login_required
 @app.route('/reset', methods=['POST'])
 def reset():
 	file = open('last.txt', 'rb')
@@ -106,12 +114,13 @@ def reset():
 	r = Response(str("times reset"), status=200)
 	return r
 
+@login_required
 @app.route('/parseRSS', methods=['POST'])
 def parseRSS(name=None):
 	if name is None:
 		name = request.values.get('name')
 
-	url = data[name]['url']
+	url = blogs[name]['url']
 
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 	toSend = req(url=url, headers=headers)
@@ -120,7 +129,7 @@ def parseRSS(name=None):
 
 	output = rss_feed.find('item')
 
-	if 'custom_parse' in data[name]:
+	if 'custom_parse' in blogs[name]:
 		output =  cleaning.findFirst(name, output)
 	else:
 		max = 0
@@ -140,14 +149,15 @@ def parseRSS(name=None):
 	r = Response(str(output), status=200)
 	return r
 
+@login_required
 @app.route('/poll', methods=['POST'])
 def poll():
 	print("polling")
 
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
-	for blog in data:
-		url = data[blog]['url']
+	for blog in blogs:
+		url = blogs[blog]['url']
 
 		toSend = req(url=url, headers=headers)
 
@@ -188,6 +198,7 @@ def poll():
 	r = Response(str("polling"), status=200)
 	return r
 
+@login_required
 @app.route('/send')
 def send():
 	print("sending email")
@@ -201,3 +212,46 @@ def send():
 	mail.send(msg)
 	r = Response(str("mailing"), status=200)
 	return r
+
+@login_required
+@app.route('/user_blogs')
+def user_blogs():
+	user = request.values.get('id')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+    return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/logout')
+def logout():
+	logout_user()
+	return redirect(url_for('index'))
