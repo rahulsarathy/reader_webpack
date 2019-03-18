@@ -13,10 +13,9 @@ if (login) {
 const content = document.getElementById('content') !== null;
 console.log("content is " + content)
 if (content) {
-	ReactDOM.render(< Reader/>, document.getElementById('content'))
+	const user_id = parseInt(document.getElementById('user_id').innerHTML)
+	ReactDOM.render(< Reader user_id={user_id}/>, document.getElementById('content'))
 }
-
-
 
 $(document).ready(function() {
 	//console.log("calling poll");

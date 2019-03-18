@@ -91,11 +91,13 @@ mail = Mail(app)
 def index(name=None):
 	return render_template('index.html', name=name)
 
+@login_required
 @app.route('/blogs', methods=['GET'])
 def get_blogs():
 	r = Response(json.dumps(blogs), status=200)
 	return r
 
+@login_required
 @app.route('/reset', methods=['POST'])
 def reset():
 	file = open('last.txt', 'rb')
@@ -112,6 +114,7 @@ def reset():
 	r = Response(str("times reset"), status=200)
 	return r
 
+@login_required
 @app.route('/parseRSS', methods=['POST'])
 def parseRSS(name=None):
 	if name is None:
@@ -146,6 +149,7 @@ def parseRSS(name=None):
 	r = Response(str(output), status=200)
 	return r
 
+@login_required
 @app.route('/poll', methods=['POST'])
 def poll():
 	print("polling")
@@ -194,6 +198,7 @@ def poll():
 	r = Response(str("polling"), status=200)
 	return r
 
+@login_required
 @app.route('/send')
 def send():
 	print("sending email")
@@ -207,6 +212,12 @@ def send():
 	mail.send(msg)
 	r = Response(str("mailing"), status=200)
 	return r
+
+@login_required
+@app.route('/user_blogs')
+def user_blogs():
+	user = request.values.get('id')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
