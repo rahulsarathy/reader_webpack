@@ -13,7 +13,7 @@ from app import cleaning
 from app import book_creator
 from flask_mail import Mail, Message
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Blog
+from app.models import User, Blog, BlogName
 from app.forms import LoginForm
 from werkzeug.urls import url_parse
 
@@ -94,7 +94,15 @@ def index(name=None):
 @login_required
 @app.route('/blogs', methods=['GET'])
 def get_blogs():
-	r = Response(json.dumps(blogs), status=200)
+	chosen = []
+	choices = Blog.query.all()
+	for choice in choices:
+		if (choice.user_id == current_user.id):
+			chosen.append(choice.name.name)
+	toReturn = []
+	toReturn.append(blogs)
+	toReturn.append(chosen)
+	r = Response(json.dumps(toReturn), status=200)
 	return r
 
 @login_required
@@ -212,12 +220,6 @@ def send():
 	mail.send(msg)
 	r = Response(str("mailing"), status=200)
 	return r
-
-@login_required
-@app.route('/user_blogs')
-def user_blogs():
-	user = request.values.get('id')
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

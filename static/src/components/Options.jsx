@@ -42,9 +42,10 @@ export default class Options extends React.Component {
 		blogs = [];
 
 		var blogData = this.state.blogData;
-		for (var key in blogData)
+		var toDisplay = blogData[0]
+		for (var key in toDisplay)
 		{
-			var display = blogData[key]['display']
+			var display = toDisplay[key]['display']
 			blogs.push(<Item name={key} changeClicked={this.props.changeClicked} display={display} />);
 		}
 	}
