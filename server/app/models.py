@@ -1,6 +1,21 @@
-from app import app, db, JSON, login
+from app import app, db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+import json
+import enum
+from sqlalchemy import Enum
+
+class BlogName(enum.Enum):
+	stratechery = 1
+	startupboy = 2
+	bryan_caplan_econlib = 3
+	marginal_revolution = 4
+	ribbonfarm = 5
+	melting_asphalt = 6
+	overcoming_bias = 7
+	elaine_ou = 8
+	eugene_wei = 9
+	meaningness = 10
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -8,7 +23,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     kindle_email = db.Column(db.String(120), index=True, unique=True)
-    subscribed = db.relationship('Blogs', backref='owner')
+    blogs = db.relationship('Blog', backref='owner')
 
     def set_password(self, password):
     	self.password_hash = generate_password_hash(password)
@@ -19,19 +34,13 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {} with id {}>'.format(self.username, self.id)
 
-class Blogs(db.Model):
-	stratechery = db.Column(db.Boolean, unique=False, default=False)
-	startupboy = db.Column(db.Boolean, unique=False, default=False)
-	bryan_caplan_econlib = db.Column(db.Boolean, unique=False, default=False)
-	marginal_revolution = db.Column(db.Boolean, unique=False, default=False)
-	ribbonfarm = db.Column(db.Boolean, unique=False, default=False)
-	melting_asphalt = db.Column(db.Boolean, unique=False, default=False)
-	overcoming_bias = db.Column(db.Boolean, unique=False, default=False)
-	elaine_ou = db.Column(db.Boolean, unique=False, default=False)
-	eugene_wei =db.Column(db.Boolean, unique=False, default=False)
-	meaningness = db.Column(db.Boolean, unique=False, default=False)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+class Blog(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	name = db.Column(Enum(BlogName))
 
+	def __repr__(self):
+		return '<User {} wants emails from {}>'.format(self.user_id, BlogName(self.name))
 	
 @login.user_loader
 def load_user(id):

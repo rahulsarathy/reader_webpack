@@ -13,7 +13,7 @@ from app import cleaning
 from app import book_creator
 from flask_mail import Mail, Message
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Blog
 from app.forms import LoginForm
 from werkzeug.urls import url_parse
 
