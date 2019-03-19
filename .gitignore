@@ -10,3 +10,5 @@
 /server/a.xml
 /server/last.txt
 server/__pycache__/config.cpython-37.pyc
+server/app/__pycache__/models.cpython-37.pyc
+server/app/__pycache__/routes.cpython-37.pyc
