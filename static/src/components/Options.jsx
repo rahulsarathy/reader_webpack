@@ -4,6 +4,7 @@ import $ from 'jquery';
 
 
 var blogs;
+var selected;
 
 export default class Options extends React.Component {
 	constructor(props) {
@@ -42,11 +43,18 @@ export default class Options extends React.Component {
 		blogs = [];
 
 		var blogData = this.state.blogData;
-		var toDisplay = blogData[0]
-		for (var key in toDisplay)
+		for (var key in blogData)
 		{
-			var display = toDisplay[key]['display']
-			blogs.push(<Item name={key} changeClicked={this.props.changeClicked} display={display} />);
+			var display = blogData[key]['display']
+			var selected;
+			if (blogData[key].hasOwnProperty('selected'))
+			{
+				blogs.push(<Item name={key} selected={true} changeClicked={this.props.changeClicked} display={display} />);
+
+			}
+			else {
+				blogs.push(<Item name={key} changeClicked={this.props.changeClicked} display={display} />);
+			}
 		}
 	}
 

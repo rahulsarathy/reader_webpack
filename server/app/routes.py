@@ -94,15 +94,11 @@ def index(name=None):
 @login_required
 @app.route('/blogs', methods=['GET'])
 def get_blogs():
-	chosen = []
 	choices = Blog.query.all()
 	for choice in choices:
 		if (choice.user_id == current_user.id):
-			chosen.append(choice.name.name)
-	toReturn = []
-	toReturn.append(blogs)
-	toReturn.append(chosen)
-	r = Response(json.dumps(toReturn), status=200)
+			blogs[choice.name.name]['selected'] = True
+	r = Response(json.dumps(blogs), status=200)
 	return r
 
 @login_required

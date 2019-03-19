@@ -14,12 +14,7 @@ export default class Reader extends React.Component {
 			innerHTML: {
 				__html: "<div></div>"
 			},
-			innerContent: '',
 		};
-	}
-
-	handleClick() {
-		this.parseURL(this.state.value);
 	}
 
 	showFirst(data)
