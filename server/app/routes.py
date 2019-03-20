@@ -118,7 +118,11 @@ def subscribe():
 @app.route('/unsubscribe', methods=['POST'])
 def unsubscribe():
 	name = request.values.get('name')
-	query = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name).delete()
+	queries = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name).all()
+	for query in queries:
+		print(query.name.name)
+		blogs[query.name.name]['selected'] = False
+		db.session.delete(query)
 	db.session.commit()
 	r = Response("unsubscribed from {}".format(name), status=200)
 	return r
@@ -136,7 +140,6 @@ def reset():
 	file = open('last.txt', 'wb')
 	pickle.dump(time_table, file)
 	file.close()
-	print("times resetted")
 	r = Response(str("times reset"), status=200)
 	return r
 

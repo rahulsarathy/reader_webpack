@@ -83,7 +83,13 @@ export default class Options extends React.Component {
 			var selected;
 			if (blogData[key].hasOwnProperty('selected'))
 			{
-				selected = true;
+				if (blogData[key]['selected'])
+				{
+					selected = true;
+				}
+				else {
+					selected = false;
+				}
 
 			}
 			else {
