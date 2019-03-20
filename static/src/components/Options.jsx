@@ -9,13 +9,47 @@ var selected;
 export default class Options extends React.Component {
 	constructor(props) {
 		super(props)
+
+		this.subscribe = this.subscribe.bind(this)
+		this.unsubscribe = this.unsubscribe.bind(this)
+
 		this.state = {
 			blogData: {}
 		}
 	}
 
 	componentDidMount(){
+		console.log("Called")
 		this.getBlogs();
+	}
+
+
+	subscribe(e)
+	{
+		var data = {
+			name: event.target.parentNode.getAttribute('name')
+		}
+		$.ajax(
+			{
+				type: 'POST',
+				url: '/subscribe',
+				data: data
+			});
+
+	}
+
+	unsubscribe(e)
+	{
+		var data = {
+			name: event.target.parentNode.getAttribute('name')
+		}
+		$.ajax(
+			{
+				type: 'POST',
+				url: '/unsubscribe',
+				data: data
+			});
+
 	}
 
 	getBlogs() {
@@ -49,19 +83,18 @@ export default class Options extends React.Component {
 			var selected;
 			if (blogData[key].hasOwnProperty('selected'))
 			{
-				blogs.push(<Item name={key} selected={true} changeClicked={this.props.changeClicked} display={display} />);
+				selected = true;
 
 			}
 			else {
-				blogs.push(<Item name={key} changeClicked={this.props.changeClicked} display={display} />);
+				selected = false;
 			}
+			blogs.push(<Item name={key} subscribe={this.subscribe} unsubscribe={this.unsubscribe} selected={selected} changeClicked={this.props.changeClicked} display={display} />);
 		}
 	}
 
 	render () {
-
 		this.createBlogs();
-
 		return (
     		<div>
     			{blogs}

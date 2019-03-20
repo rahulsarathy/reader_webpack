@@ -19,7 +19,10 @@ export default class Item extends React.Component {
       className="item-unselected"
     }
     return (
-      <div name={this.props.name} onClick={this.props.changeClicked} className={className}>
+      <div name={this.props.name} className={className}>
+        <button onClick={this.props.subscribe}>Subscribe</button>
+        <button onClick={this.props.unsubscribe}>Unsubscribe</button>
+        <button onClick={this.props.changeClicked} >Get HTML</button>
         {this.props.display}
       </div>
     	);

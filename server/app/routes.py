@@ -95,10 +95,32 @@ def index(name=None):
 @app.route('/blogs', methods=['GET'])
 def get_blogs():
 	choices = Blog.query.all()
+	print(choices)
 	for choice in choices:
 		if (choice.user_id == current_user.id):
 			blogs[choice.name.name]['selected'] = True
 	r = Response(json.dumps(blogs), status=200)
+	return r
+
+@login_required
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+	name = request.values.get('name')
+	blog = Blog(user_id=current_user.id, name=name)
+	check = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name)
+	if not check.all():
+		db.session.add(blog)
+		db.session.commit()
+	r = Response("subscribed from {}".format(name), status=200)
+	return r
+
+@login_required
+@app.route('/unsubscribe', methods=['POST'])
+def unsubscribe():
+	name = request.values.get('name')
+	query = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name).delete()
+	db.session.commit()
+	r = Response("unsubscribed from {}".format(name), status=200)
 	return r
 
 @login_required
