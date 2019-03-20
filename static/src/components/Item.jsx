@@ -13,10 +13,10 @@ export default class Item extends React.Component {
     var className;
     if (this.props.selected)
     {
-      className="item-selected"
+      className="item selected"
     }
     else {
-      className="item-unselected"
+      className="item unselected"
     }
     return (
       <div name={this.props.name} className={className}>

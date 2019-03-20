@@ -68,8 +68,35 @@ blogs = {
 		'display': 'Meaningness',
 		'url': 'https://meaningness.com/rss.xml',
 		'custom_parse': True
+	},
+	'cato': {
+		'display': 'Cato Institute',
+		'url': 'https://www.cato.org/rss/recent-opeds',
+		'custom_parse': True
+	},
+	'aei': {
+		'display': 'American Enterprise Institute',
+		'url': 'https://http://www.aei.org/feed/',
+		'custom_parse': True
+	},
+	'brookings': {
+		'display': 'Brookings Institution',
+		'url': 'http://feeds.feedblitz.com/BrookingsRSS/programs/economics',
+		'custom_parse': True
+	},
+	'niskanen': {
+			'display': 'Niskanen Center',
+			'url': 'https://niskanencenter.org/feed/',
+	},
+	'mercatus': {
+		'display': 'Mercatus Center',
+		'url': 'https://www.mercatus.org/feed',
+		'custom_parse': True
+	}, 
+	'pew': {
+		'display': 'Pew Research Center',
+		'url': 'http://www.pewresearch.org/feed/',
 	}
-
 }
 
 mail_settings = {
@@ -119,7 +146,6 @@ def unsubscribe():
 	name = request.values.get('name')
 	queries = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name).all()
 	for query in queries:
-		print(query.name.name)
 		blogs[query.name.name]['selected'] = False
 		db.session.delete(query)
 	db.session.commit()

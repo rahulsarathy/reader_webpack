@@ -1,27 +1,26 @@
-.item-selected {
-	border-style: solid;
-	border-color: green;
-	height: 150px;
-	width: 80px;
-	display: inline-block;
-	margin: 10px;
-	border-radius: 5px;
-	font-family: sans-serif;
-	word-wrap: break-word; 
-}
-
-.item-unselected {
-	border-style: solid;
-	border-color: red;
-	height: 150px;
-	width: 80px;
-	display: inline-block;
-	margin: 10px;
-	border-radius: 5px;
-	font-family: sans-serif;
-	word-wrap: break-word; 
-}
 
 .article {
 	font-family: sans-serif;
+}
+
+.item {
+	border-style: solid;
+	border-color: green;
+	height: 180px;
+	width: 100px;
+	display: inline-block;
+	margin: 10px;
+	border-radius: 2px;
+	font-family: sans-serif;
+	word-wrap: break-word; 
+	border-width: 1px;
+	vertical-align: top;
+}
+
+.selected {
+	border-color: green;
+}
+
+.unselected {
+	border-color: red;
 }
