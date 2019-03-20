@@ -95,7 +95,6 @@ def index(name=None):
 @app.route('/blogs', methods=['GET'])
 def get_blogs():
 	choices = Blog.query.all()
-	print(choices)
 	for choice in choices:
 		if (choice.user_id == current_user.id):
 			blogs[choice.name.name]['selected'] = True

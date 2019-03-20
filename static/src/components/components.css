@@ -1,8 +1,8 @@
 .item-selected {
 	border-style: solid;
 	border-color: green;
-	height: 100px;
-	width: 100px;
+	height: 150px;
+	width: 80px;
 	display: inline-block;
 	margin: 10px;
 	border-radius: 5px;
@@ -13,8 +13,8 @@
 .item-unselected {
 	border-style: solid;
 	border-color: red;
-	height: 100px;
-	width: 100px;
+	height: 150px;
+	width: 80px;
 	display: inline-block;
 	margin: 10px;
 	border-radius: 5px;
