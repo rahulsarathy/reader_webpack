@@ -5,6 +5,7 @@ import Item from './Item';
 import Reset from './Reset';
 import Poll from './Poll';
 import Email from './Email';
+import Categories from './Categories';
 
 
 export {
@@ -14,5 +15,6 @@ export {
 	Item,
 	Reset,
 	Poll,
-	Email
+	Email,
+	Categories
 }

@@ -24,3 +24,17 @@
 .unselected {
 	border-color: red;
 }
+
+.bookView {
+	border-style: solid;
+	border-color: black;
+	margin: 10px;
+	border-width: 1px;
+	z-index: 10;
+	background-color: grey;
+	transition: all 1s;
+}
+
+.active {
+	height: 50%;
+}
