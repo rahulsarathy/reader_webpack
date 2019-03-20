@@ -26,8 +26,11 @@ export default class Options extends React.Component {
 
 	subscribe(e)
 	{
+		var name = event.target.parentNode.getAttribute('name');
+		var blogData = this.state.blogData;
+		blogData[name]['selected'] = true;
 		var data = {
-			name: event.target.parentNode.getAttribute('name')
+			name: name
 		}
 		$.ajax(
 			{
@@ -35,13 +38,20 @@ export default class Options extends React.Component {
 				url: '/subscribe',
 				data: data
 			});
+		this.setState(
+			{
+				blogData: blogData
+			});
 
 	}
 
 	unsubscribe(e)
 	{
+		var name = event.target.parentNode.getAttribute('name');
+		var blogData = this.state.blogData;
+		blogData[name]['selected'] = false;
 		var data = {
-			name: event.target.parentNode.getAttribute('name')
+			name: name
 		}
 		$.ajax(
 			{
@@ -49,7 +59,10 @@ export default class Options extends React.Component {
 				url: '/unsubscribe',
 				data: data
 			});
-
+		this.setState(
+		{
+			blogData: blogData
+		});
 	}
 
 	getBlogs() {
