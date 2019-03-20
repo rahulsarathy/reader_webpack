@@ -13,7 +13,7 @@ from app import cleaning
 from app import book_creator
 from flask_mail import Mail, Message
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Blog
+from app.models import User, Blog, BlogName
 from app.forms import LoginForm
 from werkzeug.urls import url_parse
 
@@ -94,7 +94,37 @@ def index(name=None):
 @login_required
 @app.route('/blogs', methods=['GET'])
 def get_blogs():
+	choices = Blog.query.all()
+	print(choices)
+	for choice in choices:
+		if (choice.user_id == current_user.id):
+			blogs[choice.name.name]['selected'] = True
 	r = Response(json.dumps(blogs), status=200)
+	return r
+
+@login_required
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+	name = request.values.get('name')
+	blog = Blog(user_id=current_user.id, name=name)
+	check = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name)
+	if not check.all():
+		db.session.add(blog)
+		db.session.commit()
+	r = Response("subscribed from {}".format(name), status=200)
+	return r
+
+@login_required
+@app.route('/unsubscribe', methods=['POST'])
+def unsubscribe():
+	name = request.values.get('name')
+	queries = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name).all()
+	for query in queries:
+		print(query.name.name)
+		blogs[query.name.name]['selected'] = False
+		db.session.delete(query)
+	db.session.commit()
+	r = Response("unsubscribed from {}".format(name), status=200)
 	return r
 
 @login_required
@@ -110,7 +140,6 @@ def reset():
 	file = open('last.txt', 'wb')
 	pickle.dump(time_table, file)
 	file.close()
-	print("times resetted")
 	r = Response(str("times reset"), status=200)
 	return r
 
@@ -212,12 +241,6 @@ def send():
 	mail.send(msg)
 	r = Response(str("mailing"), status=200)
 	return r
-
-@login_required
-@app.route('/user_blogs')
-def user_blogs():
-	user = request.values.get('id')
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

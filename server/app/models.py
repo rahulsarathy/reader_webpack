@@ -40,7 +40,7 @@ class Blog(db.Model):
 	name = db.Column(Enum(BlogName))
 
 	def __repr__(self):
-		return '<User {} wants emails from {}>'.format(self.user_id, BlogName(self.name))
+		return '<User {} wants emails from {}>'.format(self.user_id, self.name)
 	
 @login.user_loader
 def load_user(id):

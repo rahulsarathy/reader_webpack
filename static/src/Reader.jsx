@@ -8,22 +8,20 @@ export default class Reader extends React.Component {
 		super(props);
 
 		this.showFirst = this.showFirst.bind(this);
-		this.changeClicked = this.changeClicked.bind(this);
 
 		this.state = {
 			innerHTML: {
 				__html: "<div></div>"
 			},
-			innerContent: '',
 		};
 	}
 
-	handleClick() {
-		this.parseURL(this.state.value);
-	}
 
-	showFirst(data)
+	showFirst(event)
 	{
+		var data = {
+			name: event.target.parentNode.getAttribute('name')
+		}
 		$.ajax(
 			{
 				type: 'POST',
@@ -46,17 +44,10 @@ export default class Reader extends React.Component {
 			});
 	}
 
-	changeClicked(event) {
-		var data = {
-			name: event.target.getAttribute('name')
-		}
-		this.showFirst(data);
-	}
-
 	render () {
     return (
     	<div>
-    		<Options changeClicked={this.changeClicked} showFirst={this.showFirst}/>
+    		<Options changeClicked={this.showFirst} showFirst={this.showFirst}/>
     		<Reset />
     		<Poll />
     		<Email />
