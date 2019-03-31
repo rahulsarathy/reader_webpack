@@ -24,7 +24,7 @@ export default class Item extends React.Component {
         <button onClick={this.props.unsubscribe}>Unsubscribe</button>
         <button onClick={this.props.changeClicked} >Get HTML</button>
         <button onClick={this.props.onClick}>transition</button>
-        {this.props.display}
+        <p className="itemtext">{this.props.display}</p>
       </div>
     	);
     }
