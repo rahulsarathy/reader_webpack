@@ -1,20 +1,15 @@
-from app import app, db
-from app.forms import RegistrationForm
-from urllib.request import urlopen
-from urllib.request import Request as req
+from urllib.request import urlopen, Request as req
 from flask import render_template, request, Response, redirect, flash, url_for
 import time, threading
 from bs4 import BeautifulSoup, CData
 import pickle
-from flask_mail import Mail, Message
 import os
 import json
-from app import cleaning
-from app import book_creator
-from flask_mail import Mail, Message
+from app import app, db, cleaning, book_creator
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Blog, BlogName
-from app.forms import LoginForm
+from app.forms import LoginForm, ResetPasswordRequestForm, RegistrationForm, ResetPasswordForm
+from app.email import send_password_reset_email
 from werkzeug.urls import url_parse
 
 blogs = {
@@ -116,19 +111,6 @@ blogs = {
 		'category': ['think_tanks']
 	}
 }
-
-mail_settings = {
-    "MAIL_SERVER": 'smtp.gmail.com',
-    "MAIL_PORT": 465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": os.environ['EMAIL_USER'],
-    "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
-}
-
-app.config.update(mail_settings)
-mail = Mail(app)
-
 
 @app.route('/')
 @app.route('/index')
@@ -270,21 +252,6 @@ def poll():
 	r = Response(str("polling"), status=200)
 	return r
 
-@login_required
-@app.route('/send')
-def send():
-	print("sending email")
-	recipient = request.values.get('recipient')
-	print(recipient)
-	msg = Message(
-		subject="Hello",
-		sender=app.config.get("MAIL_USERNAME"),
-		recipients=["rahul@sarathy.org"],
-		body="This is a test email I sent with Gmail and Python")
-	mail.send(msg)
-	r = Response(str("mailing"), status=200)
-	return r
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -328,3 +295,32 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
 
     return render_template('user.html', user=user)
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)

@@ -1,5 +1,5 @@
 import React from 'react';
-import {HTMLContent, ParseURL, URLField, Options, Reset, Poll, Email} from './components/Components.jsx'
+import {HTMLContent, ParseURL, URLField, Options, Reset, Poll} from './components/Components.jsx'
 import $ from 'jquery';
 
 export default class Reader extends React.Component {
@@ -57,7 +57,6 @@ export default class Reader extends React.Component {
     		</div>
     		<Reset />
     		<Poll />
-    		<Email />
     		<HTMLContent innerHTML={this.state.innerHTML}/>
     	</div>
     	);

@@ -4,7 +4,6 @@ import Options from './Options';
 import Item from './Item';
 import Reset from './Reset';
 import Poll from './Poll';
-import Email from './Email';
 import Categories from './Categories';
 
 
