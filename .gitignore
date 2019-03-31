@@ -17,3 +17,6 @@ server/app/__pycache__/models.cpython-37.pyc
 server/app/__pycache__/routes.cpython-37.pyc
 server/app/__pycache__/routes.cpython-37.pyc
 server/app.db
+static/dist/main.js
+server/app/__pycache__/models.cpython-37.pyc
+server/app/__pycache__/routes.cpython-37.pyc
