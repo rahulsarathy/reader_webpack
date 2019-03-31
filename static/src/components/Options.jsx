@@ -1,5 +1,5 @@
 import React from 'react';
-import {Item} from './Components';
+import {Item, Categories} from './Components';
 import $ from 'jquery';
 
 
@@ -93,6 +93,7 @@ export default class Options extends React.Component {
 		for (var key in blogData)
 		{
 			var display = blogData[key]['display']
+
 			var selected;
 			if (blogData[key].hasOwnProperty('selected'))
 			{
@@ -108,8 +109,23 @@ export default class Options extends React.Component {
 			else {
 				selected = false;
 			}
-			blogs.push(<Item name={key} subscribe={this.subscribe} unsubscribe={this.unsubscribe} selected={selected} changeClicked={this.props.changeClicked} display={display} />);
+			blogs.push(<Item name={key} onClick={this.props.onClick} subscribe={this.subscribe} unsubscribe={this.unsubscribe} selected={selected} changeClicked={this.props.changeClicked} display={display} />);
 		}
+	}
+
+	createColumns() {
+		var blogData = this.state.blogData;
+		var columns = {};
+		for (var key in blogData)
+		{
+			for (var category in blogData[key]['category'])
+			{
+
+			}
+		}
+
+
+
 	}
 
 	render () {

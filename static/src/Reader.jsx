@@ -8,6 +8,7 @@ export default class Reader extends React.Component {
 		super(props);
 
 		this.showFirst = this.showFirst.bind(this);
+		this.transition = this.transition.bind(this);
 
 		this.state = {
 			innerHTML: {
@@ -44,10 +45,16 @@ export default class Reader extends React.Component {
 			});
 	}
 
+	transition(){
+    	$(".bookview").toggleClass('active');
+	}
+
 	render () {
     return (
     	<div>
-    		<Options changeClicked={this.showFirst} showFirst={this.showFirst}/>
+    	    <div className="bookview">
+    			<Options onClick={this.transition} changeClicked={this.showFirst} showFirst={this.showFirst}/>
+    		</div>
     		<Reset />
     		<Poll />
     		<Email />

@@ -16,6 +16,12 @@ class BlogName(enum.Enum):
 	elaine_ou = 8
 	eugene_wei = 9
 	meaningness = 10
+	cato = 11
+	aei = 12
+	brookings = 13
+	niskanen = 14
+	mercatus = 15
+	pew = 16
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

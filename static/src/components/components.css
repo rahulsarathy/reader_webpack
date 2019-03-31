@@ -1,27 +1,48 @@
-.item-selected {
-	border-style: solid;
-	border-color: green;
-	height: 150px;
-	width: 80px;
-	display: inline-block;
-	margin: 10px;
-	border-radius: 5px;
-	font-family: sans-serif;
-	word-wrap: break-word; 
-}
-
-.item-unselected {
-	border-style: solid;
-	border-color: red;
-	height: 150px;
-	width: 80px;
-	display: inline-block;
-	margin: 10px;
-	border-radius: 5px;
-	font-family: sans-serif;
-	word-wrap: break-word; 
-}
 
 .article {
 	font-family: sans-serif;
+}
+
+.item {
+	border-style: solid;
+	border-color: green;
+	height: 180px;
+	width: 100px;
+	display: inline-block;
+	margin: 10px;
+	border-radius: 2px;
+	font-family: sans-serif;
+	word-wrap: break-word; 
+	border-width: 1px;
+	 box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3); 
+	vertical-align: top;
+	text-align: center;
+}
+
+.selected {
+	border-color: green;
+}
+
+.unselected {
+	border-color: red;
+}
+
+.bookView {
+	border-style: solid;
+	border-color: black;
+	margin: 10px;
+	border-width: 1px;
+	z-index: 10;
+	height: 100%;
+	transition: all 1s;
+}
+
+.active {
+	height: 50%;
+}
+
+.itemtext {
+	position: relative;
+	left: 0px;
+	top: 30px;
 }
