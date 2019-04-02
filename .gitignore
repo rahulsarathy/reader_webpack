@@ -13,4 +13,3 @@ server/app.db
 static/dist/main.js
 server/app.db
 *.pyc
-*.pyc
