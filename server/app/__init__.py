@@ -27,7 +27,7 @@ mail_settings = {
 
 
 def create_app(config_class=Config):
-	app = Flask(__name__, template_folder='../../static/templates', static_folder="../../static/dist")
+	app = Flask(__name__, template_folder='../static/templates', static_folder="../static/dist")
 
 	app.config.from_object(config_class)
 	app.config.update(mail_settings)

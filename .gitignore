@@ -1,5 +1,5 @@
 /server/venv/
-/static/node_modules/
+/server/static/node_modules/
 /server/publishing/
 /server/a.xml
 /server/nofilter.html
@@ -10,6 +10,6 @@
 /server/a.xml
 /server/last.txt
 server/app.db
-static/dist/main.js
+server/static/dist/main.js
 server/app.db
 *.pyc
