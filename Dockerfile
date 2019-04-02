@@ -4,17 +4,22 @@ RUN adduser -D reader
 
 WORKDIR /home/reader
 
-COPY ./server/requirements.txt requirements.txt
-RUN python -m venv venv
-RUN ./server/venv/bin/pip install -r requirements.txt
-RUN ./server/venv/bin/pip install gunicorn
+COPY requirements.txt requirements.txt
 
-COPY ./server/app app
-COPY ./server/migrations migrations
-COPY ./server/reader.py ./server/config.py boot.sh ./
+RUN apk add --update --no-cache g++ gcc libxslt-dev
+RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
+ENV LIBRARY_PATH=/lib:/usr/lib
+
+RUN python -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+RUN venv/bin/pip install gunicorn
+
+COPY app app
+COPY migrations migrations
+COPY reader.py config.py boot.sh ./
 RUN chmod +x boot.sh
 
-ENV FLASK_APP ./server/reader.py
+ENV FLASK_APP reader.py
 
 RUN chown -R reader:reader ./
 USER reader
