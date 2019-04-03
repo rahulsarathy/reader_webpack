@@ -8,6 +8,99 @@ from sqlalchemy import Enum
 from time import time
 import jwt
 
+blogs = {
+    'stratechery': {
+        'display': "Stratechery",
+        'url': "https://stratechery.com/feed",
+        'category': ['technology']
+    },
+    'startupboy':
+    {
+        'display': "Startupboy",
+        'url': "https://startupboy.com/feed",
+        'category': ['technology']
+
+    },
+    'bryan_caplan_econlib':
+    {
+        'display': 'Bryan Caplan\'s Econlib',
+        'url': "https://www.econlib.org/feed/indexCaplan_xml",
+        'category': ['economics']
+
+    },
+    'marginal_revolution':
+    {       
+        'display': "Marginal Revolution",
+        'url': "https://feeds.feedburner.com/marginalrevolution/",
+        'category': ['economics']
+    },
+    'ribbonfarm':
+    {
+        'display': "Ribbon Farm",
+        'url': "https://ribbonfarm.com/feed",
+        'custom_parse': True,
+        'category': ['rationality']
+    },
+    'melting_asphalt':
+    {
+        'display': "Melting Asphalt",
+        'url': "https://feeds.feedburner.com/MeltingAsphalt",
+        'category': ['rationality']
+    },
+    'overcoming_bias':
+    {
+        'display': 'Overcoming Bias',
+        'url': "http://www.overcomingbias.com/feed",
+        'category': ['rationality', 'economics']
+    },
+    'elaine_ou':
+    {
+        'display': 'Elaine Ou',
+        'url': 'https://elaineou.com/feed/',
+        'category': ['personal_musings']
+    },
+    'eugene_wei':
+    {
+        'display': 'Eugene Wei',
+        'url': 'https://eugene-wei.squarespace.com/blog?format=rss',
+        'category': ['personal_musings'],
+    },
+    'cato': {
+        'display': 'Cato Institute',
+        'url': 'https://www.cato.org/rss/recent-opeds',
+        'category': ['think_tanks'],
+        'custom_parse': True
+    },
+    'aei': {
+        'display': 'American Enterprise Institute',
+        'url': 'https://http://www.aei.org/feed/',
+        'category': ['think_tanks'],
+        'custom_parse': True
+    },
+    'brookings': {
+        'display': 'Brookings Institution',
+        'url': 'http://feeds.feedblitz.com/BrookingsRSS/programs/economics',
+        'category': ['think_tanks', 'economics'],
+        'custom_parse': True
+    },
+    'niskanen': {
+            'display': 'Niskanen Center',
+            'url': 'https://niskanencenter.org/feed/',
+            'category': ['think_tanks', 'economics'],
+    },
+    'mercatus': {
+        'display': 'Mercatus Center',
+        'url': 'https://www.mercatus.org/feed',
+        'category': ['think_tanks', 'economics'],
+        'custom_parse': True
+    }, 
+    'pew': {
+        'display': 'Pew Research Center',
+        'url': 'http://www.pewresearch.org/feed/',
+        'category': ['think_tanks']
+    }
+}
+
 class BlogName(enum.Enum):
 	stratechery = 1
 	startupboy = 2
@@ -65,6 +158,11 @@ class Blog(db.Model):
 	def __repr__(self):
 		return '<User {} wants emails from {}>'.format(self.user_id, self.name)
 	
+class Poll(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(Enum(BlogName), unique=True)
+    time = db.Column(db.DateTime)
+
 @login.user_loader
 def load_user(id):
 	return User.query.get(int(id))
