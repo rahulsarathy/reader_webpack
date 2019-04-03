@@ -14,7 +14,8 @@ RUN python -m venv venv
 RUN venv/bin/pip install -r requirements.txt
 RUN venv/bin/pip3 install newspaper3k && \
     curl https://raw.githubusercontent.com/codelucas/newspaper/master/download_corpora.py | python3
-RUN venv/bin/pip install gunicorn
+RUN venv/bin/pip install gunicorn pymysql
+
 
 COPY app app
 COPY static static
