@@ -14,6 +14,5 @@ export {
 	Item,
 	Reset,
 	Poll,
-	Email,
 	Categories
 }
