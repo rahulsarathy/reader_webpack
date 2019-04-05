@@ -5,6 +5,10 @@ from bs4 import BeautifulSoup
 import json
 
 def createEBook(name):
+	try:
+		shutil.rmtree('./publishing/construction/' + name + '/')
+	except OSError as e:
+		print ("Error: %s - %s." % (e.filename, e.strerror))
 	copyanything('./EPUB_Template', './publishing/construction/' + name + '/')
 	convertToXHTML(name)
 	copyfile("./publishing/images/" + name + "/author.jpg", './publishing/construction/' + name + '/OEBPS/images/author.jpg')

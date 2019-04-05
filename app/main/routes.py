@@ -73,7 +73,7 @@ def createEbook(app, blog, headers):
 
 		print("creating {}".format(blog))
 
-		parseRSS(name=blog)
+		parseWorker(blog)
 
 		book_creator.createEBook(blog)
 
@@ -84,6 +84,12 @@ def parseRSS(name=None):
 	if name is None:
 		name = request.values.get('name')
 
+	output = parseWorker(name)
+
+	r = Response(str(output), status=200)
+	return r
+
+def parseWorker(name):
 	url = blogs[name]['url']
 
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
@@ -104,14 +110,13 @@ def parseRSS(name=None):
 					output = BeautifulSoup(cd, 'html.parser')
 					max = len(cd)
 
-
 	open( './publishing/html/' + name + '.html', 'w').close()
 	text_file = open('./publishing/html/' + name + ".html", "w")
 	text_file.write(str(output))
 	text_file.close()
 
-	r = Response(str(output), status=200)
-	return r
+	return output
+
 
 @login_required
 @bp.route('/reset', methods=['POST'])
