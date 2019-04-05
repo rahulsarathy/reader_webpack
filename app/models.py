@@ -5,7 +5,7 @@ from flask_login import UserMixin
 import json
 import enum
 from sqlalchemy import Enum
-from time import time
+import time
 import jwt
 
 blogs = {
@@ -65,18 +65,18 @@ blogs = {
         'url': 'https://eugene-wei.squarespace.com/blog?format=rss',
         'category': ['personal_musings'],
     },
-    'cato': {
-        'display': 'Cato Institute',
-        'url': 'https://www.cato.org/rss/recent-opeds',
-        'category': ['think_tanks'],
-        'custom_parse': True
-    },
-    'aei': {
-        'display': 'American Enterprise Institute',
-        'url': 'https://http://www.aei.org/feed/',
-        'category': ['think_tanks'],
-        'custom_parse': True
-    },
+    # 'cato': {
+    #     'display': 'Cato Institute',
+    #     'url': 'https://www.cato.org/rss/recent-opeds',
+    #     'category': ['think_tanks'],
+    #     'custom_parse': True
+    # },
+    # 'aei': {
+    #     'display': 'American Enterprise Institute',
+    #     'url': 'https://http://www.aei.org/feed/',
+    #     'category': ['think_tanks'],
+    #     'custom_parse': True
+    # },
     'brookings': {
         'display': 'Brookings Institution',
         'url': 'http://feeds.feedblitz.com/BrookingsRSS/programs/economics',
@@ -100,6 +100,8 @@ blogs = {
         'category': ['think_tanks']
     }
 }
+
+default_time = time.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
 
 class BlogName(enum.Enum):
 	stratechery = 1
@@ -159,9 +161,11 @@ class Blog(db.Model):
 		return '<User {} wants emails from {}>'.format(self.user_id, self.name)
 	
 class Poll(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(Enum(BlogName), unique=True)
-    time = db.Column(db.DateTime)
+    name = db.Column(Enum(BlogName), primary_key=True)
+    time = db.Column(db.DateTime, default=default_time)
+
+    def __repr__(self):
+        return '<Polled {} at {}>'.format(self.name, self.time)
 
 @login.user_loader
 def load_user(id):

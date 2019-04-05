@@ -1,14 +1,19 @@
+import threading
 from urllib.request import urlopen, Request as req
-from flask import render_template, request, Response, redirect, flash, url_for
+from flask import render_template, request, Response, redirect, flash, url_for, current_app
 from flask_login import current_user, login_required
-import time, threading
+import time
+from datetime import datetime
+from threading import Thread
 from bs4 import BeautifulSoup, CData
 import pickle
 import json
 from app import db, cleaning, book_creator
-from app.models import User, Blog, BlogName, blogs
+from app.models import User, Blog, BlogName, Poll, blogs
 from app.main import bp
 from werkzeug.urls import url_parse
+
+DEFAULT_TIME = datetime.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
 
 @bp.route('/user/<username>')
 @login_required
@@ -25,6 +30,14 @@ def poll():
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
 	for blog in blogs:
+		Thread(target=createEbook, name=blog, args=(current_app._get_current_object(), blog, headers)).start()
+
+	threading.Timer(3600, poll).start()
+	r = Response(str("polling"), status=200)
+	return r
+
+def createEbook(app, blog, headers):
+	with app.app_context():
 		url = blogs[blog]['url']
 
 		toSend = req(url=url, headers=headers)
@@ -32,39 +45,38 @@ def poll():
 		xml = urlopen(toSend).read()
 		rss_feed = BeautifulSoup(xml, 'xml')
 
+		# Find last build date. If none, set to default date 11 Mar 2019
 		new_update = rss_feed.find('lastBuildDate')
 		if new_update is not None:
-			new_update = time.strptime(rss_feed.find('lastBuildDate').text.strip(), "%a, %d %b %Y %H:%M:%S +0000")
+			new_update = datetime.strptime(rss_feed.find('lastBuildDate').text.strip(), "%a, %d %b %Y %H:%M:%S +0000")
 		else:
-			new_update = time.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
+			print("rss feed for {} has no default time".format(blog))
+			new_update = DEFAULT_TIME
 
-		file = open('last.txt', 'rb')
-		time_table = pickle.load(file)
-		file.close()
+		# Retrieve last date polled from database
+		# if not in database, create new poll entry
+		last_updated = Poll.query.filter(Poll.name == blog).first()
 
-		last_updated = time.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
-		if blog in time_table:
-			last_updated = time.strptime(time_table[blog].strip(), "%a, %d %b %Y %H:%M:%S +0000")
-
-		# if no new update do nothing
-		if last_updated == new_update:
+		if last_updated.time == new_update:
 			print("skipping {}".format(blog))
-			continue
+			return
 
-		time_table[blog] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", new_update)
-		file = open('last.txt', 'wb')
-		pickle.dump(time_table, file)
-		file.close()
+		if last_updated is None:
+			new_time = datetime.strptime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+			last_updated = Poll(name=blog, time=new_time)
+			db.session.add(last_updated)
+		else:
+			print("setting new time for {}. Time is: {}".format(blog, new_update))
+			last_updated.time = new_update
+
+		db.session.commit()
 
 		print("creating {}".format(blog))
 
-		parseRSS(blog)
+		parseRSS(name=blog)
 
 		book_creator.createEBook(blog)
 
-	threading.Timer(3600, poll).start()
-	r = Response(str("polling"), status=200)
-	return r
 
 @login_required
 @bp.route('/parseRSS', methods=['POST'])
@@ -104,16 +116,15 @@ def parseRSS(name=None):
 @login_required
 @bp.route('/reset', methods=['POST'])
 def reset():
-	file = open('last.txt', 'rb')
-	time_table = pickle.load(file)
-	file.close()
+	for blog in BlogName:
+		last_updated = Poll.query.filter(Poll.name == blog).first()
+		if last_updated is None:
+			poll = Poll(name=blog, time=DEFAULT_TIME)
+			db.session.add(poll)
+		else:
+			last_updated.time = DEFAULT_TIME
+	db.session.commit()
 
-	for key in time_table:
-		time_table[key] = "Mon, 11 Mar 2019 17:45:34 +0000"
-
-	file = open('last.txt', 'wb')
-	pickle.dump(time_table, file)
-	file.close()
 	r = Response(str("times reset"), status=200)
 	return r
 

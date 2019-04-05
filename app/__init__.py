@@ -1,6 +1,6 @@
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, current_app
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import JSON
@@ -39,3 +39,4 @@ def create_app(config_class=Config):
 	return app
 
 from app import models
+from app.models import Poll, BlogName
