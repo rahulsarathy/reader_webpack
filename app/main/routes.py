@@ -30,7 +30,8 @@ def poll():
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
 	for blog in blogs:
-		Thread(target=createEbook, name=blog, args=(current_app._get_current_object(), blog, headers)).start()
+		# Thread(target=createEbook, name=blog, args=(current_app._get_current_object(), blog, headers)).start()
+		createEbook(current_app._get_current_object(), blog, headers)
 
 	threading.Timer(3600, poll).start()
 	r = Response(str("polling"), status=200)
@@ -110,10 +111,7 @@ def parseWorker(name):
 					output = BeautifulSoup(cd, 'html.parser')
 					max = len(cd)
 
-	open( './publishing/html/' + name + '.html', 'w').close()
-	text_file = open('./publishing/html/' + name + ".html", "w")
-	text_file.write(str(output))
-	text_file.close()
+	book_creator.createHTML(name, output)
 
 	return output
 

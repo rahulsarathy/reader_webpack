@@ -8,7 +8,7 @@ def createEBook(name):
 	try:
 		shutil.rmtree('./publishing/construction/' + name + '/')
 	except OSError as e:
-		print ("Error: %s - %s." % (e.filename, e.strerror))
+		print("nothing to delete for {}".format(name))
 	copyanything('./EPUB_Template', './publishing/construction/' + name + '/')
 	convertToXHTML(name)
 	copyfile("./publishing/images/" + name + "/author.jpg", './publishing/construction/' + name + '/OEBPS/images/author.jpg')
@@ -28,6 +28,12 @@ def convertToXHTML(name):
 	g.close()
 
 	injectXML(name)
+
+def createHTML(name, output):
+	open( './publishing/html/' + name + '.html', 'w').close()
+	text_file = open('./publishing/html/' + name + '.html', "w")
+	text_file.write(str(output))
+	text_file.close()
 
 def injectXML(name):
 	f = open('./publishing/xml/' + name + '.xml', "r")

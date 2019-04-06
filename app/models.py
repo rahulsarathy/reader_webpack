@@ -94,11 +94,11 @@ blogs = {
         'category': ['think_tanks', 'economics'],
         'custom_parse': True
     }, 
-    'pew': {
-        'display': 'Pew Research Center',
-        'url': 'http://www.pewresearch.org/feed/',
-        'category': ['think_tanks']
-    }
+    # 'pew': {
+    #     'display': 'Pew Research Center',
+    #     'url': 'http://www.pewresearch.org/feed/',
+    #     'category': ['think_tanks']
+    # }
 }
 
 default_time = time.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
