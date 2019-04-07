@@ -41,6 +41,11 @@
 	height: 50%;
 }
 
+.category {
+	border-style: solid;
+	height: 180px;
+}
+
 .itemtext {
 	position: relative;
 	left: 0px;

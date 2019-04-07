@@ -3,8 +3,9 @@ import {Item, Categories} from './Components';
 import $ from 'jquery';
 
 
-var blogs;
 var selected;
+var columns;
+var categories;
 
 export default class Options extends React.Component {
 	constructor(props) {
@@ -14,12 +15,12 @@ export default class Options extends React.Component {
 		this.unsubscribe = this.unsubscribe.bind(this)
 
 		this.state = {
-			blogData: {}
+			blogData: {},
+			columnData: {}
 		}
 	}
 
 	componentDidMount(){
-		console.log("Called")
 		this.getBlogs();
 	}
 
@@ -73,9 +74,11 @@ export default class Options extends React.Component {
 				dataType: 'json',
 				success: function(data)
 				{
+					//var parsedColumns = this.parseColumns(data[1])
 					this.setState(
 						{
-							blogData: data
+							blogData: data[1],
+							columnData: data[0]
 						});
 				}.bind(this),
 				error: function(xhr)
@@ -85,9 +88,15 @@ export default class Options extends React.Component {
 			});
 	}
 
+
 	createBlogs(){
 
-		blogs = [];
+		columns = {};
+
+		for (var column in this.state.columnData)
+		{
+			columns[this.state.columnData[column]] = []
+		}
 
 		var blogData = this.state.blogData;
 		for (var key in blogData)
@@ -109,31 +118,30 @@ export default class Options extends React.Component {
 			else {
 				selected = false;
 			}
-			blogs.push(<Item name={key} onClick={this.props.onClick} subscribe={this.subscribe} unsubscribe={this.unsubscribe} selected={selected} changeClicked={this.props.changeClicked} display={display} />);
+
+			for (var category in blogData[key]['category'])
+			{
+				columns[blogData[key]['category'][category]].push(<Item name={key} onClick={this.props.onClick} subscribe={this.subscribe} unsubscribe={this.unsubscribe} selected={selected} changeClicked={this.props.changeClicked} display={display} />)
+			}
+
 		}
 	}
 
-	createColumns() {
-		var blogData = this.state.blogData;
-		var columns = {};
-		for (var key in blogData)
+	createColumns(){
+		categories = []
+		for (var key in columns)
 		{
-			for (var category in blogData[key]['category'])
-			{
-
-			}
+			categories.push(<Categories category={key} items={columns[key]}/>)
 		}
-
-
-
 	}
 
 	render () {
 		this.createBlogs();
+		this.createColumns();
 		return (
     		<div>
-    			{blogs}
-    		</div>
+    		{categories}
+   			</div>
     	);
   }
 }

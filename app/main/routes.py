@@ -1,6 +1,6 @@
 import threading
 from urllib.request import urlopen, Request as req
-from flask import render_template, request, Response, redirect, flash, url_for, current_app
+from flask import render_template, request, Response, redirect, flash, url_for, current_app, send_from_directory
 from flask_login import current_user, login_required
 import time
 from datetime import datetime
@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup, CData
 import pickle
 import json
 from app import db, cleaning, book_creator
-from app.models import User, Blog, BlogName, Poll, blogs
+from app.models import User, Blog, BlogName, Poll, blogs, columns
 from app.main import bp, poll
 from werkzeug.urls import url_parse
 
@@ -21,6 +21,7 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
 
     return render_template('user.html', user=user)
+
 
 def startPoll(app):
 	print("polling")
@@ -75,9 +76,6 @@ def createEbook(blog, headers, app):
 		parseWorker(blog)
 
 		book_creator.createEBook(blog)
-
-if __name__== "__main__":
-	main()
 
 @login_required
 @bp.route('/parseRSS', methods=['POST'])
@@ -154,7 +152,8 @@ def get_blogs():
 	for choice in choices:
 		if (choice.user_id == current_user.id):
 			blogs[choice.name.name]['selected'] = True
-	r = Response(json.dumps(blogs), status=200)
+	final  = [columns, blogs]
+	r = Response(json.dumps(final), status=200)
 	return r
 
 @login_required

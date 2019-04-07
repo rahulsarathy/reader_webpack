@@ -40,3 +40,4 @@ def create_app(config_class=Config):
 
 from app import models
 from app.models import Poll, BlogName
+

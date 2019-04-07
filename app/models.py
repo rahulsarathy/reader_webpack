@@ -8,6 +8,8 @@ from sqlalchemy import Enum
 import time
 import jwt
 
+columns = ['technology', 'think_tanks', 'economics', 'rationality', 'personal_musings'] 
+
 blogs = {
     'stratechery': {
         'display': "Stratechery",

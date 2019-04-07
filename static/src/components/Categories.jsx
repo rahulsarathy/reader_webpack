@@ -1,5 +1,6 @@
 import React from 'react';
 import './components.css';
+import {Item} from './Components';
 
 
 export default class Categories extends React.Component {
@@ -11,8 +12,9 @@ export default class Categories extends React.Component {
   render () {
    
     return (
-      <div>
-
+      <div className="category">
+        {this.props.category}
+        {this.props.items}
       </div>
     	);
     }
