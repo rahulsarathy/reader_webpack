@@ -10,7 +10,7 @@ import pickle
 import json
 from app import db, cleaning, book_creator
 from app.models import User, Blog, BlogName, Poll, blogs
-from app.main import bp
+from app.main import bp, poll
 from werkzeug.urls import url_parse
 
 DEFAULT_TIME = datetime.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
@@ -22,24 +22,22 @@ def user(username):
 
     return render_template('user.html', user=user)
 
-@login_required
-@bp.route('/poll', methods=['POST'])
-def poll():
+def startPoll(app):
 	print("polling")
 
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
-
 	for blog in blogs:
 		# Thread(target=createEbook, name=blog, args=(current_app._get_current_object(), blog, headers)).start()
-		createEbook(current_app._get_current_object(), blog, headers)
+		createEbook(blog, headers, app)
 
 	threading.Timer(3600, poll).start()
-	r = Response(str("polling"), status=200)
-	return r
+	# r = Response(str("polling"), status=200)
+	# return r
 
-def createEbook(app, blog, headers):
+def createEbook(blog, headers, app):
 	with app.app_context():
 		url = blogs[blog]['url']
+		print("inside ebook")
 
 		toSend = req(url=url, headers=headers)
 
@@ -78,6 +76,8 @@ def createEbook(app, blog, headers):
 
 		book_creator.createEBook(blog)
 
+if __name__== "__main__":
+	main()
 
 @login_required
 @bp.route('/parseRSS', methods=['POST'])
@@ -89,6 +89,16 @@ def parseRSS(name=None):
 
 	r = Response(str(output), status=200)
 	return r
+
+@bp.before_app_first_request
+def activate_job():
+	def run_job(app):
+		while True:
+			startPoll(app)
+			time.sleep(3600)
+
+	thread = threading.Thread(target=run_job, args=(current_app._get_current_object(),))
+	thread.start()
 
 def parseWorker(name):
 	url = blogs[name]['url']
