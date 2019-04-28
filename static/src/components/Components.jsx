@@ -5,6 +5,8 @@ import Item from './Item';
 import Reset from './Reset';
 import Poll from './Poll';
 import Categories from './Categories';
+import Subscribe from './Subscribe';
+
 
 
 export {
@@ -14,5 +16,6 @@ export {
 	Item,
 	Reset,
 	Poll,
-	Categories
+	Categories,
+	Subscribe
 }

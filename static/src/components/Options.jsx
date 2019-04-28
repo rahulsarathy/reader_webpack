@@ -27,6 +27,7 @@ export default class Options extends React.Component {
 	subscribe(e)
 	{
 		var name = event.target.parentNode.getAttribute('name');
+
 		var blogData = this.state.blogData;
 		blogData[name]['selected'] = true;
 		var data = {
@@ -93,6 +94,8 @@ export default class Options extends React.Component {
 		for (var key in blogData)
 		{
 			var display = blogData[key]['display']
+			var color = blogData[key]['color']
+			var page = blogData[key]['page']
 
 			var selected;
 			if (blogData[key].hasOwnProperty('selected'))
@@ -109,23 +112,9 @@ export default class Options extends React.Component {
 			else {
 				selected = false;
 			}
-			blogs.push(<Item name={key} onClick={this.props.onClick} subscribe={this.subscribe} unsubscribe={this.unsubscribe} selected={selected} changeClicked={this.props.changeClicked} display={display} />);
+			console.log(blogData[key]['image'])
+			blogs.push(<Item name={key} color={color} onClick={this.props.onClick} subscribe={this.subscribe} unsubscribe={this.unsubscribe} selected={selected} changeClicked={this.props.changeClicked} display={display} url={page} />);
 		}
-	}
-
-	createColumns() {
-		var blogData = this.state.blogData;
-		var columns = {};
-		for (var key in blogData)
-		{
-			for (var category in blogData[key]['category'])
-			{
-
-			}
-		}
-
-
-
 	}
 
 	render () {

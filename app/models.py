@@ -12,59 +12,89 @@ blogs = {
     'stratechery': {
         'display': "Stratechery",
         'url': "https://stratechery.com/feed",
-        'category': ['technology']
+        'category': ['technology'],
+        'color': "#FCA71F",
+        'page': 'https://stratechery.com/',
+        'image': True
+
     },
     'startupboy':
     {
         'display': "Startupboy",
         'url': "https://startupboy.com/feed",
-        'category': ['technology']
+        'category': ['technology'],
+        'color': "#D7A174",
+        'page': 'https://startupboy.com/',
+        'image': True
+
 
     },
     'bryan_caplan_econlib':
     {
         'display': 'Bryan Caplan\'s Econlib',
         'url': "https://www.econlib.org/feed/indexCaplan_xml",
-        'category': ['economics']
+        'category': ['economics'],
+        'color': "#0d1226",
+        'page': 'https://www.econlib.org/author/bcaplan/',
+        'image': True
+
 
     },
     'marginal_revolution':
     {       
         'display': "Marginal Revolution",
         'url': "https://feeds.feedburner.com/marginalrevolution/",
-        'category': ['economics']
+        'category': ['economics'],
+        'color': "#00B88E",
+        'page': 'https://marginalrevolution.com/',
+        'image': True
+
     },
     'ribbonfarm':
     {
         'display': "Ribbon Farm",
         'url': "https://ribbonfarm.com/feed",
         'custom_parse': True,
-        'category': ['rationality']
+        'category': ['rationality'],
+        'color': "#30162b",
+        'page': 'https://www.ribbonfarm.com/',
+        'image': True
+
+
     },
     'melting_asphalt':
     {
         'display': "Melting Asphalt",
         'url': "https://feeds.feedburner.com/MeltingAsphalt",
-        'category': ['rationality']
+        'category': ['rationality'],
+        'color': "#970004",
+        'page': 'https://meltingasphalt.com/',
+        'image': True
+
     },
     'overcoming_bias':
     {
         'display': 'Overcoming Bias',
         'url': "http://www.overcomingbias.com/feed",
-        'category': ['rationality', 'economics']
+        'category': ['rationality', 'economics'],
+        'color': "#000080",
+        'page': 'www.overcomingbias.com',
+        'image': False
     },
-    'elaine_ou':
-    {
-        'display': 'Elaine Ou',
-        'url': 'https://elaineou.com/feed/',
-        'category': ['personal_musings']
-    },
-    'eugene_wei':
-    {
-        'display': 'Eugene Wei',
-        'url': 'https://eugene-wei.squarespace.com/blog?format=rss',
-        'category': ['personal_musings'],
-    },
+    # 'elaine_ou':
+    # {
+    #     'display': 'Elaine Ou',
+    #     'url': 'https://elaineou.com/feed/',
+    #     'category': ['personal_musings'],
+    #     'color': "#4286f4"
+    # },
+    # 'eugene_wei':
+    # {
+    #     'display': 'Eugene Wei',
+    #     'url': 'https://eugene-wei.squarespace.com/blog?format=rss',
+    #     'category': ['personal_musings'],
+    #     'color': "#4286f4"
+    # },
     # 'cato': {
     #     'display': 'Cato Institute',
     #     'url': 'https://www.cato.org/rss/recent-opeds',
@@ -77,22 +107,28 @@ blogs = {
     #     'category': ['think_tanks'],
     #     'custom_parse': True
     # },
-    'brookings': {
-        'display': 'Brookings Institution',
-        'url': 'http://feeds.feedblitz.com/BrookingsRSS/programs/economics',
-        'category': ['think_tanks', 'economics'],
-        'custom_parse': True
-    },
+    # 'brookings': {
+    #     'display': 'Brookings Institution',
+    #     'url': 'http://feeds.feedblitz.com/BrookingsRSS/programs/economics',
+    #     'category': ['think_tanks', 'economics'],
+    #     'custom_parse': True
+    # },
     'niskanen': {
             'display': 'Niskanen Center',
             'url': 'https://niskanencenter.org/feed/',
             'category': ['think_tanks', 'economics'],
+            'color': "#19525F",
+            'page': 'https://niskanencenter.org/',
+            'image': False
     },
     'mercatus': {
         'display': 'Mercatus Center',
         'url': 'https://www.mercatus.org/feed',
         'category': ['think_tanks', 'economics'],
-        'custom_parse': True
+        'custom_parse': True,
+        'color': "#323946",
+        'page': 'https://www.mercatus.org/',
+        'image': True
     }, 
     # 'pew': {
     #     'display': 'Pew Research Center',

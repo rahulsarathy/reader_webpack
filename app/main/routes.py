@@ -4,6 +4,7 @@ from flask import render_template, request, Response, redirect, flash, url_for, 
 from flask_login import current_user, login_required
 import time
 from datetime import datetime
+from time import gmtime
 from threading import Thread
 from bs4 import BeautifulSoup, CData
 import pickle
@@ -52,7 +53,7 @@ def createEbook(app, blog, headers):
 			new_update = datetime.strptime(rss_feed.find('lastBuildDate').text.strip(), "%a, %d %b %Y %H:%M:%S +0000")
 		else:
 			print("rss feed for {} has no default time".format(blog))
-			new_update = DEFAULT_TIME
+			new_update = datetime.now()
 
 		# Retrieve last date polled from database
 		# if not in database, create new poll entry
@@ -63,7 +64,7 @@ def createEbook(app, blog, headers):
 			return
 
 		if last_updated is None:
-			new_time = datetime.strptime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+			new_time = datetime.now()
 			last_updated = Poll(name=blog, time=new_time)
 			db.session.add(last_updated)
 		else:
@@ -126,7 +127,7 @@ def reset():
 			db.session.add(poll)
 		else:
 			last_updated.time = DEFAULT_TIME
-	db.session.commit()
+		db.session.commit()
 
 	r = Response(str("times reset"), status=200)
 	return r

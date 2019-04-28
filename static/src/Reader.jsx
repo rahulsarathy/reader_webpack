@@ -51,10 +51,9 @@ export default class Reader extends React.Component {
 
 	render () {
     return (
-    	<div>
-    	    <div className="bookview">
-    			<Options onClick={this.transition} changeClicked={this.showFirst} showFirst={this.showFirst}/>
-    		</div>
+    	<div className="reader">
+    		<h2>Click to subscribe</h2>
+    		<Options onClick={this.transition} changeClicked={this.showFirst} showFirst={this.showFirst}/>
     		<Reset />
     		<Poll />
     		<HTMLContent innerHTML={this.state.innerHTML}/>

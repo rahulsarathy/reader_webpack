@@ -4,37 +4,72 @@
 }
 
 .item {
-	border-style: solid;
-	border-color: green;
 	height: 180px;
 	width: 100px;
-	display: inline-block;
-	margin: 10px;
-	border-radius: 2px;
+	border-radius: 3px;
 	font-family: sans-serif;
 	word-wrap: break-word; 
 	border-width: 1px;
-	 box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3); 
 	vertical-align: top;
 	text-align: center;
+	color: white;
 }
 
 .selected {
-	border-color: green;
+/*	box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3); 
+*/
 }
 
 .unselected {
-	border-color: red;
+
 }
 
-.bookView {
-	border-style: solid;
-	border-color: black;
+.item-wrapper {
+	display: inline-block;
 	margin: 10px;
-	border-width: 1px;
-	z-index: 10;
-	height: 100%;
-	transition: all 1s;
+	vertical-align: top;
+
+}
+
+.subscribe {
+	width: 100px;
+	height: 20px;
+	border-radius: 3px;
+	background-color: gray;
+	margin-top: 10px;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3); 
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.light {
+	background-color: lightgray;
+	color: black;
+}
+
+.reader {
+	font-family: sans-serif;
+}
+
+.subButton {
+	border-style: none;
+	color: white;
+}
+
+.blogImage {
+	padding-top: 10px;
+	width: 50px;
+	height: 50px;
+}
+
+.page {
+	position: relative;
+	left: 0px;
+	top: 50px;
+	color: white;
 }
 
 .active {
@@ -44,5 +79,5 @@
 .itemtext {
 	position: relative;
 	left: 0px;
-	top: 30px;
+	top: 5px;
 }
