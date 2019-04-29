@@ -8,8 +8,30 @@ export default class HTMLContent extends React.Component {
 	}
 
   render () {
+  	var clear;
+	if (this.props.innerHTML["__html"] == "")
+	{
+		clear = {
+			opacity: 0,
+			pointerEvents: 'none'
+		}
+	}
+	else {
+		clear = {
+			opacity: 1,
+		}
+	}
+
     return (
-    	<div className="article" id="innerContent" dangerouslySetInnerHTML={this.props.innerHTML}>
+    	<div className="innerHTML" style={clear}>
+    		<div className="close" onClick={this.props.onClick}>
+    		Close
+    		</div>
+    		<h1>
+    		Test
+    		</h1>
+    		<div  id="innerContent" dangerouslySetInnerHTML={this.props.innerHTML}>
+    		</div>
     	</div>
     	);
   }

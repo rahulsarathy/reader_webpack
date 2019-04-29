@@ -120,7 +120,7 @@ export default class Options extends React.Component {
 	render () {
 		this.createBlogs();
 		return (
-    		<div>
+    		<div style={this.props.blur}>
     			{blogs}
     		</div>
     	);

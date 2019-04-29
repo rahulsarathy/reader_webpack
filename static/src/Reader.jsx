@@ -8,11 +8,11 @@ export default class Reader extends React.Component {
 		super(props);
 
 		this.showFirst = this.showFirst.bind(this);
-		this.transition = this.transition.bind(this);
+		this.closeHTML = this.closeHTML.bind(this);
 
 		this.state = {
 			innerHTML: {
-				__html: "<div></div>"
+				__html: ""
 			},
 		};
 	}
@@ -20,6 +20,7 @@ export default class Reader extends React.Component {
 
 	showFirst(event)
 	{
+		console.log(event.target.parentNode)
 		var data = {
 			name: event.target.parentNode.getAttribute('name')
 		}
@@ -45,18 +46,37 @@ export default class Reader extends React.Component {
 			});
 	}
 
-	transition(){
-    	$(".bookview").toggleClass('active');
+	closeHTML(){
+		this.setState({
+			innerHTML: {
+				__html: ""
+			}
+		})
 	}
 
+
 	render () {
+
+	var blur
+
+	if (this.state.innerHTML["__html"] == "")
+	{
+		blur = {
+			
+		}
+	}
+	else {
+		blur = {
+			filter: 'blur(20px)'
+		}
+	}
+
     return (
     	<div className="reader">
-    		<h2>Click to subscribe</h2>
-    		<Options onClick={this.transition} changeClicked={this.showFirst} showFirst={this.showFirst}/>
+    		<HTMLContent innerHTML={this.state.innerHTML} onClick={this.closeHTML} />
+    		<Options onClick={this.transition} changeClicked={this.showFirst} blur={blur} />
     		<Reset />
     		<Poll />
-    		<HTMLContent innerHTML={this.state.innerHTML}/>
     	</div>
     	);
   }

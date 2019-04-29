@@ -25,6 +25,8 @@ def specificArticle(name, firstArticle):
 
 	if (name=='ribbonfarm'):
 		return soup.find_all("div", class_="type-post")[0]
+	if (name=='mercatus'):
+		return soup.find_all("div", class_="main-column-region")[0]
 	else:
 		return soup	
 

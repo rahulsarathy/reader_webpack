@@ -29,7 +29,7 @@ export default class Item extends React.Component {
 
     return (
       <div className="item-wrapper" name={this.props.name}>
-        <div style={{backgroundColor: this.props.color}} className={className}>
+        <div onClick={this.props.changeClicked} style={{backgroundColor: this.props.color}} className={className}>
           <button onClick={this.props.changeClicked} >Get HTML</button>
           <img className="blogImage" src={"/dist/images/" + this.props.name + ".png"} />
           <p className="itemtext">{this.props.display}</p>
