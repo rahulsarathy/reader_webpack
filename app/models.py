@@ -5,7 +5,8 @@ from flask_login import UserMixin
 import json
 import enum
 from sqlalchemy import Enum
-import time
+from time import time
+from datetime import datetime
 import jwt
 
 blogs = {
@@ -137,7 +138,7 @@ blogs = {
     # }
 }
 
-default_time = time.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
+default_time = datetime.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
 
 class BlogName(enum.Enum):
 	stratechery = 1
@@ -165,6 +166,9 @@ class User(UserMixin, db.Model):
     kindle_email = db.Column(db.String(120), index=True, unique=True)
     blogs = db.relationship('Blog', backref='owner')
 
+    def __repr__(self):
+        return '<User {} with id {}>'.format(self.username, self.id)
+
     def set_password(self, password):
     	self.password_hash = generate_password_hash(password)
 
@@ -174,7 +178,8 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
-            current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            current_app.config['SECRET_KEY'],
+            algorithm='HS256').decode('utf-8')
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -184,9 +189,6 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
-
-    def __repr__(self):
-        return '<User {} with id {}>'.format(self.username, self.id)
 
 class Blog(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
