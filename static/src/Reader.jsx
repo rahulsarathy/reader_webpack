@@ -20,7 +20,23 @@ export default class Reader extends React.Component {
 
 	showFirst(event)
 	{
-		console.log(event.target.parentNode)
+		event.persist()
+		this.setState(
+			{
+				innerHTML: {
+					__html: "Loading..."
+				}
+			},
+			() => 
+			{
+				this.showFirstCallback(event)
+			}
+			);
+	}
+
+	showFirstCallback(event)
+	{
+		console.log(event.target)
 		var data = {
 			name: event.target.parentNode.getAttribute('name')
 		}

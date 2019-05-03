@@ -27,9 +27,6 @@ export default class HTMLContent extends React.Component {
     		<div className="close" onClick={this.props.onClick}>
     		Close
     		</div>
-    		<h1>
-    		Test
-    		</h1>
     		<div  id="innerContent" dangerouslySetInnerHTML={this.props.innerHTML}>
     		</div>
     	</div>
