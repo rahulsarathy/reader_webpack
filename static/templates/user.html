@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+ <head>
+        {% if title %}
+        <title>{{ title }} - Reader</title>
+        {% else %}
+        <title>Reader</title>
+        {% endif %}
+        <link rel="stylesheet" href="../dist/styles.css">
+</head>
     <h1>User: {{ user.username }}</h1>
     <hr>
 {% endblock %}
