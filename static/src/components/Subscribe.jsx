@@ -14,7 +14,7 @@ export default class Subscribe extends React.Component {
 		var className;
 		if (this.props.subscribe)
 		{
-			text = "subscribed"
+			text = "unsubscribe"
 			className = "subscribe light"
 		}
 		else {

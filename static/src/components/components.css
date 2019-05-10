@@ -42,11 +42,14 @@
 	background-color: gray;
 	margin-top: 10px;
 	text-align: center;
+	line-height: 20px;
 	vertical-align: middle;
 	color: white;
 	box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3); 
-	font-size: 15px;
+	font-size: 13px;
+	font-weight: 150;
 	cursor: pointer;
+	text-transform: uppercase;
 }
 
 .light {
@@ -63,8 +66,7 @@
 	height: 100%;
 	margin-left: auto;
 	margin-right: auto;
-/*	background-color: white;
-*/	-webkit-transition: all 1s ease-in;
+	-webkit-transition: all 1s ease-in;
 	-moz-transition: all 1s ease-in;
 	transition: all 1s ease-in;
 	overflow: scroll;
@@ -72,9 +74,14 @@
 
 .close {
 	position: fixed;
-	right: 0px;
+	right: 20px;
 	top: 60px;
 	cursor: pointer;
+}
+
+.close-icon {
+	height: 30px;
+	width: 30px;
 }
 
 .clear {

@@ -13,6 +13,7 @@ export default class HTMLContent extends React.Component {
 	{
 		clear = {
 			opacity: 0,
+			display: 'none',
 			pointerEvents: 'none'
 		}
 	}
@@ -25,7 +26,7 @@ export default class HTMLContent extends React.Component {
     return (
     	<div className="innerHTML" style={clear}>
     		<div className="close" onClick={this.props.onClick}>
-    		Close
+    		<img className="close-icon" src="/dist/icons/close_button.svg" />
     		</div>
     		<div  id="innerContent" dangerouslySetInnerHTML={this.props.innerHTML}>
     		</div>

@@ -11,6 +11,7 @@ export default class Reader extends React.Component {
 		this.closeHTML = this.closeHTML.bind(this);
 
 		this.state = {
+			closed: true,
 			innerHTML: {
 				__html: ""
 			},
@@ -23,6 +24,7 @@ export default class Reader extends React.Component {
 		event.persist()
 		this.setState(
 			{
+				closed: false,
 				innerHTML: {
 					__html: "Loading..."
 				}
@@ -48,12 +50,14 @@ export default class Reader extends React.Component {
 				data: data,
 				success: function(data)
 				{
-					this.setState(
-						{
+					if (!this.state.closed)
+					{
+						this.setState({
 							innerHTML: {
 								__html: data
 							} 
 						});
+					}
 				}.bind(this),
 				error: function(xhr)
 				{
@@ -63,7 +67,9 @@ export default class Reader extends React.Component {
 	}
 
 	closeHTML(){
+
 		this.setState({
+			closed: true,
 			innerHTML: {
 				__html: ""
 			}

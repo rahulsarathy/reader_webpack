@@ -19,7 +19,6 @@ export default class Options extends React.Component {
 	}
 
 	componentDidMount(){
-		console.log("Called")
 		this.getBlogs();
 	}
 

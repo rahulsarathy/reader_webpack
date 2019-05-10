@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Reader from "./Reader.jsx";
 import Login from "./Login.jsx"
+import User from "./User.jsx"
 import $ from 'jquery';
 
 const login = document.getElementById('login') !== null;
@@ -15,6 +16,12 @@ console.log("content is " + content)
 if (content) {
 	const user_id = parseInt(document.getElementById('user_id').innerHTML)
 	ReactDOM.render(< Reader user_id={user_id}/>, document.getElementById('content'))
+}
+
+const user = document.getElementById('user') !== null;
+console.log("user is " + login)
+if (user) {
+	ReactDOM.render(< User/>, document.getElementById('user'))
 }
 
 $(document).ready(function() {

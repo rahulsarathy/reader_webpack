@@ -8,6 +8,8 @@ export default class Polling extends React.Component {
 		super(props);
 
 		this.poll = this.poll.bind(this);
+		this.send = this.send.bind(this);
+
 	}
 
 	poll()
@@ -19,10 +21,19 @@ export default class Polling extends React.Component {
 			});
 	}
 
+	send(){
+		$.ajax(
+		{
+			type: 'POST',
+			url: '/send'
+		})
+	}
+
 	render () {
 		return (
 			<div>
 				<button onClick={this.poll}>Poll</button>
+				<button onClick={this.send}>Send Email</button>
 			</div>
 			);
 	}

@@ -150,6 +150,33 @@ def get_blogs():
 	return r
 
 @login_required
+@bp.route('/set_email', methods=['POST'])
+def set_email():
+	email = request.values.get('email')
+	user = User.query.filter(User.id == current_user.id).first()
+	user.kindle_email = email
+	db.session.commit()
+
+	r = Response("Email is {}".format(email), status=200)
+	return r
+
+@login_required
+@bp.route('/kindle', methods=['GET'])
+def kindle():
+	user = User.query.filter(User.id == current_user.id).first()
+	kindle = user.kindle_email
+	r = Response(json.dumps(kindle), status=200)
+	return r
+
+@bp.route('/send', methods=['POST'])
+def send():
+	users = User.query.all()
+	print(users)
+	
+	r = Response(json.dumps(blogs), status=200)
+	return r
+
+@login_required
 @bp.route('/subscribe', methods=['POST'])
 def subscribe():
 	name = request.values.get('name')
