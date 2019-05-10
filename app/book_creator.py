@@ -11,6 +11,7 @@ def createEBook(name):
 	except OSError as e:
 		print("nothing to delete for {}".format(name))
 	copyanything('./EPUB_Template', './publishing/construction/' + name + '/')
+	convertImages(name)
 	convertToXHTML(name)
 	copyfile("./publishing/images/" + name + "/author.jpg", './publishing/construction/' + name + '/OEBPS/images/author.jpg')
 	copyfile("./publishing/images/" + name + "/cover.jpg", './publishing/construction/' + name + '/OEBPS/images/cover.jpg')
@@ -25,6 +26,7 @@ def createEBook(name):
 def convertImages(name):
 	f = open('./publishing/html/' + name + '.html', 'r')
 	soup = BeautifulSoup(f, 'html.parser')
+	f.close()
 	imgs = soup.findAll('img')
 	for i in range(len(imgs)):
 		print(imgs[i]['src'])
@@ -33,7 +35,11 @@ def convertImages(name):
 		opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 		urllib.request.install_opener(opener)
 
-		urllib.request.urlretrieve(imgs[i]['src'], './publishing/cache/' + name + '/image{}.png'.format(i))
+		urllib.request.urlretrieve(imgs[i]['src'], './publishing/construction/' + name + '/OEBPS/images/image{}.png'.format(i))
+		imgs[i]['src'] = '../Images/image{}.png'.format(i)
+	f = open('./publishing/html/' + name + '.html', 'w')
+	f.write(str(soup))
+	f.close()
 
 
 def convertToXHTML(name):
