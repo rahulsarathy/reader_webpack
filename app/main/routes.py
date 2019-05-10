@@ -182,7 +182,7 @@ def send():
 	for user in dicts:
 		if (user['kindle_email'] is not None):
 			print(os.getcwd())
-			email.send_kindle(sender=current_app.config['ADMINS'][0], recipients=[user['kindle_email']], filename='../publishing/books/stratechery.epub')
+			email.send_kindle(sender=current_app.config['ADMINS'][0], recipients=[user['kindle_email']], filename='../publishing/books/stratechery.mobi')
 
 	r = Response(json.dumps(blogs), status=200)
 	return r

@@ -3,6 +3,7 @@ from shutil import copyfile
 import os
 from bs4 import BeautifulSoup
 import json
+import urllib.request
 
 def createEBook(name):
 	try:
@@ -17,6 +18,23 @@ def createEBook(name):
 	shutil.make_archive('./publishing/books/' + name , 'zip', './publishing/construction/' + name + '/')
 	os.rename('./publishing/books/' + name + '.zip', './publishing/books/' + name + '.epub')
 	shutil.rmtree('./publishing/construction/' + name + '/')
+
+	cmd = '/Users/Rahul/Downloads/KindleGen_Mac_i386_v2_9/kindlegen /Users/Rahul/Developer/WebDev/reader_webpack/publishing/books/' +  name + '.epub'
+	os.system(cmd)
+
+def convertImages(name):
+	f = open('./publishing/html/' + name + '.html', 'r')
+	soup = BeautifulSoup(f, 'html.parser')
+	imgs = soup.findAll('img')
+	for i in range(len(imgs)):
+		print(imgs[i]['src'])
+
+		opener = urllib.request.build_opener()
+		opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+		urllib.request.install_opener(opener)
+
+		urllib.request.urlretrieve(imgs[i]['src'], './publishing/cache/' + name + '/image{}.png'.format(i))
+
 
 def convertToXHTML(name):
 	f = open('./publishing/html/' + name + '.html', 'r')
