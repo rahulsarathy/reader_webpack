@@ -24,8 +24,8 @@ def user(username):
 
     return render_template('user.html', user=user)
 
-@login_required
-@bp.route('/poll', methods=['POST'])
+#@login_required
+@bp.route('/poll', methods=['GET'])
 def poll():
 	print("polling")
 
@@ -80,6 +80,15 @@ def createEbook(app, blog, headers):
 
 		book_creator.createEBook(blog)
 
+		sendByBlog(blog)
+
+def sendByBlog(name):
+	users = Blog.query.filter(name == Blog.name).all()
+	for user in users:
+		desired = User.query.filter(user.id == User.id).first()
+		kindle = desired.kindle_email
+		email.send_kindle(sender=current_app.config['ADMINS'][0], recipients=[kindle_email], filename='../publishing/books/{}.mobi'.format(name))
+
 
 @login_required
 @bp.route('/parseRSS', methods=['POST'])
@@ -122,6 +131,8 @@ def parseWorker(name):
 @login_required
 @bp.route('/reset', methods=['POST'])
 def reset():
+	if (current_user.id != 1):
+		return
 	for blog in BlogName:
 		last_updated = Poll.query.filter(Poll.name == blog).first()
 		if last_updated is None:
@@ -171,6 +182,8 @@ def kindle():
 
 @bp.route('/send', methods=['POST'])
 def send():
+	if (current_user.id != 1):
+		return
 	users = User.query.all()
 	dicts = []
 
