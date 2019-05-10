@@ -9,10 +9,11 @@ from threading import Thread
 from bs4 import BeautifulSoup, CData
 import pickle
 import json
-from app import db, cleaning, book_creator
+from app import db, cleaning, book_creator, email
 from app.models import User, Blog, BlogName, Poll, blogs
 from app.main import bp
 from werkzeug.urls import url_parse
+import os
 
 DEFAULT_TIME = datetime.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
 
@@ -171,8 +172,18 @@ def kindle():
 @bp.route('/send', methods=['POST'])
 def send():
 	users = User.query.all()
-	print(users)
-	
+	dicts = []
+
+	for user in users:
+		dicts.append(user.get_dict())
+
+	print(dicts)
+
+	for user in dicts:
+		if (user['kindle_email'] is not None):
+			print(os.getcwd())
+			email.send_kindle(sender=current_app.config['ADMINS'][0], recipients=[user['kindle_email']], filename='../publishing/books/stratechery.epub')
+
 	r = Response(json.dumps(blogs), status=200)
 	return r
 

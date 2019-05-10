@@ -178,6 +178,14 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
     	return check_password_hash(self.password_hash, password)
 
+    def get_dict(self):
+        toRet = {
+        'id' : self.id,
+        'kindle_email' : self.kindle_email 
+        }
+
+        return toRet
+
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},

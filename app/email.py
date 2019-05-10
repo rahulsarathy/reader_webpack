@@ -15,3 +15,11 @@ def send_email(subject, sender, recipients, text_body, html_body):
     msg.html = html_body
     Thread(target=send_async_email,
            args=(current_app._get_current_object(), msg)).start()
+
+
+def send_kindle(sender, recipients, filename=None):
+	msg = Message("Hello", sender=sender, recipients=recipients)
+	with current_app.open_resource(filename) as fp:
+		msg.attach(filename, "ebook/epub", fp.read())
+	Thread(target=send_async_email,
+		args=(current_app._get_current_object(), msg)).start()
