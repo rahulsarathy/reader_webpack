@@ -84,10 +84,16 @@ def createEbook(app, blog, headers):
 
 def sendByBlog(name):
 	users = Blog.query.filter(name == Blog.name).all()
+	print("users are {}".format(users))
 	for user in users:
-		desired = User.query.filter(user.id == User.id).first()
+		desired = User.query.filter(user.user_id == User.id).first()
+		print("desired is {}".format(desired))
+		if desired is None:
+			return
 		kindle = desired.kindle_email
-		email.send_kindle(sender=current_app.config['ADMINS'][0], recipients=[kindle_email], filename='../publishing/books/{}.mobi'.format(name))
+		if kindle is None:
+			return
+		email.send_kindle(sender=current_app.config['ADMINS'][0], recipients=[kindle], filename='../publishing/books/{}.mobi'.format(name))
 
 
 @login_required

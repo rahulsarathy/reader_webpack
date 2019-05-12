@@ -4,6 +4,7 @@ import os
 from bs4 import BeautifulSoup
 import json
 import urllib.request
+from pathlib import Path
 
 def createEBook(name):
 	try:
@@ -20,7 +21,7 @@ def createEBook(name):
 	os.rename('./publishing/books/' + name + '.zip', './publishing/books/' + name + '.epub')
 	shutil.rmtree('./publishing/construction/' + name + '/')
 
-	cmd = '/Users/Rahul/Downloads/KindleGen_Mac_i386_v2_9/kindlegen /Users/Rahul/Developer/WebDev/reader_webpack/publishing/books/' +  name + '.epub'
+	cmd = './publishing/kindlegen ./publishing/books/' +  name + '.epub'
 	os.system(cmd)
 
 def convertImages(name):
