@@ -1,6 +1,8 @@
 /venv/
 /static/node_modules/
-/publishing/
+publishing/xml
+publishing/books
+publishing/html
 /app/__pycache__
 app.db
 /static/dist/main.js
