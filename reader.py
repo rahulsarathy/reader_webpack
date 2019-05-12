@@ -14,7 +14,7 @@ def start_runner():
         while not_started:
             print('In start loop')
             try:
-                r = requests.get(Config.URL + 'poll')
+                r = requests.get(os.environ.get('HOME_URL') + 'poll')
                 if r.status_code == 200:
                     print('Server started, quiting start_loop')
                     not_started = False

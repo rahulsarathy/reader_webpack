@@ -97,8 +97,6 @@ export default class Reader extends React.Component {
     	<div className="reader">
     		<HTMLContent innerHTML={this.state.innerHTML} onClick={this.closeHTML} />
     		<Options onClick={this.transition} changeClicked={this.showFirst} blur={blur} />
-    		<Reset />
-    		<Poll />
     	</div>
     	);
   }
