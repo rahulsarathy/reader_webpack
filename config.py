@@ -15,4 +15,5 @@ class Config(object):
 	MAIL_USERNAME = os.environ.get('MAIL_USER')
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 	MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL')
+	URL = os.environ.get('HOME_URL') or 'http://127.0.0.1:5000/'
 	#MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
