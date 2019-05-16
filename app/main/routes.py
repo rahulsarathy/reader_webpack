@@ -135,7 +135,7 @@ def parseWorker(name):
 
 
 @login_required
-@bp.route('/reset', methods=['POST'])
+@bp.route('/reset', methods=['POST', 'GET'])
 def reset():
 	if (current_user.id != 1):
 		return
@@ -164,6 +164,11 @@ def get_blogs():
 	for choice in choices:
 		if (choice.user_id == current_user.id):
 			blogs[choice.name.name]['selected'] = True
+	r = Response(json.dumps(blogs), status=200)
+	return r
+
+@bp.route('/blogs_no', methods=['GET'])
+def blogs_no():
 	r = Response(json.dumps(blogs), status=200)
 	return r
 

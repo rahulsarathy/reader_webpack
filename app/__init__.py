@@ -17,6 +17,7 @@ login.login_message = 'Please log in to access this page.'
 mail = Mail()
 
 def create_app(config_class=Config):
+	print("creating app")
 	app = Flask(__name__, template_folder='../static/templates', static_folder="../static/dist")
 
 	app.config.from_object(config_class)

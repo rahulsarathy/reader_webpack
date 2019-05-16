@@ -11,10 +11,16 @@ from config import Config
 def start_runner():
     def start_loop():
         not_started = True
+        if os.environ.get('HOME_URL') is None:
+            url = 'http://127.0.0.1:5000'
+        else:
+            url = os.environ.get('HTTP') + os.environ.get('HOME_URL') + os.environ.get('PORT')
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+        print(url)
         while not_started:
             print('In start loop')
             try:
-                r = requests.get(os.environ.get('HOME_URL') + 'poll')
+                r = requests.get(url + '/poll', headers=headers)
                 if r.status_code == 200:
                     print('Server started, quiting start_loop')
                     not_started = False
@@ -28,8 +34,9 @@ def start_runner():
     thread = threading.Thread(target=start_loop)
     thread.start()
 
-start_runner()
 app = create_app()
+start_runner()
+
 
 @app.shell_context_processor
 def make_shell_context():

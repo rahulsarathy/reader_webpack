@@ -14,6 +14,8 @@ def createEBook(name):
 	copyanything('./EPUB_Template', './publishing/construction/' + name + '/')
 	convertImages(name)
 	convertToXHTML(name)
+	if not os.path.exists('./publishing/construction/' + name + '/OEBPS/images/'):
+		os.mkdir('./publishing/construction/' + name + '/OEBPS/images/')
 	copyfile("./publishing/images/" + name + "/author.jpg", './publishing/construction/' + name + '/OEBPS/images/author.jpg')
 	copyfile("./publishing/images/" + name + "/cover.jpg", './publishing/construction/' + name + '/OEBPS/images/cover.jpg')
 
@@ -35,7 +37,8 @@ def convertImages(name):
 		opener = urllib.request.build_opener()
 		opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 		urllib.request.install_opener(opener)
-
+		if not os.path.exists('./publishing/construction/' + name + '/OEBPS/images/'):
+			os.mkdir('./publishing/construction/' + name + '/OEBPS/images/')
 		urllib.request.urlretrieve(imgs[i]['src'], './publishing/construction/' + name + '/OEBPS/images/image{}.png'.format(i))
 		imgs[i]['src'] = '../Images/image{}.png'.format(i)
 	f = open('./publishing/html/' + name + '.html', 'w')
