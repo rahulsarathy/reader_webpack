@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Reader from "./Reader.jsx";
-import Login from "./Login.jsx"
-import User from "./User.jsx"
+import Login from "./Login.jsx";
+import User from "./User.jsx";
+import Landing from "./Landing.jsx"
+
 import $ from 'jquery';
 
 const login = document.getElementById('login') !== null;
@@ -28,6 +30,13 @@ const register = document.getElementById('register') !== null;
 console.log("user is " + register)
 if (register) {
 	ReactDOM.render(< Login/>, document.getElementById('register'))
+}
+
+
+const landing = document.getElementById('landing') !== null;
+console.log("user is " + landing)
+if (landing) {
+	ReactDOM.render(< Login/>, document.getElementById('landing'))
 }
 
 $(document).ready(function() {

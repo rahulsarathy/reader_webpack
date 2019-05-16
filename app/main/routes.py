@@ -151,11 +151,17 @@ def reset():
 	r = Response(str("times reset"), status=200)
 	return r
 
-@bp.route('/')
 @bp.route('/index')
 @login_required
 def index(name=None):
 	return render_template('index.html', name=name)
+
+@bp.route('/')
+def landing():
+	if current_user.is_authenticated:
+		return redirect(url_for('main.index'))
+	else:
+		return render_template('landing.html')
 
 @login_required
 @bp.route('/blogs', methods=['GET'])

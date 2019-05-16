@@ -108,6 +108,8 @@
 
 .reader {
 	font-family: sans-serif;
+	margin: 0 auto;
+	width: 90%;
 }
 
 .subButton {

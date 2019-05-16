@@ -1,0 +1,29 @@
+
+{% block content %}
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="dist/styles.css">
+    <title>Parse Landing</title>
+  </head>
+  <body>
+    <h1>
+      Your favorite blog posts, delivered automatically to your kindle.
+    </h1>
+
+    <p>Subscribe to your favorite blogs. Everytime a new post is published, Reader will send the post to your kindle for easy reading. </p>
+
+     <p>Already have an account?
+        <a href="{{ url_for('auth.login') }}">Click to Sign in!</a>
+    </p>
+
+     <p>New User? 
+        <a href="{{ url_for('auth.register') }}">Click to Register!</a>
+    </p>
+
+  	<div id="landing">
+<!--   	<script src="dist/main.js"></script>
+ -->
+  </body>
+</html>
+{% endblock %}
