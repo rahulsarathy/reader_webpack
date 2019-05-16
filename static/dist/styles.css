@@ -23,7 +23,26 @@
 	background-color: white;
 }
 
+.register {
+	position: relative;
+	width: 340px;
+	height: 405px;
+	margin: 0 auto;
+	z-index: 5;
+	color: black;
+	box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3); 
+	border-radius: 3px;
+	background-color: white;
+}
+
 .form-content {
+	position: relative;
+	margin-left: 20px; 
+	margin-top: 20px;
+	padding-top: 5px;
+}
+
+.register-content {
 	position: relative;
 	margin-left: 20px; 
 	margin-top: 20px;

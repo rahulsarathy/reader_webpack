@@ -19,9 +19,15 @@ if (content) {
 }
 
 const user = document.getElementById('user') !== null;
-console.log("user is " + login)
+console.log("user is " + user)
 if (user) {
 	ReactDOM.render(< User/>, document.getElementById('user'))
+}
+
+const register = document.getElementById('register') !== null;
+console.log("user is " + register)
+if (register) {
+	ReactDOM.render(< Login/>, document.getElementById('register'))
 }
 
 $(document).ready(function() {
