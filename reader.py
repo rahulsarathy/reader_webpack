@@ -35,7 +35,7 @@ def start_runner():
     thread.start()
 
 app = create_app()
-start_runner()
+#start_runner()
 
 
 @app.shell_context_processor

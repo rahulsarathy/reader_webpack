@@ -202,16 +202,17 @@ class User(UserMixin, db.Model):
         return User.query.get(id)
 
 class Blog(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	name = db.Column(Enum(BlogName))
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    name = db.Column(Enum(BlogName))
 
-	def __repr__(self):
-		return '<User {} wants emails from {}>'.format(self.user_id, self.name)
-	
+    def __repr__(self):
+        return '<User {} wants emails from {}>'.format(self.user_id, self.name)
+
 class Poll(db.Model):
-    name = db.Column(Enum(BlogName), primary_key=True)
-    time = db.Column(db.DateTime, default=default_time)
+    name = db.Column(Enum(BlogName), primary_key=True, unique=True)
+    last_time = db.Column(db.DateTime, default=default_time)
+    last_post = db.Column(db.String(120))
 
     def __repr__(self):
         return '<Polled {} at {}>'.format(self.name, self.time)

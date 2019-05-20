@@ -7,13 +7,13 @@ from datetime import datetime
 from time import gmtime
 from threading import Thread
 from bs4 import BeautifulSoup, CData
-import pickle
 import json
 from app import db, cleaning, book_creator, email
 from app.models import User, Blog, BlogName, Poll, blogs
 from app.main import bp
 from werkzeug.urls import url_parse
 import os
+import copy
 
 DEFAULT_TIME = datetime.strptime("Mon, 11 Mar 2019 17:45:34 +0000", "%a, %d %b %Y %H:%M:%S +0000")
 
@@ -167,10 +167,11 @@ def landing():
 @bp.route('/blogs', methods=['GET'])
 def get_blogs():
 	choices = Blog.query.all()
+	dup_blogs = copy.deepcopy(blogs)
 	for choice in choices:
 		if (choice.user_id == current_user.id):
-			blogs[choice.name.name]['selected'] = True
-	r = Response(json.dumps(blogs), status=200)
+			dup_blogs[choice.name.name]['selected'] = True
+	r = Response(json.dumps(dup_blogs), status=200)
 	return r
 
 @bp.route('/blogs_no', methods=['GET'])
@@ -237,7 +238,6 @@ def unsubscribe():
 	name = request.values.get('name')
 	queries = Blog.query.filter(Blog.user_id == current_user.id).filter(Blog.name == name).all()
 	for query in queries:
-		blogs[query.name.name]['selected'] = False
 		db.session.delete(query)
 	db.session.commit()
 	r = Response("unsubscribed from {}".format(name), status=200)
