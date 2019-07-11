@@ -24,21 +24,6 @@ def user(username):
 
     return render_template('user.html', user=user)
 
-#@login_required
-@bp.route('/poll', methods=['GET'])
-def poll():
-	print("polling")
-
-	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
-
-	for blog in blogs:
-		# Thread(target=createEbook, name=blog, args=(current_app._get_current_object(), blog, headers)).start()
-		createEbook(current_app._get_current_object(), blog, headers)
-
-	threading.Timer(3600, poll).start()
-	r = Response(str("polling"), status=200)
-	return r
-
 def createEbook(app, blog, headers):
 	with app.app_context():
 		url = blogs[blog]['url']
