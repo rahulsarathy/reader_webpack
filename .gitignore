@@ -8,5 +8,5 @@ app.db
 /static/dist/main.js
 *.pyc
 .flaskenv
-
+.idea/
 .env
